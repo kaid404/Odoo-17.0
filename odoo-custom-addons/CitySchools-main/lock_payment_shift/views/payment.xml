@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="shift_close_wizard_form" model="ir.ui.view">
+        <field name="name">shift_close_wizard_form_view</field>
+        <field name="model">lock.shift.date</field>
+        <field name="arch" type="xml">
+            <form string="Lock/Open Shift for Accounts">
+                <div style="display: flex; width: 100%; gap: 10px; margin-left:35%">
+                    Close Entry Before
+                    <field name="closing_date_time"/>
+
+                    <!--                <button name="close_shift" type="object" string="Close Shift" class="btn btn-danger btn-lg"-->
+                    <!--                        style="flex: 1;"/>-->
+                </div>
+                <footer>
+                    <button name="close_shift" type="object" string="Close Shift" class="btn btn-danger" width="135"
+                            style="flex: 1;"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="lock_shift_action_wizard" model="ir.actions.act_window">
+        <field name="name">Lock/Open Shift for Accounts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lock.shift.date</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="shift_close_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="lock_shift_accounts"
+              name="Lock Shift" action="lock_shift_action_wizard"
+              sequence="20"
+    />
+</odoo>

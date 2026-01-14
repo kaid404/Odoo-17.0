@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_increment_wizard,access.employee.increment.wizard,model_employee_increment_wizard,,1,1,1,1
+access_hr_employee_increment_line,access.hr.employee.increment.line,model_hr_employee_increment_line,,1,1,1,1
+access_hr_employee_increment_lines,access.hr.employee.increment.lines,model_hr_employee_increment_lines,,1,1,1,1

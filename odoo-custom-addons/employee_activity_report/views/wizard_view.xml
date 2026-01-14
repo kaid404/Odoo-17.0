@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_emp_activity_report_form" model="ir.ui.view">
+        <field name="name">emp.activity.report.form</field>
+        <field name="model">emp.activity.report</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Analysis Report">
+                <group>
+                    <group>
+                        <field name="plan_id"/>
+                    </group>
+                    <group>
+                        <field name="employee_ids" widget="many2many_tags"
+                               options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print_activity_report" type="object" string="Print Report"
+                            class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_emp_activity_report_wizard" model="ir.actions.act_window">
+        <field name="name">Employee Activity Report</field>
+        <field name="res_model">emp.activity.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Employee Activity Report"
+              id="menu_employee_activity_report"
+              parent="hr.hr_menu_hr_reports"
+              action="action_emp_activity_report_wizard"
+              sequence="51"/>
+
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="turbo_report_purchase_order_document" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//div[@class='col-3 bm-2'][3]/p[@class='m-0'][1]" position="replace">
+            <p t-esc="o.date_approve.date().strftime('%d-%m-%Y')" class="m-0"/>
+        </xpath>
+        <xpath expr="//td[@class='text-center'][1]/span[1]" position="replace">
+            <span t-esc="line.date_planned.date().strftime('%d-%m-%Y')"/>
+        </xpath>
+    </template>
+
+    <template id="turbo_report_purchase_quotation_document" inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//td[@class='text-center'][1]/span[1]" position="replace">
+            <span t-esc="order_line.date_planned.date().strftime('%d-%m-%Y')"/>
+        </xpath>
+    </template>
+
+
+</odoo>

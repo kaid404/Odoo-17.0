@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_shift_lock,shift_lock_open,model_lock_shift_date,lock_payment_shift.group_shift_lock,1,1,1,1

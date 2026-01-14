@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <template id="prospectus_details_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="font-size: 8pt;">
+                        <div class="row">
+                            <div class="col-2">
+                                <img t-att-src="'data:image/png;base64,%s' % company_logo"
+                                     style="max-width: 100px; max-height: 100px;"/>
+                            </div>
+                            <div class="col-8" style="text-align:center">
+                                <div class="row">
+                                    <h1>
+                                        <span t-esc="company_name"/>
+                                    </h1>
+                                </div>
+                                <div class="row">
+                                    <h2 align="center">City High School</h2>
+                                </div>
+                                <div class="row">
+                                    <h4 align="center">Prospectus Details Report (PDF)</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="text-align: center;">
+                                <strong>For The Month OF:-</strong>
+                                <span t-esc="from_date"/>
+                                to
+                                <span t-esc="to_date"/>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered" style="border: 1px solid black; text-align: center;">
+                        <thead>
+                            <tr style="background-color: #C1C1C1">
+                                <th style="text-align:center;border: 1px solid black;">Sr:</th>
+                                <th style="text-align:center;border: 1px solid black;">Application</th>
+                                <th style="text-align:center;border: 1px solid black;">Applicant Name</th>
+                                <th style="text-align:center;border: 1px solid black;">Guardian/Father Name</th>
+                                <th style="text-align:center;border: 1px solid black;">Guardian/Father CNIC</th>
+                                <th style="text-align:center;border: 1px solid black;">Amount</th>
+                                <th style="text-align:center;border: 1px solid black;">Company</th>
+                                <th style="text-align:center;border: 1px solid black;">Register</th>
+                                <th style="text-align:center;border: 1px solid black;">Created By</th>
+                                <th style="text-align:center;border: 1px solid black;">Created On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="i" t-value="0"/>
+                            <t t-set="total_amount" t-value="0"/>
+                            <t t-foreach="record_list" t-as="uid">
+                                <tr>
+                                    <td colspan="10">
+                                        <b>
+                                            <t t-esc="uid.get('uid_name')"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <t t-foreach="uid.get('record')" t-as="record">
+                                    <tr>
+                                        <t t-set="i" t-value="i+1"/>
+                                        <t t-set="total_amount" t-value="total_amount + record.get('amount')"/>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <span t-esc="i"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('application')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('applicant_name')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('father_name')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('cnic')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('amount')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('company')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('register')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('create')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('create_date')"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr style="background-color: #C1C1C1">
+                                <td colspan="5" style="text-align:center; font-weight:bold; border: 1px solid black;">
+                                    Grand Total:
+                                </td>
+                                <td style="text-align:center; font-weight:bold; border: 1px solid black;">
+                                    <span t-esc="total_amount"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="footer">
+
+                        <t t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="prospectus_details_report_paperformat" model="report.paperformat">
+            <field name="name">Prospectus Details Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">20</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">19</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <!-- Loan Report Action Qweb-PDF -->
+        <record id="prospectus_details_report_action" model="ir.actions.report">
+            <field name="name">Prospectus Details Report Qweb-PDF</field>
+            <field name="model">city.prospectus.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">prospectus_details_report.prospectus_details_report_template</field>
+            <field name="report_file">prospectus_details_report.prospectus_details_report_template</field>
+            <field name="binding_model_id" ref="model_city_prospectus_report"/>
+            <field name="paperformat_id" ref="prospectus_details_report.prospectus_details_report_paperformat"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+    </data>
+</odoo>
+

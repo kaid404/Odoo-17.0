@@ -1,0 +1,26 @@
+<odoo>
+
+    <record id="action_team_model" model="ir.actions.act_window">
+        <field name="name">Team</field>
+        <field name="res_model">x_team</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Team"
+              id="menu_team_studio"
+              parent="hr.menu_human_resources_configuration"
+              action="action_team_model"
+              sequence="51"/>
+
+    <record id="view_employee_form_inherit_x_team" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.x_team</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="x_studio_team"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

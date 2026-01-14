@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="internal_layout_sale_order_turbo_print">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <div class="header">
+            <div class="row">
+                <div class="col-5">
+                    <img src="/turbo_reports/static/turbo_logo_1.png" alt="logo 1"
+                         height="67px"
+                         width="95%" style=""/>
+                </div>
+                <div class="col-4"></div>
+
+
+                <div class="col-3" style="padding-top:20px;">
+                    <img src="/turbo_reports/static/turbo_logo_2.png" alt="logo 2"
+                         width="38%"
+                         height="33px"
+                    />
+                    <img src="/turbo_reports/static/turbo_logo_3.png" alt="logo 3"
+                         width="48%"
+                         height="33px"
+                         style="margin-left:20px;"/>
+                </div>
+            </div>
+        </div>
+        <div class="article">
+            <t t-out="0"/>
+        </div>
+        <div class="footer" style="font-size:11px;">
+            <div class="row">
+                <div class="col-3">
+                    <p style="font-weight:bold; padding:25px 5px 0px 0px; color:#1750ad">
+                        Turbo
+                        Internacional Services Pvt. Ltd.
+                    </p>
+                </div>
+                <div class="col-7"
+                     style="border-left:3px solid #1750ad; color:#1750ad; padding:14px 0px 1px 5px;">
+                    <strong>Karachi</strong>
+                    <span>- Plot No. 11/1 Sector No. 17 Korangi Industrial Area.</span>
+                    <strong>Lahore</strong>
+                    <span>- 10-KM Raiwind Road.</span>
+                    <p>N.T.N. 7404024-3 Tel : +92-307-7777200 info@turbointernacional.pk
+                        <br/>
+                        www.turbointernacional.pk
+                    </p>
+                </div>
+                <div class="col-2">
+                    <img src="/turbo_reports/static/turbo_logo_4.png" alt="logo 4"
+                         width="80px"
+                         height="40px"
+                         style="padding:5px 5px 0px 0px"/>
+                    <img src="/turbo_reports/static/turbo_logo_6.jpg" alt="logo 6"
+                         width="50px"
+                         height="50px"
+                         style="padding:5px 0px 0px 5px"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="turbo_sale_print" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <t t-call="turbo_reports.internal_layout_sale_order_turbo_print">
+                <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+                <t t-set="forced_vat"
+                   t-value="doc.fiscal_position_id.foreign_vat"/> <!-- So that it appears in the footer of the report instead of the company VAT if it's set -->
+                <div class="page">
+                    <style>
+                        table{
+                        width:100%;
+                        border-collapse:collapse;
+                        border:none;
+                        margin:0px 0;
+                        }
+                        thead{
+                        background-color:#1750ad;
+                        color:white;
+                        border:none;
+                        }
+                        tbody{
+                        border:none;
+                        }
+                        table th,
+                        table td{
+                        font-size:11px;
+                        text-align:center;
+                        border:none;
+                        padding:6px;
+                        }
+                        table tr{
+                        border:none;
+                        border-bottom:1px solid silver;
+                        }
+                        #terms_conditions p{
+                        line-height:1.5;
+                        font-size:11px;
+                        margin:0;
+                        padding:0;
+                        margin-bottom:7px;
+                        }
+                    </style>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="row" style="border-bottom:2px solid #1750ad;">
+                        <div class="col-12" style="font-size:14px;">
+                            <strong>Quotation No.</strong>&#160;&#160;
+                            <strong t-field="doc.name"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row" style="font-size:12px;margin-bottom:10px;">
+                        <div class="col-5">
+                            <strong>Client:</strong>
+                            <br/>
+                            <t t-if="doc.partner_id.parent_id">
+                                <span t-esc="doc.partner_id.parent_id.name.split(',')[0]"/>
+                                <br/>
+                                <div t-field="doc.partner_id.parent_id"
+                                     t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                            </t>
+                            <t t-else="">
+                                <span t-esc="doc.partner_id.name.split(',')[0]"/>
+                                <br/>
+                                <div t-field="doc.partner_id"
+                                     t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+
+                            </t>
+<!--                                                        <br/>
+                                                       <span t-esc="doc.partner_id.street"/>
+                                                       <span t-esc="doc.partner_id.street2"/>
+                                                       <span t-esc="doc.partner_id.city"/>
+                                                       <br/>
+                                                       <span t-esc="doc.partner_id.country_id.name"/>
+                                                       <span t-esc="doc.partner_id.zip"/> -->
+                                                       <br/>
+                            <span t-esc="doc.partner_id.ntn1"/>
+                            <!--                            <br/>-->
+                            <!--                            <span t-esc="doc.partner_id.stn1"/>-->
+                        </div>
+                        <div class="col-2"></div>
+                        <t t-if="not doc.service">
+                            <div class="col-5">
+                                <strong>Shipping Address :</strong>
+                                <br/>
+                                <span t-esc="doc.partner_shipping_id.name.split(',')[0]"/>
+                                <br/>
+                                <div t-field="doc.partner_shipping_id"
+                                     t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+
+                                <!--                                <br/>-->
+                                <!--                                <span>-->
+                                <!--                                    <t t-esc="doc.partner_shipping_id.street"/>-->
+                                <!--                                    <t t-esc="doc.partner_shipping_id.street2"/>-->
+                                <!--                                    <t t-esc="doc.partner_shipping_id.city"/>-->
+                                <!--                                    <br/>-->
+                                <!--                                    <t t-esc="doc.partner_shipping_id.country_id.name"/>-->
+                                <!--                                    <t t-esc="doc.partner_shipping_id.zip"/>-->
+                                <!--                                </span>-->
+                            </div>
+                        </t>
+                    </div>
+
+                    <table>
+                        <thead class="display: table-row-group">
+                            <tr>
+                                <th>Reference</th>
+                                <th>Work Order</th>
+                                <th>Installation</th>
+                                <th>T/C Type</th>
+                                <th>Sales Person</th>
+                                <th>Quotation Date</th>
+                                <!--                                <th class="text-center">Expiry Date</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <t t-esc="doc.reference"/>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.work_order"/>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.installation_id.name"/>
+                                </td>
+                                <td>
+                                    <t t-if="doc.service">
+                                        <t t-esc="doc.service_item_type_id.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="doc.default_item_type_id.name"/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.user_id.name"/>
+                                    <!--                                    <br/>-->
+                                    <!--                                    <t t-esc="doc.user_id.login"/>-->
+                                    <!--                                    <br/>-->
+                                    <!--                                    <t t-esc="doc.user_id.phone"/>-->
+                                </td>
+                                <td>
+                                    <t t-esc="doc.date_order.date().strftime('%d-%m-%Y')"/>
+                                </td>
+                                <!--                                <td class="text-center">-->
+                                <!--                                    <t t-esc="doc.validity_date"/>-->
+                                <!--                                </td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Is there a discount on at least one line? -->
+                    <t t-set="lines_to_report" t-value="doc._get_order_lines_to_report()"/>
+                    <t t-set="display_discount" t-value="any(l.discount for l in lines_to_report)"/>
+                    <t t-set="display_further" t-value="any(l.further_discount for l in lines_to_report)"/>
+                    <t t-set="current_section_total" t-value="0"/>
+
+                    <table style="border-bottom:1px solid gray; margin-bottom:2px;">
+                        <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                        <thead class="display: table-row-group">
+                            <tr>
+                                <th name="th_description" style="text-align:left;width:60%;">Description</th>
+                                <th name="th_quantity">Quantity</th>
+                                <th name="th_priceunit">Unit Price</th>
+                                <th name="th_discount">Disc.%</th>
+                                <th name="th_dics_price" style="text-align:right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-set="current_subtotal" t-value="1"/>
+                            <t t-set="qt_sum" t-value="0"/>
+                            <t t-set="unit_price_sum" t-value="0"/>
+                            <t t-set="service_disc_pr_sum" t-value="0"/>
+                            <t t-set="disc_price_sum" t-value="0"/>
+                            <t t-set="net_sum" t-value="0"/>
+                            <t t-set="amount" t-value="0"/>
+                            <t t-set="total_val_sum" t-value="0"/>
+                            <t t-set="line_display_sr" t-value="0"/>
+                            <t t-set="line_display_indx" t-value="-1"/>
+                            <t t-foreach="lines_to_report" t-as="line">
+                                <t t-set="line_display_indx" t-value="line_display_indx + 1"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                                   groups="account.group_show_line_subtotals_tax_excluded"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                                   groups="account.group_show_line_subtotals_tax_included"/>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <t t-set="line_display_sr" t-value="line_display_sr + 1"/>
+                                    <!-- Display the previous section's total -->
+                                    <t t-if="current_section_total &gt; 0">
+                                        <tr>
+                                            <td colspan="4" style="text-align:right; font-weight: bold;">Subtotal:</td>
+                                            <td style="text-align:right; font-weight: bold;">
+                                                <t t-esc="'{:,}'.format(round(current_section_total, 2))"/>
+                                            </td>
+                                        </tr>
+                                        <!-- Reset the section total -->
+                                        <!--                                         <t t-set="amount" t-value="amount + current_section_total"/> -->
+                                        <t t-set="current_section_total" t-value="0"/>
+                                    </t>
+
+                                    <!-- Display the section title -->
+                                    <tr>
+                                        <td colspan="5" style="text-align:left; font-weight: bold; background-color: #e6e8eb;">
+                                            <b t-field="line.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+<!--                                 <t t-elif="line.display_type == 'line_note'">
+                                    <tr  style="border: none;border-top:none;border-bottom:none;">
+                                        <td style="text-align:left; font-style: italic; font-size:10px;">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td colspan="4" style="text-align:left; font-style: italic;">
+                                            
+                                        </td>
+                                    </tr>
+                                </t> -->
+                                <t t-else="">
+                                <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                    <t t-if="not line.display_type">
+                                        <td name="td_name" style="text-align:left;">
+                                            <span t-field="line.name"/>
+                                            <t t-if="line.order_id.service">
+                                                <br/>
+                                                <t t-if="line.service_task_ids">
+                                                    <span t-foreach="line.service_task_ids" t-as="task">
+                                                        <span t-field="task.name"/>
+                                                        <br/>
+                                                    </span>
+                                                </t>
+                                            </t>
+                                            <t t-if="(len(lines_to_report)) &gt; (line_display_indx + 1)">
+                                                <t t-if="lines_to_report[line_display_indx + 1].display_type == 'line_note'">
+                                                    <br/>
+                                                    <span style="text-align:left; font-style: italic;"><t t-esc="lines_to_report[line_display_indx + 1].name"/></span>
+                                                    
+                                                    <t t-if="(len(lines_to_report)) &gt; (line_display_indx + 2)">
+                                                        <t t-if="lines_to_report[line_display_indx + 2].display_type == 'line_note'">
+                                                            <br/>
+                                                            <span style="text-align:left; font-style: italic;"><t t-esc="lines_to_report[line_display_indx + 2].name"/></span>
+                                                            <t t-if="(len(lines_to_report)) &gt; (line_display_indx + 3)">
+                                                                <t t-if="lines_to_report[line_display_indx + 3].display_type == 'line_note'">
+                                                                    <br/>
+                                                                    <span style="text-align:left; font-style: italic;"><t t-esc="lines_to_report[line_display_indx + 3].name"/></span>
+                                                                </t>
+                                                            </t>
+
+                                                        </t>
+                                                    </t>                                                      
+                                                </t>
+                                            </t> 
+                                        </td>
+                                        <td name="td_quantity">
+                                            <span t-field="line.product_uom_qty"/>
+                                            <t t-set="qt_sum" t-value="qt_sum + line.product_uom_qty"/>
+                                            &#160;<span t-field="line.product_uom.name"/>
+                                        </td>
+
+                                        <td name="td_priceunit">
+                                            <t t-if="doc.service">
+                                                <span t-esc="'{:,}'.format(round(line.price_unit, 2))"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="'{:,}'.format(round(line.gross_amount, 2))"/>
+                                                <t t-set="unit_price"
+                                                   t-value="round(line.gross_amount, 2)"/>
+                                                <t t-set="unit_price_sum" t-value="unit_price_sum + unit_price"/>
+                                            </t>
+                                        </td>
+                                        <td name="td_discount_turbo">
+                                            <span t-esc="round(line.discount_turbo * 100, 2)"/>
+                                        </td>
+                                        <td name="td_discount_turbo" style="text-align:right;">
+                                            <t t-if="doc.service">
+                                                <span t-esc="'{:,}'.format(round(line.tax_exclude, 2))"/>
+                                                <t t-esc="doc.currency_id.symbol"/>
+                                                <t t-set="amount"
+                                                   t-value="amount + (line.tax_exclude)"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="'{:,}'.format(round(line.pre_disc_amount * line.product_uom_qty, 2))"/>
+                                                <t t-esc="doc.currency_id.symbol"/>
+                                                <t t-set="amount"
+                                                   t-value="amount + (line.pre_disc_amount * line.product_uom_qty)"/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                    <t t-set="current_section_total"
+                                           t-value="current_section_total + line.tax_exclude"/>
+                                </tr>
+                                </t>
+                            </t>
+                             <t t-if="line_display_sr &gt; 0">
+                                <t t-if="current_section_total &gt; 0">
+                                    <tr>
+                                        <td colspan="4" style="text-align:right; font-weight: bold;">Subtotal:</td>
+                                        <td style="text-align:right; font-weight: bold;">
+                                            <t t-esc="'{:,}'.format(round(current_section_total, 2))"/>
+                                        </td>
+                                    </tr>
+                                    <!-- Add the last section's total to the grand total -->
+                                    <!--                                 <t t-set="amount" t-value="amount + current_section_total"/> -->
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                    <t t-set="total_am" t-value="amount - doc.further_amount"/>
+                    <t t-if="doc.further_amount or doc.tax">
+                        <div class="row" style="font-size:12px;">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-3"
+                                 style="border-bottom:1px solid silver;border-top:3px solid #1750ad;padding:5px;">
+                                <strong>Subtotal</strong>
+                            </div>
+                            <div class="col-3" align="right"
+                                 style="border-bottom:1px solid silver;border-top:3px solid #1750ad;padding:5px;">
+                                <span t-esc="'{:,}'.format(round(amount, 2))"/>
+                                <t t-esc="doc.currency_id.symbol"/>
+<!--                                 <t t-set="total_am" t-value="amount - doc.further_amount"/> -->
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="not doc.service">
+                        <t t-if="doc.further_amount">
+                            <div class="row" style="font-size:12px;">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-3" style="border-bottom:1px solid silver;padding:5px;">
+                                    <strong>Further Discount (<t t-esc="round(doc.further_discount, 2)"/>%)
+                                    </strong>
+                                </div>
+                                <div class="col-3" align="right" style="border-bottom:1px solid silver;padding:5px;">
+                                    <span t-esc="'{:,}'.format(round(doc.further_amount, 2))"/>
+                                    <t t-esc="doc.currency_id.symbol"/>
+                                </div>
+                            </div>
+                        <div class="row" style="font-size:12px;">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-3" style="border-bottom:1px solid silver;padding:5px;">
+                                <strong>Total</strong>
+                            </div>
+                            <div class="col-3" align="right" style="border-bottom:1px solid silver;padding:5px;">
+                                <span t-esc="'{:,}'.format(round(total_am, 2))"/>
+                                <t t-esc="doc.currency_id.symbol"/>
+                            </div>
+                        </div>
+                        </t>
+                    </t>
+                    <t t-if="doc.tax">
+                        <div class="row" style="font-size:12px;">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-3" style="border-bottom:1px solid silver;padding:5px;">
+                                <strong>
+                                    <t t-if="doc.order_line[0].tax_id.name">
+                                        <t t-esc="doc.order_line[0].tax_id.name"/>
+                                    </t>
+                                </strong>
+                            </div>
+                            <div class="col-3" align="right" style="border-bottom:1px solid silver;padding:5px;">
+                                <t t-if="doc.tax">
+                                    <span t-esc="'{:,}'.format(round(doc.tax, 2))"/>
+                                    <t t-esc="doc.currency_id.symbol"/>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+
+                    <div class="row" style="font-size:12px;">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-3" style="border-bottom:3px solid #1750ad;padding:5px;">
+                            <t t-if="doc.further_amount or doc.tax">
+                                <strong>Grand Total</strong>
+                            </t>
+                            <t t-else="">
+                                <strong>Total</strong>
+                            </t>
+                        </div>
+                        <div class="col-3" align="right" style="border-bottom:3px solid #1750ad;padding:5px;">
+                            <span t-esc="'{:,}'.format(round(total_am + doc.tax, 2))"/>
+                            <t t-esc="doc.currency_id.symbol"/>
+                        </div>
+                    </div>
+
+                    <div t-if="doc.signature" class="mt-4 ml64 mr4" name="signature" style="font-size:12px;">
+                        <div class="offset-8">
+                            <strong>Signature</strong>
+                        </div>
+                        <div class="offset-8">
+                            <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                        </div>
+                        <div class="offset-8 text-center">
+                            <p t-field="doc.signed_by"/>
+                        </div>
+                    </div>
+
+                    <div class="row" style="font-size:12px;">
+                        <div class="col-12" style="text-align:left;">
+                            <span>Quotation valid Till :</span>
+                            <span>
+                                <t t-esc="doc.validity_date.strftime('%d-%m-%Y')"/>
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="row" style="font-size:12px;">
+                        <div class="col-12" style="text-align:left;">
+                            <span>Currency :</span>
+                            <span>
+                                <t t-esc="doc.currency_id.name"/>
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="row" style="font-size:12px;">
+                        <div class="col-12">
+                            <span>Payment Term :</span>&#160;&#160;&#160;&#160;<span
+                                t-esc="doc.payment_term_id.name"/>
+                        </div>
+                        <!--                            <strong t-if="doc.payment_term_id.name)">-->
+                        <!--                                <span t-field="doc.payment_term_id.name"/>-->
+                        <!--                            </strong>-->
+                        <!--                            <p t-if="doc.fiscal_position_id and not is_html_empty(doc.fiscal_position_id.sudo().note)"-->
+                        <!--                               id="fiscal_position_remark">-->
+                        <!--                                <strong>Fiscal Position Remark :</strong>-->
+                        <!--                                <span t-field="doc.fiscal_position_id.sudo().note"/>-->
+                        <!--                            </p>-->
+                    </div>
+
+                    <div class="row" style="font-size:12px;">
+                        <div class="col-12">
+                            <span>Comments :</span>
+                            <br/>
+                            <!--                            <t t-set="sr_no" t-value="1"/>-->
+                            <t t-foreach="doc.comments_lines" t-as="comment">
+                                <!--                                <span>-->
+                                <!--                                    <t t-esc="sr_no"/>.-->
+                                <!--                                    <t t-set="sr_no" t-value="sr_no + 1"/>-->
+                                <!--                                </span>-->
+                                <span>
+                                    -&#160;<t t-esc="comment.comments_id.name"/>
+                                </span>
+                                <br/>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <t t-if="doc.service != True">
+                    <div style="page-break-after:always;"/>
+
+                    <div class="row" style="margin:0px;padding:0;margin-bottom:15px;">
+                        <div class="col-12" align="center">
+                            <h4>
+                                <strong>
+                                    Terms &amp; Conditions
+                                </strong>
+                            </h4>
+                        </div>
+                    </div>
+                    <t t-if="doc.type == 'oem'">
+                        <div class="row" id="terms_conditions">
+                            <div class="col-6" style="padding:0 3px;">
+                                <strong>
+                                    1. Prices and Payment Terms
+                                </strong>
+                                <p>1.1. The quoted Price are based on the complete order in case of change of quantity
+                                    or
+                                    partial delivery we reserve the rights to review the prices.
+                                </p>
+                                <p>1.2. Unless otherwise agreed, the agreed upon price shall apply ex works Madrid Spain
+                                    excluding, however, the costs of packaging, transport, assembly, insurance and
+                                    further
+                                    additional costs. Buyer shall also bear any and all fees, levies, duties and taxes
+                                    incurred at its domicile even in the event that they are based on laws yet to be
+                                    passed.
+                                    All contracts are concluded in EURO (€) or US Doller ($). In the event that the
+                                    price is
+                                    to be paid in a foreign currency, then this shall only determine the payment
+                                    instrument;
+                                    the amount to be paid will be based upon the EURO amount which the buyer would have
+                                    had
+                                    to pay based on the official rate of exchange on the day of contract formation.
+                                </p>
+                                <p>1.3. Unless otherwise agreed, all payments shall be paid in advance after receipt of
+                                    Pro
+                                    Forma invoice. Payments shall be effected on the due date in cash and without any
+                                    deductions.
+                                </p>
+                                <p>1.4. ill of Exchange are only accepted in the case of a specific agreement and it
+                                    shall
+                                    always be Irrecoverable at sight. Collection fees and discount charges, cost for
+                                    prolongation, renegotiation etc. are to be borne by the buyer. In the event that the
+                                    financial situation of the buyer or drawee deteriorates during the term of the
+                                    accepted
+                                    bill of exchange, or if an unfavourable disclosure concerning the buyer or drawee is
+                                    received after accepting the bill of exchange, the buyer is obliged to pay us upon
+                                    our
+                                    request in cash with immediate effect or to furnish appropriate securities,
+                                    irrespective
+                                    of our acceptance of the bill of exchange. Bills of exchange as well as all
+                                    securities
+                                    received also serve as securities for claims to which we are entitled after
+                                    reclaiming
+                                    the delivery item.
+                                </p>
+                                <p>1.5. In the event that the agreed upon delivery date is more than three months after
+                                    the
+                                    formation of the contract and if after conclusion of the contract unforeseeable cost
+                                    increases regarding the merchandise occur, then we have the right to increase the
+                                    agreed
+                                    upon price accordingly at our reasonable discretion.
+                                </p>
+                                <p>1.6. Should the transfer be delayed by request of the buyer, we are entitled to
+                                    charge
+                                    for the costs incurred through this delay; this shall also apply in the event that a
+                                    transfer fails to occur due to delayed payment, irrespective of further claims
+                                </p>
+                                <strong>
+                                    2. Delivery
+                                </strong>
+                                <p>2.1. Delivery dates and deadlines are binding only in the event that they have been
+                                    confirmed by us in writing. They commence with the date of the order
+                                    acknowledgement.
+                                    Compliance with delivery times is subject to completion of the contractual
+                                    obligations
+                                    by the buyer, particularly the punctual receipt of the agreed upon funds and the
+                                    timely
+                                    presentation of the import licence, foreign exchange approvals, transfer approvals
+                                    etc.
+                                </p>
+                                <p>2.2. Delivery times are extended appropriately if circumstances occur outside of our
+                                    control, regardless if these occur to us or our sub suppliers.
+                                </p>
+                                <p>2.3. Partial deliveries are admissible. Insignificant defects entitle the buyer
+                                    merely to
+                                    pursue warranty claims, not to refusal of acceptance.
+                                </p>
+                                <p>2.4. In the event that delivery is made to a location other than the one
+                                    contractually
+                                    agreed upon, the buyer shall bear the additional costs thus incurred.
+                                </p>
+                                <p>2.5. Risk of destruction (total loss), whether accidental or within the
+                                    responsibility of
+                                    an outside third party, or degra¬dation (damage) passes to the buyer with the
+                                    transfer
+                                    of the goods to the forwarding agent,, railway company, post office or with the
+                                    loading
+                                    thereof onto our vehicles for the purpose of delivery or in the case of collection
+                                    by
+                                    the buyer with the transfer thereof. Should the transfer of goods be
+                                    delayed for reasons for which the buyer is responsible, the risk will pass to him at
+                                    the
+                                    moment the goods are ready for transfer
+                                </p>
+                            </div>
+                            <div class="col-6" style="padding:0 3px;margin-top:24px;">
+
+                                <p>2.6. Claims against third parties to which we are entitled due to the destruction or
+                                    deterioration of the delivery item will be assigned to the buyer, should it so
+                                    request.
+                                    2.7. In the exceptional event that the agreed upon delivery date is exceeded by more
+                                    than six (6) weeks, the buyer has the right to set a reasonable grace period and to
+                                    rescind the contract by written statement should the period of grace expire without
+                                    results. Claims for compensation are excluded. This shall not apply in cases of
+                                    death,
+                                    perso¬nal injury or impairment of health, wilful intent or gross negligence as well
+                                    as
+                                    in cases of the breach of essential contractual obligations, the fulfilment of which
+                                    the
+                                    buyer had a particular right to expect in good faith
+                                </p>
+                                <p>2.7. In the exceptional event that the agreed upon delivery date is exceeded by more
+                                    than
+                                    six (6) weeks, the buyer has the right to set a reasonable grace period and to
+                                    rescind
+                                    the contract by written statement should the period of grace expire without results.
+                                    Claims for compensation are excluded. This shall not apply in cases of death,
+                                    perso¬nal
+                                    injury or impairment of health, wilful intent or gross negligence as well as in
+                                    cases of
+                                    the breach of essential contractual obligations, the fulfilment of which the buyer
+                                    had a
+                                    particular right to expect in good faith
+                                </p>
+                                <strong>3.
+                                    Warranty
+                                </strong>
+                                <p>3.1. Unless expressly agreed upon otherwise in writing, our standard warranty for the
+                                    part is 12 month from the date of delivery and for service it is 12 month from the
+                                    date
+                                    of service base on that buyer shall manage the operation and maintenance as per OEM
+                                    recommendations.
+                                </p>
+                                <p>3.2. It is obliged to examine the contract item diligently and immediately after
+                                    delivery
+                                    and, as far as necessary, to carry out random examinations. Obvious defects must be
+                                    claimed and specified in writing immediately after delivery and before usage of the
+                                    contract item, at the latest, however, within seven days from the date of delivery.
+                                    Notice of latent defects is to be sent in the same manner within a period of five
+                                    days
+                                    after discovery. If notice is not given in the appropriate form and in due time, the
+                                    condition of the contract item shall be deemed approved. Claims for material defects
+                                    may
+                                    no longer be asserted after that. The waiver of a late notification objection can
+                                    only
+                                    be made expressly and in writing. Any measures to remediate defects after the
+                                    expiration
+                                    of the above notification period are carried out as a matter of goodwill.
+                                </p>
+                                <p>3.3. In the event of justified claims, the buyer shall grant us an appropriate period
+                                    to
+                                    remedy the defect(s), which, as a rule, shall be a minimum of four weeks. The
+                                    supplementary performance occurs at our discretion through either the elimination of
+                                    the
+                                    defect or the delivery of new merchandise or reimbursement of the Price which does
+                                    not
+                                    include the freight or transportation charges in it.
+                                </p>
+                                <p>3.4. Parts which are replaced shall be sent to us postage-free and freight-free. They
+                                    will pass into our ownership. Only defective parts will be replaced. A new warranty
+                                    period shall start exclusively for the parts replaced under warranty; it ends one
+                                    year
+                                    after warranty delivery or, in case that the warranty period for the entire delivery
+                                    item has not yet expired, upon its expiration.
+                                </p>
+                                <p>3.5. The warranty shall become void should the delivery item be modified by a third
+                                    party
+                                    or parts of third party origin be installed and if the modification is in causal
+                                    connection with the defect. The warranty also expires if the buyer does not follow
+                                    the
+                                    OEM maintenance instructions for the delivery item.
+                                </p>
+                                <p>3.6. Natural deterioration as well as damages for which the buyer is responsible are
+                                    excluded from the warranty; the same applies in the case of design faults and
+                                    deficiencies in materials whenever the delivery has been made according to design
+                                    documentation of the buyer or if it supplied the materials.
+                                </p>
+                                <p>3.7. We shall be only liable for damages in cases in which we or our assistants have
+                                    acted under wilful intent or gross negligence. Liability for further damage,
+                                    subsequent
+                                    damage and indirect damage is excluded.
+                                </p>
+                                <p>3.8. Offered parts are brand new and original.</p>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="doc.type == 'non_oem'">
+                        <div class="row" id="terms_conditions">
+                            <div class="col-6" style="padding:0 3px;">
+                                <strong>
+                                    1. Prices and Payment Terms
+                                </strong>
+                                <p>1.1. The quoted Price are based on the complete order in case of change of quantity
+                                    or partial delivery we reserve the rights to review the prices.
+                                </p>
+                                <p>1.2. Unless otherwise agreed, the agreed upon price shall apply ex works Madrid Spain
+                                    excluding, however, the costs of packaging, transport, assembly, insurance and
+                                    further additional costs. Buyer shall also bear any and all fees, levies, duties and
+                                    taxes incurred at its domicile even in the event that they are based on laws yet to
+                                    be passed. All contracts are concluded in EURO (€) or US Doller ($). In the event
+                                    that the price is to be paid in a foreign currency, then this shall only determine
+                                    the payment instrument; the amount to be paid will be based upon the EURO amount
+                                    which the buyer would have had to pay based on the official rate of exchange on the
+                                    day of contract formation.
+                                </p>
+                                <p>1.3. Unless otherwise agreed, all payments shall be paid in advance after receipt of
+                                    Pro Forma invoice. Payments shall be effected on the due date in cash and without
+                                    any deductions.
+                                </p>
+                                <p>1.4. Bill of Exchange are only accepted in the case of a specific agreement and it
+                                    shall always be Irrecoverable at sight. Collection fees and discount charges, cost
+                                    for prolongation, renegotiation etc. are to be borne by the buyer. In the event that
+                                    the financial situation of the buyer or drawee deteriorates during the term of the
+                                    accepted bill of exchange, or if an unfavourable disclosure concerning the buyer or
+                                    drawee is received after accepting the bill of exchange, the buyer is obliged to pay
+                                    us upon our request in cash with immediate effect or to furnish appropriate
+                                    securities, irrespective of our acceptance of the bill of exchange. Bills of
+                                    exchange as well as all securities received also serve as securities for claims to
+                                    which we are entitled after reclaiming the delivery item.
+                                </p>
+                                <p>1.5. In the event that the agreed upon delivery date is more than three months after
+                                    the formation of the contract and if after conclusion of the contract unforeseeable
+                                    cost increases regarding the merchandise occur, then we have the right to increase
+                                    the agreed upon price accordingly at our reasonable discretion.
+                                </p>
+                                <p>1.6. Should the transfer be delayed by request of the buyer, we are entitled to
+                                    charge for the costs incurred through this delay; this shall also apply in the event
+                                    that a transfer fails to occur due to delayed payment, irrespective of further
+                                    claims
+                                </p>
+                                <strong>
+                                    2. Delivery
+                                </strong>
+                                <p>2.1. Delivery dates and deadlines are binding only in the event that they have been
+                                    confirmed by us in writing. They commence with the date of the order
+                                    acknowledgement. Compliance with delivery times is subject to completion of the
+                                    contractual obligations by the buyer, particularly the punctual receipt of the
+                                    agreed upon funds and the timely presentation of the import licence, foreign
+                                    exchange approvals, transfer approvals etc.
+                                </p>
+                                <p>2.2. Delivery times are extended appropriately if circumstances occur outside of our
+                                    control, regardless if these occur to us or our sub suppliers
+                                </p>
+                                <p>2.3. Partial deliveries are admissible. Insignificant defects entitle the buyer
+                                    merely to pursue warranty claims, not to refusal of acceptance.
+                                </p>
+                                <p>2.4. In the event that delivery is made to a location other than the one
+                                    contractually agreed upon, the buyer shall bear the additional costs thus incurred.
+                                </p>
+                                <p>2.5. Risk of destruction (total loss), whether accidental or within the
+                                    responsibility of an outside third party, or degra¬dation (damage) passes to the
+                                    buyer with the transfer of the goods to the forwarding agent,, railway company, post
+                                    office or with the loading thereof onto our vehicles for the purpose of delivery or
+                                    in the case of collection by the buyer with the transfer thereof. Should the
+                                    transfer of goods be
+                                    delayed for reasons for which the buyer is responsible, the risk will pass to him at
+                                    the moment the goods are ready for transfer
+                                </p>
+                            </div>
+                            <div class="col-6" style="padding:0 3px;margin-top:24px;">
+
+                                <p>2.6.Claims against third parties to which we are entitled due to the destruction or
+                                    deterioration of the delivery item will be assigned to the buyer, should it so
+                                    request.
+                                </p>
+                                <p>2.7. In the exceptional event that the agreed upon delivery date is exceeded by more
+                                    than six (6) weeks, the buyer has the right to set a reasonable grace period and to
+                                    rescind the contract by written statement should the period of grace expire without
+                                    results. Claims for compensation are excluded. This shall not apply in cases of
+                                    death, perso¬nal injury or impairment of health, wilful intent or gross negligence
+                                    as well as in cases of the breach of essential contractual obligations, the
+                                    fulfilment of which the buyer had a particular right to expect in good faith
+                                </p>
+                                <strong>3. Warranty</strong>
+                                <p>3.1. Unless expressly agreed upon otherwise in writing, our standard warranty for the
+                                    part is 12 month from the date of delivery and for service it is 12 month from the
+                                    date of service base on that buyer shall manage the operation and maintenance as per
+                                    OEM recommendations.
+                                </p>
+                                <p>3.2. It is obliged to examine the contract item diligently and immediately after
+                                    delivery and, as far as necessary, to carry out random examinations. Obvious defects
+                                    must be claimed and specified in writing immediately after delivery and before usage
+                                    of the contract item, at the latest, however, within seven days from the date of
+                                    delivery. Notice of latent defects is to be sent in the same manner within a period
+                                    of five days after discovery. If notice is not given in the appropriate form and in
+                                    due time, the condition of the contract item shall be deemed approved. Claims for
+                                    material defects may no longer be asserted after that. The waiver of a late
+                                    notification objection can only be made expressly and in writing. Any measures to
+                                    remediate defects after the expiration of the above notification period are carried
+                                    out as a matter of goodwill.
+                                </p>
+                                <p>3.3. In the event of justified claims, the buyer shall grant us an appropriate period
+                                    to remedy the defect(s), which, as a rule, shall be a minimum of four weeks. The
+                                    supplementary performance occurs at our discretion through either the elimination of
+                                    the defect or the delivery of new merchandise or reimbursement of the Price which
+                                    does not include the freight or transportation charges in it.
+                                </p>
+                                <p>3.4. Parts which are replaced shall be sent to us postage-free and freight-free. They
+                                    will pass into our ownership. Only defective parts will be replaced. A new warranty
+                                    period shall start exclusively for the parts replaced under warranty; it ends one
+                                    year after warranty delivery or, in case that the warranty period for the entire
+                                    delivery item has not yet expired, upon its expiration.
+                                </p>
+                                <p>3.5. The warranty shall become void should the delivery item be modified by a third
+                                    party or parts of third party origin be installed and if the modification is in
+                                    causal connection with the defect. The warranty also expires if the buyer does not
+                                    follow the OEM maintenance instructions for the delivery item.
+                                </p>
+                                <p>3.6. Natural deterioration as well as damages for which the buyer is responsible are
+                                    excluded from the warranty; the same applies in the case of design faults and
+                                    deficiencies in materials whenever the delivery has been made according to design
+                                    documentation of the buyer or if it supplied the materials.
+                                </p>
+                                <p>3.7. We shall be only liable for damages in cases in which we or our assistants have
+                                    acted under wilful intent or gross negligence. Liability for further damage,
+                                    subsequent damage and indirect damage is excluded.
+                                </p>
+                                <p>3.8. The offered parts are high quality European Non-OEM</p>
+                                <p>3.9. The OEM part number mentioned just for understanding purpose only.</p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

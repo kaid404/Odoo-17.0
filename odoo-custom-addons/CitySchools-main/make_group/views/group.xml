@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_op_invoice" model="res.groups">
+            <field name="name">Invoice Group</field>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        </record>
+
+    </data>
+
+    <record id="register_payment_inherit" model="ir.ui.view">
+        <field name="name">account.payment.register.form</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_difference']" position="attributes">
+                <attribute name="groups">make_group.group_op_invoice</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

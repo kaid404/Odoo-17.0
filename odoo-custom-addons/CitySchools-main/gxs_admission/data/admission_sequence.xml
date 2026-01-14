@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for op.admission -->
+        <record id="seq_op_admission" model="ir.sequence">
+            <field name="name">Admission</field>
+            <field name="code">op.admission</field>
+            <field name="prefix">AD</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+
+        <record id="seq_op_admission_al_barkat" model="ir.sequence">
+            <field name="name">Admission - Al Barkat Campus</field>
+            <field name="code">op.admission.al_barkat</field>
+            <field name="prefix">AD-AL-B-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <!-- Sequence for City Campus -->
+        <record id="seq_op_admission_city" model="ir.sequence">
+            <field name="name">Admission - City Campus</field>
+            <field name="code">op.admission.city</field>
+            <field name="prefix">AD-CTYC-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <!-- Sequence for Boys Campus -->
+        <record id="seq_op_admission_boys" model="ir.sequence">
+            <field name="name">Admission - Boys Campus</field>
+            <field name="code">op.admission.boys</field>
+            <field name="prefix">AD-BYC-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <!-- Sequence for Khizra Campus -->
+        <record id="seq_op_admission_khizra" model="ir.sequence">
+            <field name="name">Admission - Khizra Campus</field>
+            <field name="code">op.admission.khizra</field>
+            <field name="prefix">AD-KHIZC-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <!-- Sequence for Canal Campus -->
+        <record id="seq_op_admission_canal" model="ir.sequence">
+            <field name="name">Admission - Canal Campus</field>
+            <field name="code">op.admission.canal</field>
+            <field name="prefix">AD-CNALC-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <!-- Sequence for Madina Campus -->
+        <record id="seq_op_admission_madina" model="ir.sequence">
+            <field name="name">Admission - Madina Campus</field>
+            <field name="code">op.admission.madina</field>
+            <field name="prefix">AD-MADINAC-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+        <!-- Sequence for Nazimabad Campus -->
+        <record id="seq_op_admission_nazimabad" model="ir.sequence">
+            <field name="name">Admission - Nazimabad Campus</field>
+            <field name="code">op.admission.nazimabad</field>
+            <field name="prefix">AD-NAZIMC-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False" />
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record model="ir.ui.view" id="hr_contract_view_form_adding_decution">
+        <field name="name">hr.contract.form1</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='hr_responsible_id']" position="after">
+                <field name="is_overtime"/>
+                <field name="is_late_decution"/>
+                <field name="sick_leave"/>
+                <field name="earn_leave"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="employee_late_view_form" model="ir.ui.view">
+        <field name="name">rst.late.count.form</field>
+        <field name="model">rst.late.count</field>
+        <field name="arch" type="xml">
+            <form string="Employee Outward Gatepass">
+                
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="name"/>
+                            <field name="date" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                        </group>
+                        <group>
+                            <field name="late"/>
+                           
+                        </group>
+                    </group>
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+    <record id="employee_late_view_tree" model="ir.ui.view">
+        <field name="name">rst.late.count.Tree.View</field>
+        <field name="model">rst.late.count</field>
+        <field name="arch" type="xml">
+            <tree string="Record rules">
+                 <field name="employee_id"/>
+                            <field name="date" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="check_in"/>
+                            <field name="check_out"/>
+                       
+                            <field name="late"/>
+            </tree>
+        </field>
+    </record>
+    <record id="employee_late_window_action" model="ir.actions.act_window">
+        <field name="name">Late Deduction</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rst.late.count</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="employee_late_view_tree"/>
+        <!--        <field name="target">new</field>-->
+    </record>
+
+    <menuitem id="employee_late_menu_root"
+              name="Late Deduction"
+              parent="hr_attendance.menu_hr_attendance_view_attendances"
+              action="employee_late_window_action"
+              sequence="20"/>
+
+
+</odoo>

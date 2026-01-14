@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="plan_view_attendance_request" model="ir.ui.view">
+        <field name="name">plan.view.attendance.tree</field>
+        <field name="model">attendance.adjustment</field>
+        <field name="inherit_id" ref="sg_attendance_adjustment_request.attendance_adjustment_form"/>
+        <field name="arch" type="xml">
+
+<!--            <field name="check_in" position="before">-->
+<!--                <field name="plan_date_only" invisible="0"/>-->
+<!--            </field>-->
+            <field name="emp_check_in" position="before">
+                <field name="att_date" invisible="0"/>
+
+            </field>
+            <field name="responsible_id" position="before">
+                <field name="emp_check_in_pre" readonly="1"/>
+                <field name="emp_check_out_pre" readonly="1"/>
+
+
+            </field>
+
+        </field>
+    </record>
+
+
+</odoo>

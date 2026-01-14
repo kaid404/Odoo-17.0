@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_report_view_form">
+            <field name="name">Stock Report</field>
+            <field name="model">stock.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="wizard_date"/>
+                    </group>
+                    <group>
+                        <field name="wizard_location" widget="many2many_tags" domain="[('usage', '=', 'internal')]"/>
+                    </group>
+                    <footer>
+                        <button string="Print" name="print_stock_report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="stock_report_action">
+            <field name="name">Stock Report</field>
+            <field name="res_model">stock.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Stock Report" id="stock_report_menu" parent="point_of_sale.menu_point_rep"
+                  action="stock_report_action"/>
+
+    </data>
+</odoo>

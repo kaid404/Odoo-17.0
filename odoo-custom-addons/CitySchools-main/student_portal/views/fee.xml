@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="fee_template" name="Student Fee Template">
+        <t t-call="web.layout">
+            <head>
+                <link rel="stylesheet" href="/student_portal/static/src/css/style.css"/>
+                <link rel="stylesheet" href="/student_portal/static/src/css/responsive.css"/>
+                <!-- font-awsome CDN Link -->
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+                      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+                      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+                <link rel='stylesheet'
+                      href='https://cdn-uicons.flaticon.com/2.5.1/uicons-thin-rounded/css/uicons-thin-rounded.css'/>
+            </head>
+
+            <body>
+ <header>
+                    <div class="logosec">
+                        <div class="menuicn">
+                            <!-- <span> &#x2630;</span> -->
+                            <i class="fa-solid fa-bars-staggered"></i>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <!-- <span>&#128276;</span> -->
+                        <i class="fa-regular fa-bell"></i>
+                        <!-- <span id="fullscreen-toggle" onclick="toggleFullscreen()">&#x26F6;</span> -->
+                        <i class="fa-solid fa-expand" id="fullscreen-toggle" onclick="toggleFullscreen()"></i>
+                        <!-- <span id="theme-toggle">&#9789;</span> -->
+                        <i class="fa-solid fa-circle-half-stroke" id="theme-toggle"></i>
+                        <img class="nav-img profile_pic" t-att-src="image_data_uri(student.image_1920)" alt="Profile Pic"/>
+                    </div>
+                </header>
+<!--                <style>-->
+
+<!--                </style>-->
+                <div class="main-container">
+                <div class="navcontainer">
+                        <nav class="nav">
+                            <div class="nav-upper-options">
+                                <a href="/student_dashboard">
+                                    <div class="nav-option">
+                                        <!-- <i class="fi fi-tr-dashboard-panel nav-img"></i> -->
+                                        <img class="nav-img" src="/student_portal/static/src/img/dashboard (2).png"
+                                             alt="animated_icon"/>
+                                        <h3>Dashboard</h3>
+                                    </div>
+                                </a>
+                                <a href="/student_profile">
+                                    <div class="option2 nav-option">
+                                        <img class="nav-img" src="/student_portal/static/src/img/user.png"
+                                             alt="profile"/>
+                                        <h3>Profile</h3>
+                                    </div>
+                                </a>
+                                <a href="/fee">
+                                    <div class="nav-option option3">
+                                        <img class="nav-img" src="/student_portal/static/src/img/calendar.png"
+                                             alt="Fee"/>
+                                        <h3>Fee</h3>
+                                    </div>
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                <div class="main">
+<!--                    <div class="box-container">-->
+                        <table class="fee-table">
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Class</th>
+                                    <th>Year</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="fee_data" t-as="fee">
+                                <tr>
+                                    <td>
+                                        <t t-esc="fee.student_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="fee.student_id.year_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="fee.student_id.class_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="fee.payment_state"/>
+                                    </td>
+                                    <td>
+                                        <a href="/print_voucher" class="print-button">Print Voucher</a>
+                                    </td>
+                                </tr>
+                                </t>
+                                <!-- Repeat the above <tr> block for each student's fee data -->
+                            </tbody>
+                        </table>                      <!-- <div class="box box1">
+                    <div class="text">
+                        <h2 class="topic-heading">60.5k</h2>
+                        <h2 class="topic">Article Views</h2>
+                    </div>
+
+                    <img
+                        src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(31).png"
+                        alt="Views">
+                </div>
+
+                <div class="box box2">
+                    <div class="text">
+                        <h2 class="topic-heading">150</h2>
+                        <h2 class="topic">Likes</h2>
+                    </div>
+
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185030/14.png" alt="likes">
+                </div>
+
+                <div class="box box3">
+                    <div class="text">
+                        <h2 class="topic-heading">320</h2>
+                        <h2 class="topic">Comments</h2>
+                    </div>
+
+                    <img
+                        src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png"
+                        alt="comments">
+                </div>
+
+                <div class="box box4">
+                    <div class="text">
+                        <h2 class="topic-heading">70</h2>
+                        <h2 class="topic">Published</h2>
+                    </div>
+
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png"
+                        alt="published">
+                </div> -->
+<!--                    </div>-->
+                </div>
+                    <!-- <div class="report-container">
+                <div class="report-header">
+                    <h1 class="recent-Articles">Recent Articles</h1>
+                    <button class="view">View All</button>
+                </div>
+
+                <div class="report-body">
+                    <div class="report-topic-heading">
+                        <h3 class="t-op">Article</h3>
+                        <h3 class="t-op">Views</h3>
+                        <h3 class="t-op">Comments</h3>
+                        <h3 class="t-op">Status</h3>
+                    </div>
+
+                    <div class="items">
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 73</h3>
+                            <h3 class="t-op-nextlvl">2.9k</h3>
+                            <h3 class="t-op-nextlvl">210</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 72</h3>
+                            <h3 class="t-op-nextlvl">1.5k</h3>
+                            <h3 class="t-op-nextlvl">360</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 71</h3>
+                            <h3 class="t-op-nextlvl">1.1k</h3>
+                            <h3 class="t-op-nextlvl">150</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 70</h3>
+                            <h3 class="t-op-nextlvl">1.2k</h3>
+                            <h3 class="t-op-nextlvl">420</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 69</h3>
+                            <h3 class="t-op-nextlvl">2.6k</h3>
+                            <h3 class="t-op-nextlvl">190</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 68</h3>
+                            <h3 class="t-op-nextlvl">1.9k</h3>
+                            <h3 class="t-op-nextlvl">390</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 67</h3>
+                            <h3 class="t-op-nextlvl">1.2k</h3>
+                            <h3 class="t-op-nextlvl">580</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 66</h3>
+                            <h3 class="t-op-nextlvl">3.6k</h3>
+                            <h3 class="t-op-nextlvl">160</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 65</h3>
+                            <h3 class="t-op-nextlvl">1.3k</h3>
+                            <h3 class="t-op-nextlvl">220</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div> -->
+                    <!--                </div>-->
+                </div>
+
+                <script src="/student_portal/static/src/js/index.js"></script>
+            </body>
+        </t>
+    </template>
+</odoo>

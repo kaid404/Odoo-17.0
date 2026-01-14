@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="attendance_template" name="Faculty Dashboard Template">
+        <t t-call="web.layout">
+            <head>
+                <!--                <meta charset="UTF-8" />-->
+                <!--                <meta http-equiv="X-UA-Compatible" content="IE=edge" />-->
+                <!--                <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+                <link rel="stylesheet" href="/faculty_portal/static/src/css/style.css"/>
+                <link rel="stylesheet" href="/faculty_portal/static/src/css/responsive.css"/>
+                <!-- font-awsome CDN Link -->
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+                      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+                      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+                <link rel='stylesheet'
+                      href='https://cdn-uicons.flaticon.com/2.5.1/uicons-thin-rounded/css/uicons-thin-rounded.css'/>
+            </head>
+
+            <body>
+                <header>
+                    <div class="logosec">
+                        <div class="menuicn">
+                            <!-- <span> &#x2630;</span> -->
+                            <i class="fa-solid fa-bars-staggered"></i>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <!-- <span>&#128276;</span> -->
+                        <i class="fa-regular fa-bell"></i>
+                        <!-- <span id="fullscreen-toggle" onclick="toggleFullscreen()">&#x26F6;</span> -->
+                        <i class="fa-solid fa-expand" id="fullscreen-toggle" onclick="toggleFullscreen()"></i>
+                        <!-- <span id="theme-toggle">&#9789;</span> -->
+                        <i class="fa-solid fa-circle-half-stroke" id="theme-toggle"></i>
+                        <img class="nav-img profile_pic" t-att-src="image_data_uri(faculty_staff.image_1920)" alt="Profile Pic"/>
+                    </div>
+                </header>
+
+                <div class="main-container">
+                    <div class="navcontainer">
+                        <nav class="nav">
+                            <div class="nav-upper-options">
+                                <a href="/dashboard">
+                                    <div class="nav-option">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/dashboard (2).png"
+                                             alt="animated_icon"/>
+                                        <h3>Dashboard</h3>
+                                    </div>
+                                </a>
+                                <a href="/profile">
+                                    <div class="option2 nav-option">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/user.png"
+                                             alt="profile"/>
+                                        <h3>Profile</h3>
+                                    </div>
+                                </a>
+                                <a href="/attendance">
+                                    <div class="nav-option option3">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/calendar.png"
+                                             alt="Attendance"/>
+                                        <h3>Attendance</h3>
+                                    </div>
+                                </a>
+                  <a href="/diary_form">
+                                    <div class="nav-option option3">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/calendar.png"
+                                             alt="Attendance"/>
+                                        <h3>Diary</h3>
+                                    </div>
+                                </a>
+                                <a href="/notification">
+                                <div class="nav-option option6">
+                                    <img class="nav-img" src="/faculty_portal/static/src/img/box.png"
+                                         alt="Notifications"/>
+                                    <h3>Notifications</h3>
+                                </div>
+                                </a>
+
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main">
+                        <div class="box-container box_atten">
+                            <t t-foreach="attendance_data" t-as="attendance">
+                                <div class="box boxxiner">
+                                    <div class="text">
+                                        <p class="topic-heading">
+                                            <i class="fa-solid fa-clipboard-user"></i>
+                                            <strong>Register ID : </strong><span t-esc="attendance.register_id.name"/>
+                                        </p>
+                                        <p class="topic-heading">
+                                            <i class="fa-solid fa-chalkboard-user"></i>
+                                            <strong>Course ID : </strong><span t-esc="attendance.course_id.name"/>
+                                        </p>
+                                        <p class="topic-heading">
+                                            <i class="fa-solid fa-person-chalkboard"></i>
+                                            <strong>Faculty : </strong><span t-esc="attendance.faculty_id.name"/>
+                                        </p>
+                                        <p >
+                                            <i class="fa-solid fa-list-check"></i>
+                                           <strong>Sheet Name : </strong> <span t-esc="attendance.name"/>
+                                        </p>
+                                        <p>
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                          <strong>Date : </strong>  <span t-esc="attendance.attendance_date"/>
+                                        </p>
+                                    </div>
+                                    <a t-att-href="'/attendance_form/%i' %(attendance.id)">
+                                        <button>Mark Attendance</button>
+                                    </a>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+
+                </div>
+
+                <script src="/faculty_portal/static/src/js/index.js"></script>
+            </body>
+        </t>
+    </template>
+</odoo>

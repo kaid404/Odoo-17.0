@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_generate_monthly_invoices_wizard_form" model="ir.ui.view">
+        <field name="name">generate.monthly.invoices.wizard.form</field>
+        <field name="model">generate.monthly.invoices.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Monthly Invoices">
+                <group>
+                    <field name="classes" widget="many2many_tags"/>
+                    <field name="date" invisible="0"/>
+                    <field name="month_selection"/>
+                    <field name="admission_fee"/>
+                    <field name="annual_charges"/>
+                    <field name="security_charges"/>
+                    <field name="registration_fee"/>
+<!--                    <field name="fee_arrears"/>-->
+                    <field name="student_ids"/>
+                    <field name="is_from_student" invisible="1"/>
+                    <field name="invoice_history" invisible="not is_from_student" readonly="1"/>
+                </group>
+                <footer>
+                    <button string="Generate Invoices" type="object" name="generate_invoices" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_generate_monthly_invoices_wizard" model="ir.actions.act_window">
+        <field name="name">Generate Monthly Invoices</field>
+        <field name="res_model">generate.monthly.invoices.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+        <record model="ir.actions.act_window" id="act_fee_student_view_2">
+            <field name="name">Students</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="gxs_core.view_op_student_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+     <menuitem id="menu_generate_monthly_invoices_1" name="Student Fee"
+        parent="menu_school_fee_form" sequence="10"/>
+
+         <menuitem id="menu_generate_monthly_invoices" name="Generate Monthly Invoices"
+        parent="menu_generate_monthly_invoices_1"
+        action="action_generate_monthly_invoices_wizard"/>
+
+
+
+
+    <menuitem id="menu_fee_students" name="Students Profile"
+        parent="menu_school_fee_form"
+        action="act_fee_student_view_2" sequence="0"/>
+
+</odoo>

@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+        <record id="email_template_hr_recruitment_job_offer" model="mail.template">
+            <field name="name">Job Offer Letter</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="subject">Job Offer Letter - {{ object.partner_name or '' }} - {{ object.job_id.name or 'Position Title' }}</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="body_html" type="html">
+                <div style="margin:0px; padding:0px;">
+
+                    <p><b><t t-out="object.partner_name or 'Candidate’s Name'"/>,</b></p>
+                    <p><b>CNIC:</b></p>
+
+                    <p>Thank you for interviewing with us. We are delighted to offer you the position of
+                        <b><t t-out="object.job_id.name or 'Job Title'"/></b> at <b><t t-out="object.company_id.name"/></b>,
+                        and feel that you will be an excellent addition to our team.
+                    </p>
+
+                    <p>The terms and conditions of your employment are as follows:</p>
+                    <ul>
+                        <li><b>Job Title:</b> <t t-out="object.job_id.name or 'Job Title'"/></li>
+                        <li><b>Monthly Salary (Gross):</b> ___________</li>
+                        <li><b>Probation Period:</b> ___________</li>
+                    </ul>
+
+                    <p>Apart from the salary, we will also offer you the following benefits (which will be unlocked post probation):</p>
+                    <ul>
+                        <li>Health Insurance (IPD) – including spouse &amp; kids</li>
+                        <li>Health Insurance (OPD) – including spouse, kids &amp; parents</li>
+                        <li>Life Insurance</li>
+                        <li>Annual Leaves – (including leave encashment option on selected leaves)</li>
+                        <li>Situational Leaves – (e.g., Maternity, Paternity, Wedding, Bereavement etc.)</li>
+                        <li>Provident Fund</li>
+                        <li>EOBI</li>
+                        <li>Interest-free loan – (As per company policy)</li>
+                    </ul>
+
+                    <p>We feel that you will be a great fit for our team, and look forward to having you here.
+                        Please confirm your acceptance of this understanding by replying to this email.
+                    </p>
+
+                    <p><b>Please state your acceptance and mention your joining date.</b></p>
+                    <p><b>NOTE: This offer is only valid for the next 48 hours.</b></p>
+
+                    <p><b>Disclaimers:</b></p>
+                    <ul>
+                        <li>The probation review lets us communicate feedback on your performance and share our assessment of your work.
+                            Please do note that based on the probation review, your probation period may end or be extended,
+                            and subsequent employment is subject to satisfactory performance.</li>
+                        <li>The salary amount mentioned in this email is gross, and is subject to applicable taxes as per local laws.</li>
+                    </ul>
+
+                    <p>Regards,<br/>
+                        <t t-out="user.name"/><br/>
+                        <t t-out="object.company_id.name"/>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

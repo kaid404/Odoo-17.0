@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="portal_helpdesk_ticket_inherit" inherit_id="helpdesk.portal_helpdesk_ticket">
+        <xpath expr="//thead" position="attributes">
+            <attribute name="style">font-size: 20px;</attribute>
+        </xpath>
+        <xpath expr="//t[1]/tr[1]" position="attributes">
+            <attribute name="style">font-size: 20px;</attribute>
+        </xpath>
+    </template>
+
+
+    <template id="portal_tickets_followup_inherit" inherit_id="helpdesk.tickets_followup">
+        <xpath expr="//div[@id='ticket_chat'][1]" position="replace">
+        </xpath>
+        <xpath expr="//div[@id='card'][1]" position="replace">
+            <div style="font-family: Arial, sans-serif; font-size:14px; color:#000;">
+                <p>
+                    🗂️
+                    <strong>Ticket Number:</strong>
+                    <t t-out="ticket.id"/>
+                    <br/>
+                    🔹
+                    <strong>Subject:</strong>
+                    <t t-out="ticket.name"/>
+                    <br/>
+                    🔸
+                    <strong>Customer:</strong>
+                    <t t-out="ticket.partner_id.name"/>
+                    <t t-if="ticket.partner_id.phone">
+                        &#160;&#160;&#160;
+                        <i class="fa fa-phone"/>
+                        <span t-out="ticket.partner_id.phone"/>
+                    </t>
+                    <t t-if="ticket.partner_id.email">
+                        &#160;&#160;&#160;
+                        <i class="fa fa-envelope"/>
+                        <span t-out="ticket.partner_id.email"/>
+                    </t>
+                    <br/>
+                    🆕
+                    <strong>New Status:</strong>
+                    <t t-out="ticket.stage_id.name"/>
+                    <br/>
+                    📁
+                    <strong>Project:</strong>
+                    <!--                    <t t-out="ticket.pro_id.name"/>-->
+                </p>
+                <div style="text-align: center; padding: 16px 0px 16px 0px;">
+                    <a style="background-color: #F39E22; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;"
+                       t-att-href="object.get_portal_url()" target="_blank">View Ticket
+                    </a>
+                </div>
+                <p>
+                    <strong style="color:#c00000;">Aramis Help Desk System</strong>
+                </p>
+            </div>
+        </xpath>
+    </template>
+</odoo>

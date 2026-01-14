@@ -1,0 +1,30 @@
+{
+    'name': 'OPUS Employee Payroll Report',
+    'version': '17.0',
+    'category': 'Studio',
+    'summary': 'Module for Managing HR Policies & Reports for PAK-GULG ',
+    'license': 'AGPL-3',
+    'author': "ABDUL REHMAN GHANI (GXS)",
+    'website': "http://www.globalxs.co/abdul.rehman@globalxs.co",
+    'Maintainer': 'Global XS Technology Solutions',
+    'depends': [
+        'base',
+        'hr_payroll',
+        'hr',
+        'report_xlsx',
+    ],
+    'demo': [],
+    'data': [
+
+        'security/ir.model.access.csv',
+        # 'data/paper_format.xml',
+        'reports/paperformat.xml',
+        'reports/payroll_report_pdf.xml',
+        'views/view.xml',
+        'views/menus.xml',
+        'views/reports_actions.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto install': False,
+}

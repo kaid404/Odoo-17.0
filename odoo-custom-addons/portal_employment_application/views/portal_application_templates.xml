@@ -1,0 +1,309 @@
+<odoo>
+
+    <template id="portal_employment_application_form" name="Employment Application Portal">
+        <t t-call="web.layout">
+            <head>
+                <style>
+                    /* --- General Layout --- */
+                    body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    background-color: #f4f6f8;
+                    color: #333;
+                    margin: 0;
+                    padding: 0;
+                    }
+
+                    .container {
+                    max-width: 900px;
+                    margin: 2rem auto;
+                    padding: 2rem 2.5rem;
+                    background-color: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+                    }
+
+                    h2, h4 {
+                    font-weight: 600;
+                    color: #1a1a1a;
+                    }
+
+                    h2 {
+                    margin-bottom: 1.5rem;
+                    text-align: center;
+                    font-size: 2rem;
+                    }
+
+                    h4 {
+                    margin-top: 2rem;
+                    margin-bottom: 1rem;
+                    font-size: 1.2rem;
+                    border-bottom: 2px solid #e0e0e0;
+                    padding-bottom: 0.3rem;
+                    }
+
+                    /* --- Form Inputs --- */
+                    .form-control {
+                    width: 100%;
+                    padding: 0.55rem 0.75rem;
+                    border: 1px solid #ccc;
+                    border-radius: 8px;
+                    font-size: 1rem;
+                    transition: border-color 0.3s, box-shadow 0.3s;
+                    }
+
+                    .form-control:focus {
+                    border-color: #007bff;
+                    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+                    outline: none;
+                    }
+
+                    textarea.form-control {
+                    min-height: 80px;
+                    resize: vertical;
+                    }
+
+                    select.form-control {
+                    padding: 0.5rem 0.75rem;
+                    background-color: #fff;
+                    }
+
+                    /* --- Rows and Columns --- */
+                    .row {
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin: -0.5rem;
+                    }
+
+                    .row > .col-md-6, .row > .col-md-4 {
+                    padding: 0.5rem;
+                    flex: 1;
+                    }
+
+                    @media (max-width: 768px) {
+                    .row > .col-md-6, .row > .col-md-4 {
+                    flex: 100%;
+                    }
+                    }
+
+                    .mb-3 {
+                    margin-bottom: 1rem !important;
+                    }
+
+                    /* --- Buttons --- */
+                    .btn-primary {
+                    background-color: #007bff;
+                    color: #fff;
+                    border: none;
+                    padding: 0.75rem 1.5rem;
+                    font-size: 1.1rem;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: background-color 0.3s, transform 0.2s;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    }
+
+                    .btn-primary:hover {
+                    background-color: #0056b3;
+                    transform: translateY(-2px);
+                    }
+
+                    /* --- Labels --- */
+                    label {
+                    display: block;
+                    font-weight: 500;
+                    margin-bottom: 0.4rem;
+                    color: #555;
+                    }
+
+                    /* --- Signature input --- */
+                    input[type="file"].form-control {
+                    padding: 0.4rem 0.75rem;
+                    }
+
+                    /* --- Section Styling --- */
+                    .container h4:first-of-type {
+                    margin-top: 0;
+                    }
+
+                    /* --- Optional extra touch --- */
+                    .container::before {
+                    content: "";
+                    display: block;
+                    height: 6px;
+                    width: 80px;
+                    background: linear-gradient(90deg, #007bff, #00c6ff);
+                    margin: 0 auto 1rem auto;
+                    border-radius: 4px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h2>Employment Application Form</h2>
+                    <form action="/employment/application/submit" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                        <h4>Job Details</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input type="date" class="form-control" name="date" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="expected_salary" placeholder="Expected Salary" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="gross_salary" placeholder="Gross Salary" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <select name="position_applied" class="form-control" required="1">
+                                    <option value="">Position Applied</option>
+                                    <t t-foreach="request.env['hr.job'].sudo().search([])" t-as="job">
+                                        <option t-att-value="job.id">
+                                            <t t-esc="job.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- Basic Info -->
+                        <h4>Applicant's Information</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="name" placeholder="Full Name" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input
+                                        type="date"
+                                        class="form-control"
+                                        name="date_of_birth"
+                                        onfocus="this.type='date'"
+                                        onblur="if(!this.value)this.type='text'"
+                                        placeholder="Date of Birth"
+                                        required="1"
+                                />
+                                <!--                                <input type="date" class="form-control" name="date_of_birth"/>-->
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="mobile_no" placeholder="Mobile Number" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="email_id" type="email" placeholder="Email" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="cnic_number" placeholder="CNIC Number" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <select name="marital_status" class="form-control" required="1">
+                                    <option value="">Marital Status</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                    <option value="widower">Widower</option>
+                                    <option value="divorced">Divorced</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h4>Address</h4>
+                        <textarea class="form-control mb-3" name="current_address"
+                                  placeholder="Current Address" required="1"></textarea>
+
+                        <h4>Education</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="qualification_recent"
+                                       placeholder="Recent Qualification" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="institute_name" placeholder="Institute Name" required="1"/>
+                            </div>
+                        </div>
+
+                        <h4>Experience</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="current_company" placeholder="Current Company" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="current_job" placeholder="Current Job" required="1"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" name="total_work_experience"
+                                       placeholder="Total Work Experience" required="1"/>
+                            </div>
+                        </div>
+
+                        <h4>Family Info</h4>
+                        <input class="form-control mb-3" name="father_occupation" placeholder="Father Occupation" required="1"/>
+                        <select class="form-control mb-3" name="relatives_employed" required="1">
+                            <option value="">Relatives Employed?</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+
+                        <h4>Company History</h4>
+                        <select class="form-control mb-3" name="previously_employed" required="1">
+                            <option value="">Previously Employed?</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                        <select class="form-control mb-3" name="info_source" required="1">
+                            <option value="">How did you get job info?</option>
+                            <option value="employee">Company Employee</option>
+                            <option value="advertisement">Advertisement</option>
+                            <option value="other">Other</option>
+                        </select>
+
+                        <h4>Employee References</h4>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <input class="form-control" name="name_1" placeholder="Employee Name" required="1"/>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <input class="form-control" name="relationship_1" placeholder="Relationship" required="1"/>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <input class="form-control" name="position_held_1" placeholder="Position Held" required="1"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <input class="form-control" name="name_2" placeholder="Employee Name"/>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <input class="form-control" name="relationship_2" placeholder="Relationship"/>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <input class="form-control" name="position_held_2" placeholder="Position Held"/>
+                            </div>
+                        </div>
+
+
+                        <label>Signature</label>
+                        <input type="file" class="form-control mb-3" name="signature" required="1"/>
+
+                        <button type="submit" class="btn btn-primary btn-lg mt-3">Submit Application</button>
+                    </form>
+                </div>
+            </body>
+        </t>
+    </template>
+
+
+    <template id="portal_application_thank_you" name="Employment Application Thank You">
+        <t t-call="web.layout">
+            <head>
+            </head>
+            <body>
+                <div class="container mt-5 text-center">
+                    <h3>Application Submitted 🎉</h3>
+                    <p>Thank you for applying. We will review your application and get back to you soon.</p>
+                </div>
+            </body>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,217 @@
+<odoo>
+    <data>
+
+        <record id="view_hr_attendance_form_inherit_checkin_date" model="ir.ui.view">
+            <field name="name">hr.attendance.form.inherit.checkin.date</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+            <field name="arch" type="xml">
+                <field name="check_in" position="after">
+                    <field name="checkin_date" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_hr_attendance_form_inherit_late_field" model="ir.ui.view">
+            <field name="name">view_hr_attendance_form_inherit_late_field</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='check_in']" position="after">
+                    <field name="late_time" widget="float_time"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="attendance_report_form_specific">
+            <field name="name">attendance.report.form</field>
+            <field name="model">attendance.report.shift</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+
+                        <field name="shift_id" options="{'no_create_edit':True,'no_create':True,'no_open': True}"/>
+                        <field name="company_ids" options="{'no_create_edit':True,'no_create':True,'no_open': True}"
+                               widget="many2many_tags" invisible="1"/>
+                        <field name="employee_ids" options="{'no_create_edit':True,'no_create':True,'no_open': True}"
+                               widget="many2many_tags"/>
+                        <field name="date"/>
+                        <field name="print_by"/>
+                    </group>
+                    <footer>
+                        <button name="print_report_spesific" string="Print" type="object" class="btn btn-success"
+                                invisible="print_by != '1'"/>
+                        <button name="print_report_spesific_present" string="Print" type="object"
+                                class="btn btn-success"
+                                invisible="print_by != '2'"/>
+                        <button name="print_report_spesific_absent" string="Print" type="object" class="btn btn-success"
+                                invisible="print_by != '3'"/>
+                        <button name="print_report_spesific_leave" string="Print" type="object" class="btn btn-success"
+                                invisible="print_by != '4'"/>
+                        <!--                        <button name="print_calendar" string="My Print" type="object" class="highlight"/>-->
+                        <button string="Close" class="btn btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--        <record model="ir.ui.view" id="attendance_report_form">-->
+        <!--            <field name="name">attendance.report.form</field>-->
+        <!--            <field name="model">attendance.report</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <group>-->
+        <!--                        <field name="from_date"/>-->
+        <!--                        <field name="to_date"/>-->
+        <!--                        <field name="employee_id" options="{'no_create_edit':True,'no_create':True,'no_open': True}"/>-->
+        <!--                    </group>-->
+        <!--                    <footer>-->
+        <!--                        <button name="print_report" string="Print" type="object" class="btn btn-success"/>-->
+        <!--                        &lt;!&ndash;                        <button name="print_calendar" string="My Print" type="object" class="highlight"/>&ndash;&gt;-->
+        <!--                        <button string="Close" class="btn btn-danger" special="cancel"/>-->
+        <!--                    </footer>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record model="ir.ui.view" id="attendance_report_top_management_form">-->
+        <!--            <field name="name">attendance.report.top.management.form</field>-->
+        <!--            <field name="model">attendance.report.management</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <group>-->
+        <!--                        <field name="from_date"/>-->
+        <!--                        <field name="to_date"/>-->
+
+        <!--                    </group>-->
+        <!--                    <footer>-->
+        <!--                        <button name="print_report" string="Print" type="object" class="btn btn-success"/>-->
+        <!--                        &lt;!&ndash;                        <button name="print_calendar" string="My Print" type="object" class="highlight"/>&ndash;&gt;-->
+        <!--                        <button string="Close" class="btn btn-danger" special="cancel"/>-->
+        <!--                    </footer>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record model="ir.ui.view" id="department_attendance_report_form">-->
+        <!--            <field name="name">department.attendance.report.form</field>-->
+        <!--            <field name="model">department.attendance.report</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <group>-->
+        <!--                        <field name="from_date"/>-->
+        <!--                        <field name="to_date"/>-->
+        <!--                        <field name="department_id" options="{'no_create_edit':True,'no_create':True,'no_open': True}"/>-->
+        <!--                    </group>-->
+        <!--                    <footer>-->
+        <!--                        <button name="print_dept_report" string="Print" type="object" class="oe_highlight"/>-->
+        <!--                        <button string="Close" class="btn btn-danger" special="cancel"/>-->
+        <!--                    </footer>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <!--        <record model="ir.ui.view" id="monthly_absentee_report_form">-->
+        <!--            <field name="name">monthly.absentee.report.form</field>-->
+        <!--            <field name="model">monthly.absentee.report</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <group class="col-6">-->
+        <!--                        <field name="month"/>-->
+        <!--                        <field name="year"/>-->
+        <!--                        <field name="from_date" invisible="1"/>-->
+        <!--                        <field name="to_date" invisible="1"/>-->
+        <!--                        <field name="department_id" options="{'no_create_edit':True,'no_create':True,'no_open': True}"/>-->
+        <!--                    </group>-->
+        <!--                    <footer>-->
+        <!--                        <button name="print_absentee_report" string="Print" type="object" class="btn-primary"/>-->
+        <!--                        <button string="Close" class="btn-danger" special="cancel"/>-->
+        <!--                    </footer>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record model="ir.actions.act_window" id="attendance_report_top_management_form_action_window">-->
+        <!--            <field name="name">Monthly Top Management Attendance Report Summary</field>-->
+        <!--            <field name="res_model">attendance.report.management</field>-->
+        <!--            <field name="view_mode">form</field>-->
+        <!--            <field name="target">new</field>-->
+        <!--        </record>-->
+        <record id="specific_employees_attendance_report_action_window" model="ir.actions.act_window">
+            <field name="name">Daily Attendance Report Shift</field>
+            <field name="res_model">attendance.report.shift</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <!--        <record model="ir.actions.act_window" id="attendance_report_action_window">-->
+        <!--            <field name="name">Attendance Report(Present/Absent)</field>-->
+        <!--            <field name="res_model">attendance.report</field>-->
+        <!--            <field name="view_mode">form</field>-->
+        <!--            <field name="target">new</field>-->
+        <!--        </record>-->
+        <!--        <record model="ir.actions.act_window" id="department_attendance_report_action_window">-->
+        <!--            <field name="name">Department Wise Attendance Report(Present/Absent)</field>-->
+        <!--            <field name="res_model">department.attendance.report</field>-->
+        <!--            <field name="view_mode">form</field>-->
+        <!--            <field name="target">new</field>-->
+        <!--        </record>-->
+
+        <!--        <record model="ir.actions.act_window" id="absentee_report_action_window">-->
+        <!--            <field name="name">Monthly Absentee Report</field>-->
+        <!--            <field name="res_model">monthly.absentee.report</field>-->
+        <!--            <field name="view_mode">form</field>-->
+        <!--            <field name="target">new</field>-->
+        <!--        </record>-->
+
+        <!--        <record id="view_report_save_form" model="ir.ui.view">-->
+        <!--            <field name="name">absent.report.save.wizard.form</field>-->
+        <!--            <field name="model">absent.report.save.wizard</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form string="Monthly Absentee Report">-->
+        <!--                    <field name="name" invisible="1"/>-->
+        <!--                    <div>-->
+        <!--                        <h2>Report Generated</h2>-->
+        <!--                        <p>Here is the Excel Sheet:-->
+        <!--                            <field name="data" readonly="1" filename="name"/>-->
+        <!--                        </p>-->
+        <!--                    </div>-->
+        <!--                    <footer>-->
+        <!--                        <button string="Close" class="btn-default" special="cancel"/>-->
+        <!--                    </footer>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+        <menuitem id="menu_hr_attendance_manage_report_specific_employees"
+                  name="Daily Attendance Report By Shift "
+                  parent="hr_attendance.menu_hr_attendance_reporting"
+                  action="specific_employees_attendance_report_action_window"
+        />
+
+        <!--        <menuitem id="menu_hr_attendance_manage_report_top_management"-->
+        <!--                  name="Monthly Top Management Attendance Report Summary"-->
+        <!--                  parent="hr_attendance.menu_hr_attendance_report"-->
+        <!--                  action="attendance_report_top_management_form_action_window"-->
+        <!--                  sequence="100"/>-->
+
+        <!--        <menuitem id="menu_hr_attendance_manage_report"-->
+        <!--                  name="Attendance Report(Present/Absent)"-->
+        <!--                  parent="hr_attendance.menu_hr_attendance_report"-->
+        <!--                  action="attendance_report_action_window"-->
+        <!--                  sequence="100"/>-->
+
+        <!--        <menuitem id="department_menu_hr_attendance_manage_report"-->
+        <!--                  name="Parent Department wise Attendance Report"-->
+        <!--                  parent="hr_attendance.menu_hr_attendance_report"-->
+        <!--                  action="department_attendance_report_action_window"-->
+        <!--                  sequence="100"/>-->
+
+        <!--        <menuitem id="absentee_menu_hr_attendance_manage_report"-->
+        <!--                  name="Absent Report"-->
+        <!--                  parent="hr_attendance.menu_hr_attendance_report"-->
+        <!--                  action="absentee_report_action_window"-->
+        <!--                  sequence="100"/>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .main{border: 2px solid red !important; position:relative;font-size:12px;height:1070px;width:760px;border-radius:0px;border:2px solid silver;background-image:url("/city_school/static/src/img/bg_img.png");background-repeat:no-repeat;background-size:100% 100%;background-position: center;}
+        .main_inner{height:100%;width:100%;background-color:rgba(255, 255, 255, .6);opacity:0.95;border-radius:0px;}
+        .inner_container{z-index:1000;height:100%;width:100%;background-color:transparent;opacity:1;border-radius:0px;}
+        .right_corner{z-index:-1;position:absolute;top:0;right:0;height:150px;}
+        .lft_corner{z-index:0;position:absolute;bottom:0px;left:0;height:250px;width:100%;}
+        .head{padding-top:25px;text-align:center;}
+        .logo{text-align:center;}
+        .head h5{font-size:25px;margin:0;}
+        .address{font-size:13px;}
+        .title{font-size:15px;}
+        .dynamic_data_lines{border-bottom:0px dotted;margin-bottom:3px;}
+        table{border:1px dotted silver;width:100%;}
+        table td ,th{border-bottom:1px dotted silver;padding:3px;text-align:left;}
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="main_inner">
+            <div class="inner_container">
+                <div class="head">
+                    <div class="row pt-4">
+                        <div class="logo col-2">
+                            <img src="/city_school/static/src/img/logo.png"
+                                alt="Company Logo"
+                                style="max-height: 80px;" />
+                        </div>
+                        <div class="col-8">
+                            <h5>
+                                <strong>CITY HIGH SCHOOL ( <t
+                                        t-esc="o.company_id.name" /> ) </strong>
+                            </h5>
+                            <div class="address">
+                                <span t-esc="o.company_id.street" />
+                                <span
+                                    t-esc="o.company_id.street2" />
+                                <span
+                                    t-esc="o.company_id.city" />
+                                <t
+                                    t-if="o.company_id.state_id.name or o.company_id.country_id.name or o.company_id.phone">
+                                ,
+                                </t>
+                                <span
+                                    t-esc="o.company_id.state_id.name" />
+                                <span
+                                    t-esc="o.company_id.country_id.name" />
+                                <span
+                                    t-esc="o.company_id.phone" /> . </div>
+                            <div class="title">
+                                <strong>FEE VOUCHER</strong>
+                            </div>
+                        </div>
+                        <div class="col-2 logo">
+                            <img src="/city_school/static/src/img/image.png"
+                                alt="https://www.cityhighschool.pk" height="80px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row px-4 pt-1">
+                    <section
+                        style="width: 100%;padding: 5px;font-size: 12px;font-weight: 500;">
+                        <table
+                            style="width: 100%;border: 1px solid #026ab2;border-collapse: collapse;">
+                            <tr>
+                                <td rowspan="2"
+                                    style="width: 160px;padding: 5px;text-align: center;">
+                                    <img
+                                        src="/fee_voucher/static/src/img/Blinq_logo.png"
+                                        alt="Blinq_logo" height="40px" />
+                                </td>
+                                <td colspan="2"
+                                    style="padding: 3px;background-color: #026ab2;color:white;font-size: 15px;text-align: center;font-weight: 600;border-left: 1px solid #026ab2;">1Bill
+                                    Invoice ID : 100333</td>
+                            </tr>
+                            <tr style="font-weight: 600;">
+                                <td
+                                    style="text-align: left;padding: 5px;border-left: 1px solid #026ab2;border-right: 1px solid #026ab2;">1Bill
+                                    Amount</td>
+                                <td style="text-align: right;padding: 5px;">14870</td>
+                            </tr>
+                        </table>
+                        <div style="width: 100%;border: 1px solid #026ab2;border-bottom: none; border-top: none;">
+                            <p
+                                style="padding-left: 20px;margin: 0;padding-top: 10px;">Pay
+                                in <strong>
+                                    CASH</strong> using 1Bill Invoice ID at any bank
+                                branch of : </p>
+                            <ul style="font-weight: 600; margin: 0;">
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Meezan</li>
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Faysal</li>
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> MCB</li>
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> DIB</li>
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Habib Metro</li>
+                            </ul>
+                            <ul
+                                style="font-weight: 600;margin: 0;padding-bottom: 5px;">
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Alfalah</li>
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> TCS</li>
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Al Baraka</li>
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Leopards</li>
+                                <li style="width: 130px; display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Silk</li>
+                            </ul>
+                        </div>
+                        <div style="width: 100%;border: 1px solid #026ab2;">
+                            <p style="padding-left: 20px;padding-top:10px;margin: 0;">Pay <strong>ONLINE</strong>
+                                using 1Bill Invoice ID via : </p>
+                            <ul style="font-weight: 600;margin: 0;">
+                                <li style="width: 220px;display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Mobile Banking</li>
+                                <li style="width: 220px;display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Internet Banking</li>
+                                <li style="width: 220px;display: inline-block;"><span
+                                        style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">
+                                    .</span> Wallets</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+                <div class="row px-4 pt-1">
+                    <div class="col-7"></div>
+                    <div class="col-5" style="text-align:right;">
+                        <strong>PARENT COPY</strong>
+                    </div>
+                </div>
+                <div class="row px-4 ">
+                    <div class="col-7">
+                        <table>
+                            <tr>
+                                <th colspan="2"
+                                    style="background-color:#026ab2;color:white;text-align:center;padding:5px;">
+                                    INFORMATION
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="text-left">
+                                    <span>Invoice No :</span>
+                                </th>
+                                <td>
+                                    <strong t-if="o.name">
+                                        <t t-esc="o.name" />
+                                    </strong>                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-left">
+                                    <span>Month :</span>
+                                </th>
+                                <td>
+                                    <strong>
+                                        <t t-esc="o.get_current_month_formatted()" />
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-left">
+                                    <span>Class :</span>
+                                </th>
+                                <td>
+                                    <strong t-if="o.student_id.year_id.name">
+                                        <t t-esc="o.student_id.year_id.name" /> (<t
+                                            t-esc="o.student_id.section_id.name" />) </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-left">
+                                    <span>Roll No :</span>
+                                </th>
+                                <td>
+                                    <strong t-if="o.student_id.gr_no">
+                                        <t t-esc="o.student_id.gr_no" />
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-left">
+                                    <span>Student Name :</span>
+                                </th>
+                                <td>
+                                    <strong t-if="o.student_id.name">
+                                        <t t-esc="o.student_id.name" />
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-left">
+                                    <span>Father Name :</span>
+                                </th>
+                                <td>
+                                    <strong t-if="o.student_id.father_name">
+                                        <t t-esc="o.student_id.father_name" />
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-left">
+                                    <span>
+                                        Mobile :
+                                    </span>                                </th>
+                                <td>
+                                    <strong t-if="o.mobile">
+                                        <t t-esc="o.mobile" />
+                                    </strong>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+    
+                    <div class="col-5">
+                        <table>
+                            <tr>
+                                <th colspan="2"
+                                    style="background-color:#026ab2;color:white;text-align:center;padding:5px;">
+                                    FEE CHALAN
+                                </th>
+                            </tr>
+                            <t t-foreach="o.invoice_line_ids" t-as="fee">
+                                <t t-if="fee.price_unit >= 0">
+                                    <tr>
+                                        <th>
+                                            <t t-esc="fee.product_id.name" />
+                                        </th>
+                                        <td>
+                                            <t t-esc="round(fee.price_unit)" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <th> Payable By : <t t-esc="o.invoice_date_due" />
+                                </th>
+                                <td>
+                                    <t t-set="balance"
+                                        t-value="sum(line.price_unit for line in o.invoice_line_ids)" />
+                                    <t t-esc="round(balance)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Payable After Due Date :
+                                </th>
+                                <td>
+                                    <t t-set="balance"
+                                        t-value="sum(line.price_unit for line in o.invoice_line_ids)" />
+                                    <t
+                                        t-esc="round(balance +  o.get_fine_amount_year_base())" />
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- <table style="border:none;">
+                            <tr>
+                                <th colspan="2"
+                                    style="background-color:#026ab2;color:white;text-align:center;">
+                                    Kindly Bring This Challan For Fee Deposit
+                                </th>
+                            </tr>
+                            <tr>
+                                <th
+                                    style="border:none;border-bottom:1px dotted black;text-align:left;"
+                                    colspan="2">
+                                    <p style="margin: 0;"> Dear Parents, <br /> please note carefully
+                                        that <i>"LATE FEE
+                                            DEPOSIT FINE"</i> wil not be remitted
+                                        after due date Now to onwards. <br /> Thanks </p>
+                                </th>
+                            </tr>
+                        </table> -->
+                    </div>
+                </div>
+                <div class="row px-5 my-1 p-1" style="font-size: 16px;font-weight: bold; background-color: #026ab2;color: yellow;">
+                    Admission Open 2025 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Admission Open 2025&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Admission Open 2025
+</div>
+
+                <div class="row mx-4" style="font-size: 10px; background-color: #026ab2;color: white;">
+                    <div class="col-8 p-2 ">
+                        <div style="font-weight: bold; text-align: center;font-size: 12px;padding-bottom: 10px;">Fee Payment Terms & Conditions</div>
+                        <div class="dynamic_data_lines">
+                            <span>
+                                1-<strong> Tuition Fee</strong> must be paid in<strong> advance on a
+                                monthly basis</strong> and is
+                               <strong> NON-REFUNDABLE.</strong>
+                            </span>
+                        </div>
+                        <div class="dynamic_data_lines">
+                            <span> 2- Fee must be paid<strong> before the Due date</strong>
+                                mentioned on the Fee Bill.A Fine of Rs. <t
+                                    t-esc="o.get_fine_amount_year_base()" />/- will
+                                be charged after the due date. </span>
+                        </div>
+                        <div class="dynamic_data_lines">
+                            <strong>
+                                3- If the fee remains unpaid for<strong> more
+                                seven days</strong> after the
+                                due date, student will not be<strong> allowed to sit in
+                                class.</strong>
+                            </strong>
+                        </div>
+                        <div class="dynamic_data_lines">
+                            <span>
+                                4- For student withdrawal,<strong> one-month written notice is required</strong>, or month's fee must be paid in lieu of notice.
+                            </span>
+                        </div>
+                        <!-- <div class="dynamic_data_lines pt-2">
+                           
+                        </div> -->
+                    </div>
+                    <div class="col-4 p-2" style="border-left: 1px  solid yellow;">
+<!-- <div style="width: 150px; border:2px solid; transform: rotate(90deg) translate(75px, 0);margin-left: -95px;"></div> -->
+                        <div style="font-weight: bold; text-align: center;font-size: 12px;padding-bottom: 10px;">Annual Miscellaneous charges</div>
+                        <strong>• Pre-Nursery to Grade 8 : PKR 6000</strong><br/>
+                        <strong>• Grade 9 to 10 : PKR 8000</strong></strong><br/>
+                        <strong>(Charged once per academic year)</strong>   <br/>
+                        <strong>Important : Late fee fines will not be waived under any circumstances.</strong><br/>
+                        <strong>Thank You ofr your cooperation.</strong>
+                    </div>
+                </div>
+                <div class="row px-4 pt-2">
+                    <div class="col-12">
+                         <span
+                                style="border-bottom:1px solid;padding-bottom:3px;">
+                                Office will remain open on every Saturday
+                            </span>
+                    </div>
+                </div>
+                <div class="row px-4 pt-2">
+                    <div class="col-12 pt-2"><strong>Note : </strong> Parents paying
+                        in cash at the school do not incur any extra charges.
+                        However, online payments via 1Bill will include a bank
+                        transaction fee: 
+                        <div class="pt-2 ps-5" >
+<strong>• PKR 0 – 9,950: PKR 50</strong>                            
+                            <br/>
+                            <strong>• PKR 9,951 – 99,905: PKR 95</strong>
+                            </div> This fee is charged
+                        by the bank and not by the school. 
+                        </div>
+                </div>
+                <div class="row px-4" style="position: absolute;bottom: 40px;left: 10px;width: 100%;">
+                    <div class="col-3 pt-4">
+                        <span>Issue Date :</span>
+                        <strong>
+                            <t t-esc="o.invoice_date" />
+                        </strong>
+                    </div>
+                    <div class="col-3 pt-4">
+                        <span>Due Date :</span>
+                        <strong>
+                            <t t-esc="o.invoice_date_due" />
+                        </strong>
+                    </div>
+                    <div class="col-3 pt-4">
+                        <span style="border-top:1px solid;padding:5px;">Account
+                            Officer</span>
+                    </div>
+                    <div class="col-1 pt-1 pe-1"
+                        style="margin-top:-40px;text-align:right;">
+                        <img src="/city_school/static/src/img/www.png"
+                            alt="https://www.cityhighschool.pk" width="17px"
+                            class="pb-1" />
+                        <br />
+                        <img
+                            src="/city_school/static/src/img/Instagram_icon.png"
+                            alt="https://www.instagram.com/cityhighschoolfsd_/?hl=en"
+                            width="17px"
+                            class="pb-1" />
+                        <br />
+                        <img src="/city_school/static/src/img/facebook.png"
+                            alt="https://www.facebook.com/cityhighschoolfsd"
+                            width="17px"
+                            class="pb-1" />
+                        <br />
+                        <img src="/city_school/static/src/img/youtub.png"
+                            alt="https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw"
+                            width="18px" style="margin-right:2px;" />
+                    </div>
+                    <div class="col-2" style="margin-top:-40px;text-align:left;">
+                        <img src="/city_school/static/src/img/final_qr.jpeg"
+                            style="width: 85px; height: 85px;"
+                            alt="Social Media QR Code" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+                       <!-- <section style="width: 760px;padding: 5px;font-size: 16px;font-weight: 500;">
+<table style="width: 100%;border: 2px solid #f5a511;border-collapse: collapse;">
+<tr>
+    <td rowspan="2" style="width: 160px;padding: 5px;text-align: center;"><img src="/fee_voucher/static/src/img/Blinq_logo.png" alt="Blinq_logo" height="50px"/> </td>
+    <td colspan="2" style="padding: 5px;background-color: #f5a511;font-size: 25px;text-align: center;font-weight: 600;">1Bill Invoice ID : 100333</td>
+</tr>
+<tr style="font-weight: 600;">
+    <td style="text-align: left;padding: 5px;border-left: 1px solid #f5a511;border-right: 1px solid #f5a511;">1Bill Amount</td>
+    <td style="text-align: right;padding: 5px;">14870</td>
+</tr>
+</table>
+<div style="width: 100%;border: 2px solid #f5a511;margin-top: 5px;">
+<p style="padding-left: 20px;">Pay in <strong>CASH</strong> using 1Bill Invoice  ID at any bank branch of :
+</p>
+<ul style="display: flex;font-weight: 600;">
+    <li style="width: 150px;">Meezan</li>
+    <li style="width: 150px;">Faysal</li>
+    <li style="width: 150px;">MCB</li>
+    <li style="width: 150px;">DIB</li>
+    <li style="width: 150px;">Habib Metro</li>
+</ul>
+<ul style="display: flex;font-weight: 600;">
+    <li style="width: 150px;">Alfalah</li>
+    <li style="width: 150px;">TCS</li>
+    <li style="width: 150px;">Al Baraka</li>
+    <li style="width: 150px;">Leopards</li>
+    <li style="width: 150px;">Silk</li>
+</ul>
+</div>
+<div style="width: 100%;border: 2px solid #f5a511;">
+    <p style="padding-left: 20px;">Pay <strong>ONLINE</strong> using 1Bill Invoice  ID via :
+    </p>
+    <ul style="display: flex;font-weight: 600;">
+        <li style="width: 250px;">Mobile Banking</li>
+        <li style="width: 250px;">Internet Banking</li>
+        <li style="width: 250px;">Wallets</li>
+    </ul>
+    </div>
+    </section>   -->
+    <!-- <section style="width: 760px;padding: 5px;font-size: 12px;font-weight: 500;">
+<table style="width: 100%;border: 1px solid #026ab2;border-collapse: collapse;">
+<tr>
+    <td rowspan="2" style="width: 160px;padding: 5px;text-align: center;"><img src="/fee_voucher/static/src/img/Blinq_logo.png" alt="Blinq_logo" height="40px"/> </td>
+    <td colspan="2" style="padding: 5px;background-color: #026ab2;color:white;font-size: 18px;text-align: center;font-weight: 600;">1Bill Invoice ID : 100333</td>
+</tr>
+<tr style="font-weight: 600;">
+    <td style="text-align: left;padding: 5px;border-left: 1px solid #026ab2;border-right: 1px solid #026ab2;">1Bill Amount</td>
+    <td style="text-align: right;padding: 5px;">14870</td>
+</tr>
+</table>
+<div style="width: 99.8%;border: 1px solid #026ab2;border-bottom: none; border-top: none;">
+<p style="padding-left: 20px;margin: 0;padding-top: 10px;">Pay in <strong>CASH</strong> using 1Bill Invoice  ID at any bank branch of :
+</p>
+<ul style="font-weight: 600;">
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">.</span> Meezan</li>
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 30px;line-height: 0;text-align: center;vertical-align: top;">.</span> Faysal</li>
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> MCB</li>
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> DIB</li>
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> Habib Metro</li>
+</ul>
+<ul style="font-weight: 600;margin: 0;padding-bottom: 5px;" >
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> Alfalah</li>
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> TCS</li>
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> Al Baraka</li>
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> Leopards</li>
+    <li style="width: 130px; display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> Silk</li>
+</ul>
+</div>
+<div style="width: 99.8%;border: 1px solid #026ab2;">
+    <p style="padding-left: 20px;">Pay <strong>ONLINE</strong> using 1Bill Invoice  ID via :
+    </p>
+    <ul style="font-weight: 600;">
+        <li style="width: 235px;display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> Mobile Banking</li>
+        <li style="width: 235px;display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> Internet Banking</li>
+        <li style="width: 235px;display: inline-block;"><span style="font-size: 35px;line-height: 0;text-align: center;vertical-align: top;">.</span> Wallets</li>
+    </ul>
+    </div>
+    </section>    -->
+</body>
+</html>

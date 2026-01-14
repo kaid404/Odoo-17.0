@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vehicle Loan Report Wizard -->
+    <record model="ir.ui.view" id="prospectus_details_report_form">
+        <field name="name">Prospectus Details Report Wizard</field>
+        <field name="model">city.prospectus.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group>
+                        <field name="to_date"/>
+                        <field name="user_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_prospectus_report" string="Print PDF" type="object" class="btn-warning"/>
+                    <button string="Close" class="btn-danger" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vehicle Loan Report Action Window -->
+
+    <record model="ir.actions.act_window" id="prospectus_details_report_act_window">
+        <field name="name">Prospectus Details Report (PDF)</field>
+        <field name="res_model">city.prospectus.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="prospectus_details_report_form"/>
+    </record>
+
+
+    <menuitem id="prospectus_details_menu"
+              name="Prospectus Details Report (PDF)"
+              parent="gxs_admission.menu_admission_report_root"
+              action="prospectus_details_report_act_window"
+              sequence="2"/>
+
+</odoo>

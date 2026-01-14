@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+        <record id="view_hr_salary_rule_inherit_partner" model="ir.ui.view">
+            <field name="name">Partner Check Field</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="partner_check"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_payslip_line_inherit_partner" model="ir.ui.view">
+            <field name="name">Partner Field in Payslip Line Tree</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@class='o_hr_payroll_salary_computation'][1]/field[1]/tree[1]/field[1]" position="after">
+                    <field name="partner_id_field"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

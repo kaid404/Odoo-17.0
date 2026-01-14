@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_city_books_ledger_report,city.books.ledger.report,model_city_books_ledger_report,,1,1,1,1

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="city_product_ledger_report_wizard_form" model="ir.ui.view">
+        <field name="name">city.books.ledger.report.wizard</field>
+        <field name="model">city.books.ledger.report</field>
+        <field name="arch" type="xml">
+            <form string="Books Sale Report">
+                <group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="product_ids" widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <field name="to_date"/>
+                        <field name="category_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="product_ledger_report" string="Print PDF" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-danger" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="city_product_ledger_report_action_window" model="ir.actions.act_window">
+        <field name="name">Books Sale Ledger Report (PDF)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">city.books.ledger.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="city_product_ledger_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="product_ledger_report_menu"
+              name="Sale Books Ledger Report (PDF)"
+              parent="sale.menu_sale_report"
+              action="city_product_ledger_report_action_window"
+              sequence="120"/>
+
+</odoo>

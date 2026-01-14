@@ -1,0 +1,118 @@
+<odoo>
+    <data>
+
+        <template id="stock_summary_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <h2 align="center">Stock Report - UHRL Lounge-HSIA</h2>
+                        <p align="left">
+                            <strong>Date:</strong>
+                            <t t-esc="report_date"/>
+                            <br/>
+                            <strong>Locations:</strong>
+                            <t t-esc="report_locations"/>
+                        </p>
+                    </div>
+                    <table style="width: 100%;">
+                        <thead style="background-color: #000000; color: #ffffff;">
+                            <tr>
+                                <!--                                <th style="border: 1px solid #000; padding: 5px;">SKU</th>-->
+                                <th style="border: 1px solid #000; padding: 5px;">Product Name</th>
+                                <th style="border: 1px solid #000; padding: 5px;">Opening Stock</th>
+                                <th style="border: 1px solid #000; padding: 5px;">Goods Received</th>
+                                <th style="border: 1px solid #000; padding: 5px;">Units Issued</th>
+                                <th style="border: 1px solid #000; padding: 5px;">Closing Stock</th>
+                                <!--                                <th style="border: 1px solid #000; padding: 5px;">Location</th>-->
+                                <!--                                <th style="border: 1px solid #000; padding: 5px;">Unit Price</th>-->
+                                <!--                                <th style="border: 1px solid #000; padding: 5px;">Current Stock</th>-->
+                                <!--                                <th style="border: 1px solid #000; padding: 5px;">Total Units Sold</th>-->
+                                <!--                                <th style="border: 1px solid #000; padding: 5px;">Total Units Transferred</th>-->
+                                <!--                                <th style="border: 1px solid #000; padding: 5px;">Total Units Adjusted</th>-->
+                                <!--                                <th style="border: 1px solid #000; padding: 5px;">Profit (%)</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="opening_stock" t-value="0"/>
+                            <t t-set="units_received" t-value="0"/>
+                            <t t-set="units_issued" t-value="0"/>
+                            <t t-set="closing_stock" t-value="0"/>
+
+                            <t t-foreach="products" t-as="line">
+
+                                <t t-set="opening_stock" t-value="opening_stock + line['opening_stock']"/>
+                                <t t-set="units_received" t-value="units_received + line['received_stock']"/>
+                                <t t-set="units_issued" t-value="units_issued + line['issued_stock']"/>
+                                <t t-set="closing_stock" t-value="closing_stock + line['closing_stock']"/>
+
+                                <tr>
+                                    <td style="border: 1px solid #000; padding: 5px;">
+                                        <t t-esc="line['name']"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 5px;">
+                                        <t t-esc="line['opening_stock']"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 5px;">
+                                        <t t-esc="line['received_stock']"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 5px;">
+                                        <t t-esc="line['issued_stock']"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 5px;">
+                                        <t t-esc="line['closing_stock']"/>
+                                    </td>
+                                </tr>
+
+                            </t>
+                            <tr style="font-weight: bold; background-color: #d0d0d0;">
+                                <td colspan="1" style="text-align: right; border: 1px solid #000; padding: 4px;">
+                                    Grand Total
+                                </td>
+                                <td style="border: 1px solid #000; padding: 4px;">
+                                    <t t-esc="opening_stock"/>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 4px;">
+                                    <t t-esc="units_received"/>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 4px;">
+                                    <t t-esc="units_issued"/>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 4px;">
+                                    <t t-esc="closing_stock"/>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_stock_summary_report" model="report.paperformat">
+            <field name="name">Stock Summary Report</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="action_report_stock_summary" model="ir.actions.report">
+            <field name="name">Stock Summary Report</field>
+            <field name="model">stock.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">stock_report.stock_summary_report_template</field>
+            <field name="report_file">stock_report.stock_summary_report_template</field>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_stock_summary_report"/>
+        </record>
+
+    </data>
+</odoo>

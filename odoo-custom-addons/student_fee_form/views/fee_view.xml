@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_student_fee_update_form" model="ir.ui.view">
+        <field name="name">Student.Fee.Form</field>
+        <field name="model">student.fee.update</field>
+        <field name="arch" type="xml">
+            <form string="Student Fee Update">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="gr_number"/>
+                            <field name="current_date"/>
+                        </group>
+                        <group>
+                            <field name="previous_fee"/>
+                            <field name="new_fee"/>
+                            <field name="discount"/>
+                            <field name="total_fee"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_student_fee_update_tree" model="ir.ui.view">
+        <field name="name">Student.Fee.Tree</field>
+        <field name="model">student.fee.update</field>
+        <field name="arch" type="xml">
+            <tree string="Student Fee Update">
+                <field name="gr_number"/>
+                <field name="student_id"/>
+                <field name="previous_fee"/>
+                <field name="new_fee"/>
+                <field name="current_date"/>
+                <field name="discount"/>
+                <field name="total_fee"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_student_fee_update" model="ir.actions.act_window">
+        <field name="name">Student Fee Update</field>
+        <field name="res_model">student.fee.update</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_student_fee_update_tree"/>
+    </record>
+
+    <record id="view_student_form_inherit" model="ir.ui.view">
+        <field name="name">op.student.form.inherit</field>
+        <field name="model">op.student</field>
+        <field name="inherit_id" ref="gxs_core.view_op_student_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='id_old_student']" position="before">
+                <field name="increment_category"/>
+            </xpath>
+
+            <!--            <xpath expr="//field[@name='academic_details']//field[@name='increment_month']" position="after">-->
+            <!--                <field name="increase_fee"/>-->
+            <!--            </xpath>-->
+
+        </field>
+    </record>
+
+    <record id="view_category_field_form_inherit" model="ir.ui.view">
+        <field name="name">op.category.field.form.inherit</field>
+        <field name="model">op.admission</field>
+        <field name="inherit_id" ref="gxs_admission.view_op_admission_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='father_name']" position="after">
+                <field name="increment_category" readonly="state == 'done'"/>
+<!--                <field name="std_fee"/>-->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_apply_fee_increment" model="ir.actions.server">
+        <field name="name">Apply Fee Increment</field>
+        <field name="model_id" ref="model_op_student"/>
+        <field name="state">code</field>
+        <field name="code">model.apply_fee_increment()</field>
+    </record>
+
+
+    <menuitem id="student_fee_update_menu"
+              name="Fee Records"
+              parent="gxs_school_fee.menu_generate_monthly_invoices_1"
+              action="action_student_fee_update"
+              sequence="17"/>
+
+
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Employee Salary Increment Report Action Qweb-PDF -->
+
+    <!-- Group Company WISE Salary Summary Report Action XLSX -->
+    <record id="group_summ_wise_xlsx" model="ir.actions.report">
+        <field name="name">Opus Employees Payroll Report</field>
+        <field name="model">opus.employees.payroll.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">opus_payroll_report.com_wise_xlsx</field>
+        <field name="report_file">opus_payroll_report.com_wise_xlsx</field>
+        <!--        <field name="binding_model_id" ref="model_pak_com_wise_salary_summary_report"/>-->
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

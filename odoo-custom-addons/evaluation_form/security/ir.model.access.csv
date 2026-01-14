@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_evaluation_template,evaluation.template,model_evaluation_template,,1,1,1,1
+access_evaluation_template_lines,evaluation.template.lines,model_evaluation_template_lines,,1,1,1,1
+access_evaluation_form,evaluation.form,model_evaluation_form,,1,1,1,1
+access_evaluation_form_lines,evaluation.form.lines,model_evaluation_form_lines,,1,1,1,1
+
+

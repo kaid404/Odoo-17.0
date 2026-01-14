@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_account_move_fee_discount" model="ir.ui.view">
+    <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_fee_discount_wizard" string="Fee Discount" type="object" class="btn-primary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

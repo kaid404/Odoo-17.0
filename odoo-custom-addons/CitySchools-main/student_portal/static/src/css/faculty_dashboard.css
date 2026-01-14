@@ -1,0 +1,138 @@
+:root {
+    /* Color Variables */
+    --color-primary: #007bff;
+    --color-secondary: #6c757d;
+    --color-accent: #ffc107;
+    --color-background: #ffffff;
+    --color-text: #333333;
+    --color-border: #e1e1e1;
+    --color-muted: #6c757d;
+
+    /* Font Variables */
+    --font-family-base: 'Helvetica Neue', Arial, sans-serif;
+    --font-family-heading: 'Roboto', sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+/*
+body {
+    font-size: clamp(16px, calc(1vw + 1em), 24px);
+}   */
+
+    /* Responsive Font Sizes */
+    --font-size-small: clamp(10px, calc(1.3vw + .6em), 22px);
+  /*  --font-size-small: 0.875rem; /* 14px */
+  /*  --font-size-base: 1rem; /* 16px */
+    --font-size-base: clamp(16px, calc(1vw + 1em), 24px);
+    --font-size-lg: 1.25rem; /* 20px */
+    --font-size-xl: 1.5rem; /* 24px */
+    /*--font-size-xxl: 2rem; /* 32px */
+    --font-size-xxl: clamp(24px, calc(1vw + 1em), 32px);
+
+    /* Spacing Variables (using rem for better scalability) */
+    --spacing-xs: 0.25rem; /* 4px */
+    --spacing-sm: 0.5rem; /* 8px */
+    --spacing-md: 1em; /* 16px */
+    --spacing-lg: 1.5rem; /* 24px */
+    --spacing-xl: 2rem; /* 32px */
+    --spacing-xxl: 3rem; /* 48px */
+
+    /* Breakpoints for Responsive Design */
+    --breakpoint-xs: 480px;
+    --breakpoint-sm: 768px;
+    --breakpoint-md: 992px;
+    --breakpoint-lg: 1200px;
+
+    /* Border Radius */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+
+    /* Shadows */
+    --box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --box-shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    /* Dark/Light Theme */
+    --color-background-light: #ffffff;
+    --color-background-dark: #121212;
+    --color-text-light: #333333;
+    --color-text-dark: #f1f1f1;
+
+    /* Header Background Colors */
+    --color-header-light: #f8f9fa; /* Light, neutral background */
+    --color-header-dark: #1f1f1f; /* Dark, modern background */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+body.light-theme {
+    background-color: var(--color-background-light);
+    color: var(--color-text-light);
+}
+
+body.dark-theme {
+    background-color: var(--color-background-dark);
+    color: var(--color-text-dark);
+}
+
+
+body.dark-theme header {
+    background-color: var(--color-header-dark); /* Switch to dark theme header color */
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+
+    background-color: var(--color-header-light); /* Default to light theme header color */
+}
+
+aside{
+height:100vh;
+border:2px solid blue;
+}
+
+aside ul{
+list-style:none;
+border:2px solid yellow;
+}
+
+aside ul li{
+background-color:var(--l);
+}
+
+/* If screen size is 600px wide, or less, set the font-size of <div> to 30px */
+@media screen and (min-width: 1260px) {
+  body {
+    border: 8px solid blue;
+    font-size: var(--font-size-xxl);
+  }
+}
+
+/* When the width is between 600px and 900px  */
+@media screen and (max-width: 1260px) and (min-width: 768px) {
+  body {
+    font-size: var(--font-size-base);
+    border: 8px solid yellow;
+  }
+}
+
+/* If screen size is 600px wide, or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 768px) {
+  body {
+    border: 8px solid red;
+    font-size: var(--font-size-small);
+  }
+}
+

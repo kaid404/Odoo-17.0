@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mmrp_workcenter_xlsx_report" model="ir.ui.view">
+        <field name="name">gxs.campus.transfer</field>
+        <field name="model">gxs.campus.transfer</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="company_id"/>
+                    </group>
+                    <group>
+                        <field name="student_ids" widget="many2many_tags"/>
+                    </group>
+
+                </group>
+                <footer>
+                    <button name="transfer" string="Transfer" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-danger" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_merge_opportunities" model="ir.actions.act_window">
+            <field name="name">Student Transfer</field>
+            <field name="res_model">gxs.campus.transfer</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="gxs_core.model_op_student"/>
+            <field name="binding_view_types">list</field>
+        </record>
+
+
+</odoo>

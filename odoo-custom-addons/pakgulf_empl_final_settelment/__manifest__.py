@@ -1,0 +1,30 @@
+{
+    'name': 'PF Employee Settlement',
+    'version': '17.0.1.0.0',
+    'category': 'Extra Tools',
+    'summary': 'Module for manging Employee Final Settlement',
+    'sequence': '-10008',
+    'license': 'AGPL-3',
+    'author': 'Hammad Asghar',
+    'Maintainer': 'Odoo Mates',
+    'website': '',
+    'depends': [
+        'hr',
+        'hr_payroll',
+        'hr_contract',
+        'mail',
+    ],
+    'demo': [],
+    'data': [
+        'security/ir.model.access.csv',
+        # 'views/view.xml',
+        'views/empl_final_settlement.xml',
+        'views/employees_contract.xml',
+        'views/payslip_inherit.xml',
+        'views/rules.xml',
+
+    ],
+    'installable': True,
+    'application': True,
+    'auto install': False,
+}

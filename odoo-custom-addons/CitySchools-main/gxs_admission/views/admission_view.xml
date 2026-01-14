@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_op_admission_tree" model="ir.ui.view">
+            <field name="name">op.admission.tree</field>
+            <field name="model">op.admission</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Registration">
+                    <field name="application_number"/>
+                    <field name="title" optional="show"/>
+                    <field name="name"/>
+                    <field name="admission_date"/>
+                    <field name="application_date"/>
+                    <field name="course_id" invisible="1"/>
+<!--                    <field name="batch_id" optional="hide"/>-->
+                    <field name="state"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                    <field name="gender" optional="hide"/>
+                    <field name="birth_date" optional="hide"/>
+                    <field name="email" optional="hide" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_op_admission_form" model="ir.ui.view">
+            <field name="name">op.admission.form</field>
+            <field name="model">op.admission</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Registration">
+                    <header>
+                        <button string="Submit" invisible="state != 'draft'" class="oe_highlight" type="object"
+                                name="submit_form"/>
+                        <button name="confirm_in_progress" invisible="state not in ('submit','pending')"
+                                string="Confirm" type="object"
+                                class="oe_highlight"/>
+                        <button string="Admission Confirm" class="oe_highlight" invisible="state != 'confirm'"
+                                type="object"
+                                name="admission_confirm"/>
+                        <button name="enroll_student" invisible="state != 'admission'" string="Enroll" type="object"
+                                class="oe_highlight"/>
+                        <button name="confirm_rejected" invisible="state not in ('confirm','confirm_pending')"
+                                string="Reject" type="object"/>
+                        <button name="confirm_pending" invisible="state != 'submit'" string="Pending" type="object"/>
+                        <button name="confirm_cancel" string="Cancel" type="object"/>
+                        <button name="confirm_to_draft" invisible="state not in ('pending','reject','cancel')"
+                                string="Set to Draft"
+                                type="object"/>
+                        <button name="open_student" invisible="state != 'done'" string="Open Student Profile"
+                                type="object"/>
+                        <button name="get_prospectus_fee" invisible="prospectus_fee_paid == True" string="Received Prospectus"
+                                type="object"/>
+                        get_prospectus_fee
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <field name="prospectus_fee_paid" invisible="1"/>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                invisible="active == True"/>
+
+                        <field name="image" widget="image" class="oe_left oe_avatar" readonly="state == 'done'"/>
+                        <div class="oe_title">
+                            <h3>
+                                <field name="title" placeholder="Title" style="width: 30%%" readonly="state == 'done'" invisible="1"/>
+                            </h3>
+                            <h2>
+                                <field name="name" placeholder="Name" required="1" style="padding-right:10px"
+                                       invisible="1"/>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <field name="first_name" placeholder="First Name" required="1"
+                                                   style="padding-right:10px" readonly="state == 'done'"/>
+                                        </td>
+                                        <td>
+                                            <field name="middle_name" placeholder="Middle Name"
+                                                   readonly="state == 'done'"
+                                                   style="padding-right:10px"/>
+                                        </td>
+                                        <td>
+                                            <field name="last_name" placeholder="Last Name" required="1"
+                                                   readonly="state == 'done'"
+                                                   style="padding-right:10px"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </h2>
+                        </div>
+                        <notebook>
+                            <page name="admission_detail" string="Admission Detail">
+                                <group>
+                                    <group>
+                                        <field name="register_id" readonly="state == 'done'"
+                                               domain="[('state', 'in', ['application','admission'])]"
+                                               widget="selection"/>
+                                        <field name="application_date" readonly="state == 'done'"/>
+                                        <field name="course_id" invisible="1" readonly="state == 'done'"/>
+                                        <field name="academic_years_id" readonly="state == 'done'"/>
+                                        <field name="course_id" invisible="0" readonly="1"/>
+
+                                        <field name="academic_term_id" readonly="state == 'done'"/>
+                                        <field name="discount" invisible="1"/>
+                                        <field name="discount_tag" invisible="1"/>
+                                        <field name="discount_tags" invisible="0" widget="many2many_tags"/>
+                                        <field name="due_date" readonly="state == 'done'" invisible="1"/>
+                                        <field name="is_student" invisible="1"/>
+                                        <field name="company_id" groups="base.group_multi_company" optional="show" invisible="1"/>
+                                        <field name="fees_start_date" invisible="1"/>
+                                                                                <field name="gender" readonly="state == 'done'"/>
+                                                                                <field name="prospectus_fee" readonly="prospectus_fee_paid == True"/>
+                                        <field name="company_id" string="Campus"/>
+                                    </group>
+                                    <group>
+                                        <field name="application_number"/>
+                                        <field name="admission_date" readonly="1"/>
+<!--                                        <field name="batch_id" context="{'course_id': course_id,'get_parent_batch':1}"-->
+<!--                                               readonly="state == 'done'" invisible="1"/>-->
+                                        <field name="fees" readonly="state == 'done'"
+                                               required="state not in ('draft', 'submit')" invisible="0"/>
+                                        <field name="fees_term_id" required="0" invisible="1"
+                                               readonly="state not in ('draft', 'submit', 'confirm')"/>
+                                        <field name="fee_structure" required="0"
+                                               readonly="state not in ('draft', 'submit', 'confirm')"/>
+                                        <field name="partner_id" invisible="1"/>
+                                        <field name="student_id" placeholder="Student" readonly="state == 'done'"
+                                               options="{'no_create_edit': True}"
+                                               required="is_student == True" invisible="is_student == False"/>
+                                        <field name="mobile" placeholder="Mobile"
+                                               readonly="state == 'done'" required="1"/>
+                                        <field name="birth_date" options="{'datepicker':{'warn_future': true}}"
+                                               readonly="state == 'done'"/>
+                                        <field name="father_name" required="1" readonly="state == 'done'"/>
+
+                                        <field name="email" placeholder="Email" readonly="state == 'done'" invisible="1" required="0"/>
+
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="educational_detail" string="Educational Detail">
+                                <group>
+                                    <group>
+                                        <field name="prev_institute_id" readonly="state == 'done'"/>
+                                        <field name="prev_result" readonly="state == 'done'"/>
+                                    </group>
+                                    <group>
+                                        <field name="prev_course_id" readonly="state == 'done'"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="personal_detail" string="Personal Detail">
+                                <group>
+
+<!--                                    <group>-->
+<!--                                        <field name="birth_date" options="{'datepicker':{'warn_future': true}}"-->
+<!--                                               readonly="state == 'done'"/>-->
+<!--                                    </group>-->
+                                </group>
+                                <label for="street" string="Address"/>
+                                <div>
+                                    <div>
+                                        <field name="street" placeholder="Street..." nolabel="1" style="width: 100%%"
+                                               readonly="state == 'done'"/>
+                                        <field name="street2" placeholder="Street 2..." nolabel="1"
+                                               readonly="state == 'done'"
+                                               style="width: 100%%"/>
+                                    </div>
+                                    <div class="address_format">
+                                        <field name="city" placeholder="City" style="width: 40%%"
+                                               readonly="state == 'done'"/>
+                                        <field name="state_id" options='{"no_open": True}' readonly="state == 'done'"
+                                               placeholder="State" style="width: 24%%"/>
+                                        <field name="zip" placeholder="ZIP" style="width: 34%%"
+                                               readonly="state == 'done'"/>
+                                    </div>
+                                    <div>
+                                        <field name="country_id" placeholder="Country" options='{"no_open": True}'
+                                               nolabel="1" readonly="state == 'done'"/>
+                                        <field name="phone" placeholder="Phone" nolabel="1" style="width: 100%%"
+                                               readonly="state == 'done'"/>
+
+                                    </div>
+                                </div>
+                                <group>
+                                    <group>
+                                        <field name="family_business" readonly="state == 'done'"/>
+                                        <field name="nbr" invisible="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="family_income" readonly="state == 'done'"/>
+                                    </group>
+                                    <group>
+                                        <field name="form_b" readonly="state == 'done'"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_op_admission_search" model="ir.ui.view">
+            <field name="name">op.admission.search</field>
+            <field name="model">op.admission</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Registration">
+                    <field name="name"/>
+                    <field name="application_number"/>
+                    <field name="admission_date"/>
+                    <field name="application_date"/>
+                    <field name="birth_date"/>
+                    <field name="course_id"/>
+<!--                    <field name="batch_id"/>-->
+                    <newline/>
+                    <filter name="enrolled_student" string="Enrolled" domain="[('state','=','done')]"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Admission Date" name="group_by_adm_admission_date"
+                                domain="[]" context="{'group_by':'admission_date'}"/>
+                        <filter string="Application Date" name="group_by_adm_application_date"
+                                domain="[]" context="{'group_by':'application_date'}"/>
+                        <filter string="Course" name="group_by_adm_course_id"
+                                domain="[]" context="{'group_by':'course_id'}"/>
+                        <filter string="Batch" name="group_by_adm_batch_id"
+                                domain="[]" context="{'group_by':'batch_id'}"/>
+                        <filter string="Status" name="group_by_adm_state"
+                                domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Register" name="group_by_adm_register"
+                                domain="[('register_id.state', 'not in', ['cancel', 'done'])]"
+                                context="{'group_by':'register_id'}"/>
+                        <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_op_admission_graph">
+            <field name="name">op.admission.graph</field>
+            <field name="model">op.admission</field>
+            <field name="arch" type="xml">
+                <graph string="Course By Admission" type="pie">
+                    <field name="course_id"/>
+                    <field name="nbr" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_op_admission_pivot">
+            <field name="name">op.admission.pivot</field>
+            <field name="model">op.admission</field>
+            <field name="arch" type="xml">
+                <pivot string="Course By Admission">
+                    <field name="title"/>
+                    <field name="name"/>
+                    <field name="middle_name"/>
+                    <field name="last_name"/>
+                    <field name="application_number"/>
+                    <field name="register_id"/>
+                    <field name="admission_date"/>
+                    <field name="application_date"/>
+                    <field name="birth_date"/>
+                    <field name="course_id" type="row"/>
+<!--                    <field name="batch_id"/>-->
+                    <field name="state"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_op_admission_view">
+            <field name="name">Application</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.admission</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="search_view_id" ref="view_op_admission_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_op_admission_view_form">
+            <field name="act_window_id" ref="act_open_op_admission_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_op_admission_form"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="act_open_op_admission_view_tree">
+            <field name="act_window_id" ref="act_open_op_admission_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_op_admission_tree"/>
+        </record>
+
+        <record id="view_op_student_course_form_admission_inherit" model="ir.ui.view">
+            <field name="name">op.student.course.form.admission.inherit</field>
+            <field name="model">op.student.course</field>
+            <field name="inherit_id" ref="gxs_core.view_op_student_course_form"/>
+            <field name="arch" type="xml">
+<xpath expr="//field[3]" position="before">
+                <field name="product_id" required="0" invisible="1"/>
+</xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

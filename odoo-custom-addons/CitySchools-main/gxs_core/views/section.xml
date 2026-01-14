@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+            <record id="section_tree" model="ir.ui.view">
+        <field name="name">section.tree</field>
+        <field name="model">class.section</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                        <field name="faculty"/>
+                <field name="class_id"/>
+                <field name="year_id"/>
+            </tree>
+        </field>
+        </record>
+                <record id="section_form" model="ir.ui.view">
+        <field name="name">section.form</field>
+        <field name="model">class.section</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="class_id"/>
+                            <field name="faculty"/>
+                </group>  <group>
+                    <field name="year_id"/>
+                </group>
+                <notebook>
+                        <page string="Students">
+                            <field name="students"/>
+                        </page>
+                </notebook>
+
+            </form>
+        </field>
+        </record>
+    <!--              web_icon="med_exam,static/description/icon.svg"-->
+        <record model="ir.actions.act_window" id="action_class_section_form">
+        <field name="name">Class Section</field>
+        <field name="res_model">class.section</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new section</p>
+        </field>
+    </record>
+
+    <menuitem name="Class Section"
+              id="menu_class_section_form"
+              parent="gxs_core.menu_op_school_config"
+              action="action_class_section_form"
+              sequence="49"/>
+</odoo>

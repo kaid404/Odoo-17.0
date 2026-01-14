@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pakgulf_emp_wise_attendance_form" model="ir.ui.view">
+        <field name="name">pakgulf.emp.wise.attendance</field>
+        <field name="model">pakgulf.emp.wise.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Monthly Attendance Department Wise">
+                <group>
+                    <group>
+                        <!--                    <field name="shift_id"/>-->
+                        <!--                    <field name="department_ids" widget="many2many_tags"/>-->
+                        <field name="employee_ids" widget="many2many_tags"/>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                    </group>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="department_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <!--                    <button name="print_emp_attendance" string="Attendance PDF" type="object" class="btn-success"/>-->
+                    <button name="attendance_xlsx" string="Attendance Excel" type="object" class="btn-warning"/>
+                    <button string="Cancel" class="btn-danger" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="pakgulf_emp_wise_attendance_action_17" model="ir.actions.act_window">
+        <field name="name">Monthly Attendance Department Wise</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pakgulf.emp.wise.attendance</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="pakgulf_emp_wise_attendance_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="month_dept_wise_attendance"
+              name="Pak Gulf Monthly Attendance Employee Wise"
+              parent="hr_attendance.menu_hr_attendance_reporting"
+              action="pakgulf_emp_wise_attendance_action_17"
+              sequence="3"/>
+
+</odoo>

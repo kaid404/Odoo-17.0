@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="att_analysis_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                    <h3 style="text-align:center;">
+                        Reports for Lates, Leaves &amp; Absences
+                    </h3>
+                    <p style="text-align:center; margin-bottom:15px;">
+                        <strong>
+                            <t t-esc="period"/>
+                        </strong>
+                    </p>
+
+                    <table class="table table-bordered"
+                           style="width:100%; font-size:12px; border-top:4px solid #007bff;">
+                        <thead>
+                            <tr style="background:#f0f0f0;">
+                                <th>S#</th>
+                                <t t-if="show_email">
+                                    <th>Email</th>
+                                </t>
+                                <th>Employee</th>
+                                <th>Team</th>
+                                <th>Badge Id</th>
+                                <th>Manager</th>
+                                <th>Designation</th>
+                                <t t-if="report_of == 'leaves'">
+                                    <th>Total Leave</th>
+                                </t>
+                                <t t-if="report_of == 'absences'">
+                                    <th>Total Absences</th>
+                                </t>
+                                <t t-if="report_of == 'lates'">
+                                    <th>Total Lates</th>
+                                </t>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <t t-set="sr" t-value="1"/>
+                            <t t-foreach="employee_lines" t-as="row">
+                                <tr>
+                                    <td>
+                                        <t t-esc="sr"/>
+                                        <t t-set="sr" t-value="sr + 1"/>
+                                    </td>
+                                    <t t-if="show_email">
+                                        <td>
+                                            <t t-esc="row['email']"/>
+                                        </td>
+                                    </t>
+                                    <td>
+                                        <t t-esc="row['employee_name']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="row['team']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="row['code']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="row['manager']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="row['designation']"/>
+                                    </td>
+                                    <t t-if="report_of == 'leaves'">
+                                        <td class="text-center">
+                                            <t t-esc="row['leave_days']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="report_of == 'absences'">
+                                        <td class="text-center">
+                                            <t t-esc="row['absent_days']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="report_of == 'lates'">
+                                        <td class="text-center">
+                                            <t t-esc="row['late_days']"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_att_analysis_report" model="ir.actions.report">
+        <field name="name">Attendance Analysis Report</field>
+        <field name="model">att.analysis.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">att_analysis_report.att_analysis_report_template</field>
+        <field name="report_file">att_analysis_report.att_analysis_report_template</field>
+    </record>
+
+    <record id="action_att_analysis_report_xlsx" model="ir.actions.report">
+        <field name="name">Attendance Analysis Report</field>
+        <field name="model">att.analysis.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">att_analysis_report.att_analysis_template_xlsx</field>
+        <field name="report_file">att_analysis_report.att_analysis_template_xlsx</field>
+    </record>
+</odoo>

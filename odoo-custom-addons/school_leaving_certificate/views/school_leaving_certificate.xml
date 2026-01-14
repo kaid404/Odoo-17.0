@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="school_leaving_certificate_tree" model="ir.ui.view">
+        <field name="name">school.leaving.certificate.tree</field>
+        <field name="model">school.leaving.certificate</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="father_name"/>
+                <field name="class_id"/>
+                <field name="section_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="school_leaving_certificate_form" model="ir.ui.view">
+        <field name="name">school.leaving.certificate.form</field>
+        <field name="model">school.leaving.certificate</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_draft" type="object" string="Set to Draft" invisible="state == 'draft'" class="mt-3"/>
+                    <button name="action_confirm" type="object" string="Confirm" invisible="state != 'draft'" class="oe_highlight mt-3"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state != 'draft'" class="mt-3"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="open_credit_note" class="btn oe_stat_button" icon="fa-pencil-square-o" type="object">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Refund</span>
+                            </div>
+                        </button>
+                    </div>
+                    <h3>
+                        <field name="name"/>
+                    </h3>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="father_name"/>
+                            <field name="gender"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="phone_no"/>
+                            <field name="mobile_no"/>
+                            <div name="o_address_format">
+                                <field name="street" placeholder="Street..."/>
+                                <field name="street2" placeholder="Street2"/>
+                                <div class="address_format">
+                                    <field name="city" placeholder="City" style="width: 40%"/>
+                                    <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%"
+                                           options="{'no_open': True}"/>
+                                    <field name="zip" placeholder="ZIP" style="width: 20%"/>
+                                </div>
+                                <field name="country_id" placeholder="Country" class="oe_no_button"
+                                       options="{'no_open': True}"/>
+                                <field name="company_id" string="Campus"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="reason_leaving"/>
+                    </group>
+                    <notebook>
+                        <page string="Office Use">
+                            <group>
+                                <group>
+                                    <field name="gr_no"/>
+                                    <field name="admission_no"/>
+                                    <field name="roll_no"/>
+                                    <field name="class_id"/>
+                                    <field name="term_id"/>
+                                    <field name="section_id"/>
+                                </group>
+                                <group>
+                                    <field name="enrollment_date"/>
+                                    <field name="possible_attendance"/>
+                                    <field name="student_attendance"/>
+                                    <field name="class_id"/>
+                                    <field name="fee_due"/>
+                                </group>
+
+                            </group>
+                        </page>
+                        <!-- Add more pages as needed -->
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_school_leaving_certificate_form">
+        <field name="name">School Leaving Certificate</field>
+        <field name="res_model">school.leaving.certificate</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new School Leaving Certificate</p>
+        </field>
+    </record>
+
+
+    <menuitem name="School Leaving Certificates"
+              id="menu_school_leaving_certificate_form"
+              parent="gxs_core.menu_op_general_student"
+              action="action_school_leaving_certificate_form"
+              sequence="51"/>
+</odoo>

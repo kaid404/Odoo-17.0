@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Stock Report -->
+    <template id="stock_retailer_report_template">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+            <!-- So that it appears in the footer of the report instead of the company VAT if it's set -->
+
+            <h2><strong>Delivery Note</strong># <span t-field="doc.name"/></h2>
+            <div class="row" style="margin-top: 5px;">
+                <div class="col-6">
+                    <strong>Ship To</strong>
+                    <div t-field="doc.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' />
+                </div>
+                <div class="col-6">
+                    <strong>Date : </strong>
+                    <div t-field="doc.scheduled_date" />
+                </div>
+            </div>
+
+            <div class="page">
+                <div class="oe_structure" />
+
+                <!--  Is there a discount on at least one line? -->
+                <table class="table table-sm o_main_table" style="margin-top: 15px;">
+                    <!--  In case we want to repeat the header, remove "display: table-row-group" -->
+                    <thead style="display: table-row-group;">
+                        <tr>
+                            <th name="th_code" style="font-size:13px;" class="text-left">Item Code</th>
+                            <th name="th_description" style="font-size:13px;" class="text-left">Item Name</th>
+                            <th name="th_lot" style="font-size:13px;" class="text-left">Lot No</th>
+                            <th name="th_exp_date" style="font-size:13px;" class="text-left">Expiry Date</th>
+                            <th name="th_quantity_ord" style="font-size:13px;" class="text-left">Qty Ordered</th>
+                            <th name="th_quantity_issu" style="font-size:13px;" class="text-left">Qty Issued</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-set="qty_total" t-value="0" />
+                        <t t-set="qty_done_total" t-value="0" />
+
+                        <t t-set="lines" t-value="doc.move_ids.filtered(lambda x: x.quantity)" />
+                        <t t-foreach="lines" t-as="line">
+                            <t t-foreach="line.move_line_ids" t-as="move_line">
+                                <t t-set="qty_total" t-value="qty_total + move_line.quantity" />
+                                <t t-set="qty_done_total" t-value="qty_done_total + move_line.quantity" />
+                                <tr>
+                                    <td name="td_code" style="font-size:13px;"><span t-field="move_line.product_id.default_code" /></td>
+                                    <td name="td_name" style="font-size:13px;"><span t-field="move_line.product_id.name" /></td>
+                                    <td name="th_lot" class="text-left" style="font-size:13px;"><span t-esc="move_line.lot_id.name" /></td>
+                                    <t t-if="move_line.lot_id.expiration_date">
+                                    	<td name="th_exp_date" class="text-left" style="font-size:13px;"><span t-esc="move_line.lot_id.expiration_date.strftime('%m/%Y')" /></td>
+                                    </t>
+                                    <t t-else=""><td></td></t>	
+                                    <td t-if="move_line.picking_id.state == 'done'" style="font-size:13px;">
+                                        <span t-field="move_line.quantity" />
+                                        <span t-field="move_line.product_uom_id" />
+                                    </td>
+                                    <td t-else="" style="font-size:13px;">
+                                        <span t-field="move_line.quantity" />
+                                        <span t-field="move_line.product_uom_id" />
+                                    </td>
+                                    <td style="font-size:13px;">
+                                        <span t-field="move_line.quantity" />
+                                        <span t-field="move_line.product_uom_id" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <tr>
+                            <td colspan="6" style="border-top: 0px; margin: 0px; padding: 0px;"><hr style="border-top: 2px solid #000; margin: 0px; padding: 0px;" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" />
+                            <td name="td_qty_total" class="text-left" style="font-size:13px;"><strong>Total</strong></td>
+                            <td name="td_qty_total" class="text-left" style="font-size:13px;">
+                            	<t t-if="move_line.picking_id.state == 'done'">
+                                	<strong><span t-esc="'%.2f'% qty_done_total" /></strong>
+                                </t>	
+                                <t t-else="">
+                                	<strong><span t-esc="'%.2f'% qty_total" /></strong>
+                                </t>
+                            </td>
+                            <td name="td_qty_done_total" class="text-left" style="font-size:13px;">
+                                <strong><span t-esc="'%.2f'% qty_done_total" /></strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="oe_structure" />
+                <p style="margin-top: 100px;" t-field="doc.note" />
+                <p style="margin-top: 100px;">
+                    <span><strong>Authorised Signature</strong></span>
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="stock_retailer_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sh_sale_custom.stock_retailer_report_template" t-lang="doc.partner_id.lang" />
+            </t>
+        </t>
+    </template>
+</odoo>

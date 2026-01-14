@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gxs_late_policy_dep,access_gxs_late_policy_dep,model_gxs_late_policy_dep,,1,1,1,1
+access_gxs_overtime_calculate,access_gxs_overtime_calculate,model_gxs_overtime_calculate,,1,1,1,1
+access_gxs_overtime_calculate_lines,access_gxs_overtime_calculate_lines,model_gxs_overtime_calculate_lines,,1,1,1,1
+access_gxs_leave_deduction_policy,access_gxs_leave_deduction_policy,model_gxs_leave_deduction_policy,,1,1,1,1
+access_employee_gatepass,access.employee.gatepass,model_employee_gatepass,,1,1,1,1
+access_employee_attendance_absent,access.employee.attendance.absent,model_employee_attendance_absent,,1,1,1,1
+
+
+access_rst_late_count,access_rst_late_count,model_rst_late_count,,1,0,0,0
+
+

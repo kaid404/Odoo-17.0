@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="emp_contribution_loan_details_pdf_doc">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="record_list" t-as="employee">
+                    <div class="page">
+                        <div class="row" style="border: 1px solid black">
+                            <div class="col-2">
+                                <img t-att-src="'data:image/png;base64,%s' % company_logo"
+                                     style="max-width: 100px; max-height: 100px;"/>
+                            </div>
+                            <div class="col-8" style="text-align:center">
+                                <div class="row">
+                                    <h1>
+                                        <span t-esc="company_name"/>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="border: 1px solid black; padding: 20px">
+
+                        </div>
+                        <table style="border: 1px solid black; width: 100%">
+                            <tr style="border: 1px solid black; padding: 10px">
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong>Employee Code:</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong t-esc="employee.get('employee_code')"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong>Name:</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong t-esc="employee.get('employee_name')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black; padding: 10px">
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong>Designation:</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong t-esc="employee.get('designation')"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong>Department:</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong t-esc="employee.get('department')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black; padding: 10px">
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong>Date Of Joining:</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong t-esc="employee.get('joining')"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong>Business Unit:</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px">
+                                    <strong t-esc="employee.get('emp_company')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black; text-align: center;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="4">
+                                    <strong>Contribution and Loan Details</strong>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3" width="">
+                                    <strong>1- Employee Contribution Till Date.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong t-esc="employee.get('pf_emp')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3">
+                                    <strong>2- Employer Contribution Till Date.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong t-esc="employee.get('pf_emper')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3">
+                                    <strong>3- Total Contribution Till Date.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong t-esc="employee.get('sum_pf')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3">
+                                    <strong>4- Requested Amount.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong t-esc="employee.get('required_amount')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3">
+                                    <strong>5- Reason Of Encashment.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong t-esc="employee.get('remarks')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3">
+                                    <strong>6- Installment Per Month.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong t-esc="employee.get('deduction')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3">
+                                    <strong>7- Term Of Loan.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong t-esc="employee.get('installments')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3">
+                                    <strong>8- First Payment Date.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong t-esc="employee.get('date')"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; padding: 10px" colspan="3">
+                                    <strong>9- Employee Signature.</strong>
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px" colspan="1">
+                                    <strong></strong>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1"/>
+                            <div class="col-4" style="border-top: 1px solid black; text-align: center">
+                                <strong>Akmal Javed</strong>
+                                <br/>
+                                <strong>Manager Finance</strong>
+                            </div>
+                            <div class="col-1"/>
+
+                            <div class="col-1"/>
+                            <div class="col-4" style="border-top: 1px solid black; text-align: center">
+                                <strong>Dawood Ahmad</strong>
+                                <br/>
+                                <strong>Director Finance / Accounts</strong>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1"/>
+                            <div class="col-4" style="border-top: 1px solid black; text-align: center">
+                                <strong>Mussadaq Rauf</strong>
+                                <br/>
+                                <strong>Assistant Vice President</strong>
+                            </div>
+                            <div class="col-1"/>
+
+                            <div class="col-1"/>
+                            <div class="col-4" style="border-top: 1px solid black; text-align: center">
+                                <strong>Fahad Farid</strong>
+                                <br/>
+                                <strong>Senior Exective Driector</strong>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                    <p style="page-break-before: always;"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="contribution_loan_details_report_action" model="ir.actions.report">
+        <field name="name">Contribution and Loan Details PDF</field>
+        <field name="model">emp.contribution.loan.details</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pakgulf_employee_pf_loan_application.emp_contribution_loan_details_pdf_doc</field>
+        <field name="report_file">pakgulf_employee_pf_loan_application.emp_contribution_loan_details_pdf_doc</field>
+        <field name="binding_model_id" ref="model_emp_contribution_loan_details"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

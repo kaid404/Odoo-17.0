@@ -1,0 +1,82 @@
+<odoo>
+
+
+    <record id="op_student_form_blinq" model="ir.ui.view">
+        <field name="name">op.student.inherit.form</field>
+        <field name="model">op.student</field>
+        <field name="inherit_id" ref="gxs_core.view_op_student_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mobile']" position="after">
+                    <field name="billId"/>
+                </xpath>
+            <xpath expr="//header" position="inside">
+                    <button name="create_consumer" type="object" string="Sync TO Blinq" invisible="billId" readonly="1"/>
+            </xpath>
+
+
+        </field>
+    </record>
+    <record id="view_op_student_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="is_fee_invoice" invisible="1"/>
+<!--                <button name="create_invoice_to_blinq_in_bulk" string="Sync To Blinq bulk" type="object" class="btn-primary" invisible="is_fee_invoice != True"/>-->
+                <button name="create_invoice_to_blinq" string="Sync To Blinq" type="object" class="btn-primary" invisible="payment_state != 'not_paid' or is_fee_invoice != True"/>
+                <button name="get_invoice_status" string="Get Blinq Status" type="object" class="btn-primary" invisible="is_fee_invoice != True"/>
+                <button name="block_invoice" string="Block Invoice" type="object" class="btn-primary" invisible="payment_state != 'not_paid' or is_fee_invoice != True"/>
+                <button name="unpay_invoice" string="Blinq Mark as Unpaid" type="object" class="btn-primary" invisible="payment_state != 'not_paid' or is_fee_invoice != True"/>
+                <button name="paid_invoices" string="Get Paid Invoices" type="object" class="btn-primary" invisible="payment_state != 'not_paid' or is_fee_invoice != True"/>
+<!--                <button name="pay_invoice" string="Blinq Mark as paid" type="object" class="btn-primary"/>-->
+<!--                <button name="get_invoice_status" string="Get Blinq Status" type="object" class="btn-primary" invisible="payment_state != 'not_paid' or is_fee_invoice != True"/>-->
+<!--                <field name="payment_create_date" invisible="1"/>-->
+<!--                <field name="payment_create_user" invisible="1"/>-->
+            </xpath>
+        </field>
+    </record>
+
+
+<!--    <record id="ir_cron_model_account_move" model="ir.cron">-->
+<!--            <field name="name">Sync To blinq</field>-->
+<!--            <field name="model_id" ref="account.model_account_move"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.create_invoice_to_blinq_in_bulk()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">weeks</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>-->
+<!--            <field eval="False" name="doall"/>-->
+<!--            <field name="priority">1000</field>-->
+<!--        </record>-->
+
+
+
+
+    <record id="ir_cron_model_op_student" model="ir.cron">
+            <field name="name">Sync To blinq</field>
+            <field name="model_id" ref="gxs_core.model_op_student"/>
+            <field name="state">code</field>
+            <field name="code">model.sync_to_blinq_in_bulk()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field eval="False" name="doall"/>
+            <field name="priority">1000</field>
+        </record>
+
+<!--    <record id="create_invoice_after_fine_id" model="ir.cron">-->
+<!--            <field name="name">Sync after fine</field>-->
+<!--            <field name="model_id" ref="account.model_account_move"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.create_invoice_after_fine()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">weeks</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>-->
+<!--            <field eval="False" name="doall"/>-->
+<!--            <field name="priority">1000</field>-->
+<!--        </record>-->
+</odoo>

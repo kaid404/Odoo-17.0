@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_hr_applicant_form_inherit_template" model="ir.ui.view">
+        <field name="name">hr.applicant.form.inherit.template</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="hr_template_id"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_open_email_composer" string="Send an Email" type="object"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_mass_send_email_applicant" model="ir.actions.server">
+        <field name="name">Send Emails</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">records.action_mass_send_email()</field>
+    </record>
+
+</odoo>

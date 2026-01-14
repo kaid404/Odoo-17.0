@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="fee_discount_wizard_form" model="ir.ui.view">
+        <field name="name">fee.discount.wizard.form</field>
+        <field name="model">fee.discount.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="student_id" readonly="1"/>
+                        <field name="move_id" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="date"/>
+                        <field name="discount_amount"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="reason_discount"/>
+                </group>
+                <footer groups="base.group_user">
+                    <button name="action_done" type="object" string="Done" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+
+            </form>
+
+        </field>
+    </record>
+
+<!--    <record model="ir.actions.act_window" id="action_fee_discount_wizard_form">-->
+<!--        <field name="name">Fee Discount Wizard</field>-->
+<!--        <field name="res_model">fee.discount.wizard</field>-->
+<!--        <field name="binding_view_types">form</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="view_id" ref="fee_discount.fee_discount_wizard_form"/>-->
+<!--        <field name="context">{}</field>-->
+<!--        <field name="target">new</field>-->
+<!--    </record>-->
+
+
+</odoo>

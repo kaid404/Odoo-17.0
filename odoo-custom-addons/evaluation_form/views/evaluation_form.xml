@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_evaluation_form" model="ir.ui.view">
+        <field name="name">evaluation.form.view.form</field>
+        <field name="model">evaluation.form</field>
+        <field name="arch" type="xml">
+            <form string="Evaluation Form" create="true" edit="true">
+                <header>
+                    <button string="Set to Draft" name="action_draft" type="object"
+                            invisible="state not in ['cancel']"/>
+                    <button string="Approve" name="action_approve" type="object"
+                            class="oe_highlight" invisible="state not in ['draft']"/>
+                    <button string="Confirm" name="action_confirm" type="object"
+                            class="oe_highlight" invisible="state not in ['approved']"/>
+                    <button string="Cancel" name="action_cancel" type="object"
+                            class="oe_danger" invisible="state not in ['done']"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="candidate_name" readonly="state in ['done']"/>
+                            <field name="initial_interviewer_name" readonly="state in ['done']"/>
+                            <field name="final_interviewer_name" readonly="state in ['done']"/>
+                            <field name="position" readonly="state in ['done']"/>
+                            <field name="template_id" readonly="state in ['done']"/>
+                        </group>
+                        <group>
+                            <field name="company_id" readonly="1"/>
+                            <field name="team_id" readonly="state in ['done']"/>
+
+                            <field name="total_marks" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Evaluation Criteria">
+                            <field name="evaluation_line_ids" create="0" edit="0" readonly="state in ['done']">
+                                <tree editable="bottom">
+                                    <field name="evaluation_factors" force_save="1" readonly="1"/>
+                                    <field name="initial_score" force_save="1"/>
+                                    <field name="final_score" force_save="1"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="evaluation_factors" force_save="1" readonly="1"/>
+                                        <field name="initial_score" force_save="1"/>
+                                        <field name="final_score" force_save="1"/>
+                                    </group>
+                                </form>
+
+                            </field>
+                        </page>
+                    </notebook>
+                    <br/>
+                    <group>
+                        <group>
+                            <field name="scoring" widget="statusbar" readonly="state in ['done']"/>
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+                    <group>
+                        <div class="o_row">
+                            <strong>Remarks &amp; Recommendations</strong>
+                        </div>
+                        <div class="o_row">
+                            <field name="remarks" nolabel="1" colspan="2" readonly="state in ['done']"
+                                   placeholder="Write your remarks and recommendations here..."/>
+                        </div>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_evaluation_form_tree" model="ir.ui.view">
+        <field name="name">evaluation.form.view.tree</field>
+        <field name="model">evaluation.form</field>
+        <field name="arch" type="xml">
+            <tree string="Evaluation Forms">
+                <field name="candidate_name"/>
+                <field name="initial_interviewer_name"/>
+                <field name="final_interviewer_name"/>
+                <field name="position"/>
+                <field name="template_id"/>
+                <field name="total_marks"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_evaluation_form_search" model="ir.ui.view">
+        <field name="name">evaluation.form.view.search</field>
+        <field name="model">evaluation.form</field>
+        <field name="arch" type="xml">
+            <search string="Search Evaluation Forms">
+                <field name="candidate_name"/>
+                <field name="initial_interviewer_name"/>
+                <field name="final_interviewer_name"/>
+                <field name="position"/>
+                <field name="template_id"/>
+                <field name="total_marks"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_evaluation_form" model="ir.actions.act_window">
+        <field name="name">Evaluation Forms</field>
+        <field name="res_model">evaluation.form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_evaluation_form_root"
+              name="Evaluation"
+              parent="hr_recruitment.menu_hr_recruitment_root"
+              sequence="60"/>
+
+    <menuitem id="menu_evaluation_root_parent"
+              name="Evaluation Form"
+              parent="menu_evaluation_form_root"
+              action="action_evaluation_form"
+              sequence="10"
+    />
+
+</odoo>

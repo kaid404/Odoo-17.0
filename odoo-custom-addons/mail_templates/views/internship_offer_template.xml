@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+
+        <record id="email_template_hr_recruitment_internship_offer" model="mail.template">
+            <field name="name">Internship / Training Offer Letter</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="subject">Internship / Training Offer - {{ object.job_id.name }}</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+
+                    <p>
+                        <b>Job Offer Letter – Internship/Training program –
+                            <t t-out="object.job_id.name or ''"/>
+                        </b>
+                    </p>
+
+                    <p>Dear Candidate,</p>
+
+                    <p>Thank you for interviewing with us. We are delighted to offer you the position of
+                        <b>
+                            <t t-out="object.job_id.name or ''"/>
+                        </b>
+                        at<t t-out="object.company_id.name"/>,
+                        and feel that you will be an excellent addition to our team.
+                    </p>
+
+                    <p>The terms and conditions of your employment are as follows:</p>
+                    <ul>
+                        <li>
+                            <b>Job Title:</b>
+                            <t t-out="object.job_id.name or ''"/>
+                        </li>
+                        <li>
+                            <b>Monthly Stipend:</b>
+                            ___________
+                        </li>
+                        <li>
+                            <b>Training Period:</b>
+                            ___________
+                        </li>
+                        <li>
+                            <b>Salary Revision:</b>
+                            ___________
+                        </li>
+                        <li>
+                            <b>Contract:</b>
+                            ___________
+                        </li>
+                        <li>
+                            <b>Joining Date:</b>
+                            <t t-out="object.date_open or ''"/>
+                        </li>
+                    </ul>
+
+                    <p>We feel that you will be a great fit for our team, and look forward to having you here.
+                        Please confirm your acceptance of this understanding by replying to this email.
+                    </p>
+
+                    <p>
+                        <b>Please state your acceptance and mention your joining date.</b>
+                    </p>
+                    <p>
+                        <b>NOTE: This offer is only valid for the next 48 hours.</b>
+                    </p>
+
+                    <p>
+                        Regards,
+                        <br/>
+                        <t t-out="user.name"/>
+                        <br/>
+                        <t t-out="object.company_id.name"/>
+                    </p>
+
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

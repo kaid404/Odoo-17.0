@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="employee_activity_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+
+                    <h3 style="text-align:center;">
+                        <t t-esc="plan"/>
+                        – Activity Report
+                    </h3>
+                    <t t-foreach="records" t-as="emp">
+
+                        <p style="margin-top:10px;">
+                            <strong>Employee:</strong>
+                            <t t-esc="emp['employee_name']"/>
+                            <br/>
+                            <strong>Department:</strong>
+                            <t t-esc="emp['department']"/>
+                            <br/>
+                            <strong>Team:</strong>
+                            <t t-esc="emp['team']"/>
+                            <br/>
+                            <strong>Designation:</strong>
+                            <t t-esc="emp['designation']"/>
+                        </p>
+
+                        <table class="table table-bordered" style="width:100%; font-size:12px; border-top:4px solid #007bff;">
+                            <thead>
+                                <tr>
+                                    <th>Sr#</th>
+                                    <th>Activity Summary</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sr" t-value="0"/>
+                                <t t-foreach="emp['activities']" t-as="act">
+                                    <t t-set="sr" t-value="sr + 1"/>
+                                    <tr>
+                                        <td>
+                                            <t t-esc="sr"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="act['summary']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="act['due_date']"/>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span t-if="act['status'] == 'Overdue'"
+                                                  style="color:#fff; background:#dc3545; padding:3px 8px;">
+                                                Overdue
+                                            </span>
+                                            <span t-if="act['status'] == 'Done'"
+                                                  style="color:#000; background:#d3d3d3; padding:3px 8px;">
+                                                Done <t t-if="act.get('done_date')">- <t t-esc="act['done_date']"/></t>
+                                            </span>
+                                            <span t-if="act['status'] == 'Today'"
+                                                  style="color:#000; background:#ffbf00; padding:3px 8px;">
+                                                Today
+                                            </span>
+                                            <span t-if="act['status'] == 'Planned'"
+                                                  style="color:#fff; background:#198754; padding:3px 8px;">
+                                                Planned
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div style="page-break-after: always;"/>
+                    </t>
+                </div>
+
+            </t>
+        </t>
+    </template>
+
+    <record id="action_employee_activity_report" model="ir.actions.report">
+        <field name="name">Employee Activity Report</field>
+        <field name="model">emp.activity.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_activity_report.employee_activity_report_template</field>
+        <field name="report_file">employee_activity_report.employee_activity_report_template</field>
+    </record>
+</odoo>

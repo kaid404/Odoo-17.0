@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="attendance_form_template" name="Faculty Dashboard Template">
+        <t t-call="web.layout">
+            <head>
+<!--                <meta charset="UTF-8" />-->
+<!--                <meta http-equiv="X-UA-Compatible" content="IE=edge" />-->
+<!--                <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+                <link rel="stylesheet" href="/student_portal/static/src/css/style.css" />
+                <link rel="stylesheet" href="/student_portal/static/src/css/responsive.css" />
+                <!-- font-awsome CDN Link -->
+                <link rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+                    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+                    crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <link rel='stylesheet'
+                    href='https://cdn-uicons.flaticon.com/2.5.1/uicons-thin-rounded/css/uicons-thin-rounded.css' />
+            </head>
+
+            <body>
+                <header>
+                    <div class="logosec">
+                        <img
+                            src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182541/Untitled-design-(30).png"
+                            class="icn menuicn" id="menuicn" alt="menu-icon" />
+                    </div>
+
+                    <div class="message">
+                        <i class="fa-solid fa-bell icons"></i>
+                        <i id="fullscreen-toggle" class="fa-solid fa-expand icons"
+                            onclick="toggleFullscreen()"></i>
+                        <i class="fa-solid fa-circle-half-stroke icons" id="theme-toggle"
+                            title="Toggle Dark Light Theme"></i>
+                        <img class="nav-img" src="/student_portal/static/src/img/man.png" alt="Profile Pic" />
+                    </div>
+                </header>
+
+                <div class="main-container">
+                    <div class="navcontainer">
+                        <nav class="nav">
+                            <div class="nav-upper-options">
+                                <a href="/student_dashboard">
+                                    <div class="nav-option">
+                                        <img class="nav-img" src="/student_portal/static/src/img/dashboard (2).png"
+                                            alt="animated_icon" />
+                                        <h3> Dashboard</h3>
+                                    </div>
+                                </a>
+                                    <a href="/profile">
+                                    <div class="option2 nav-option">
+                                        <img class="nav-img" src="/student_portal/static/src/img/user.png"
+                                            alt="profile" />
+                                        <h3> Profile</h3>
+                                    </div>
+                                </a>
+                                <a href="/attendance">
+                                <div class="nav-option option3">
+                                    <img class="nav-img" src="/student_portal/static/src/img/calendar.png"
+                                        alt="Attendance" />
+                                    <h3> Attendance</h3>
+                                </div>
+                                </a>
+                                <div class="nav-option option4">
+                                    <img class="nav-img" src="/student_portal/static/src/img/checklist.png"
+                                        alt="Results" />
+                                    <h3> Results</h3>
+                                </div>
+                                <div class="nav-option option5">
+                                    <img class="nav-img" src="/student_portal/static/src/img/schedule.png"
+                                        alt="schedule" />
+                                    <h3> Class Schedule</h3>
+                                </div>
+                                <div class="nav-option option6">
+                                    <img class="nav-img" src="/student_portal/static/src/img/box.png"
+                                        alt="Notifications" />
+                                    <h3> Notifications</h3>
+                                </div>
+                                <div class="nav-option option7">
+                                    <img class="nav-img" src="/student_portal/static/src/img/learning.png"
+                                        alt="LMS" />
+                                    <h3>LMS</h3>
+                                </div>
+                                <div class="nav-option option8">
+                                    <img class="nav-img" src="/student_portal/static/src/img/cloud-data.png"
+                                        alt="SIRC" />
+                                    <h3> SIRC</h3>
+                                </div>
+                                <div class="nav-option option9">
+                                    <img class="nav-img" src="/student_portal/static/src/img/customer-review.png"
+                                        alt="Feedback" />
+                                    <h3> Feedback</h3>
+                                </div>
+                                <div class="nav-option option10">
+                                    <img class="nav-img" src="/student_portal/static/src/img/book.png"
+                                        alt="Student Thesis" />
+                                    <h3> Student Thesis</h3>
+                                </div>
+                                <div class="nav-option option11">
+                                    <img class="nav-img"
+                                        src="/student_portal/static/src/img/project-management.png"
+                                        alt="Student Projects" />
+                                    <h3> Student Projects</h3>
+                                </div>
+                                <div class="nav-option option12">
+                                    <img class="nav-img" src="/student_portal/static/src/img/cloud-data.png"
+                                        alt="Feedback" />
+                                    <h3> Cmaced Projects</h3>
+                                </div>
+                                <div class="nav-option option13">
+                                    <img class="nav-img" src="/student_portal/static/src/img/customer-review.png"
+                                        alt="Feedback" />
+                                    <h3> ORIC</h3>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main">
+                   <form action="/attendance_form" method="post">
+    <input type="hidden" name="attendance_sheet_id" t-att-value="attendance_sheet.id"/>
+
+    <article>
+        <div>
+            <strong>Register :</strong>
+            <span t-esc="attendance_sheet.register_id.name"/>
+        </div>
+        <div>
+            <strong>Name :</strong>
+            <span t-esc="attendance_sheet.name"/>
+        </div>
+    </article>
+    <article>
+        <div>
+            <strong>Session :</strong>
+            <span t-esc="attendance_sheet.session_id.name"/>
+        </div>
+        <div>
+            <strong>Date :</strong>
+            <span t-esc="attendance_sheet.attendance_date"/>
+        </div>
+    </article>
+    <table>
+        <thead>
+            <tr>
+                <th>Sr no.</th>
+                <th>Name</th>
+                <th>Present</th>
+                <th>Late</th>
+                <th>Absent Excused</th>
+                <th>Absent Unexcused</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <t t-foreach="attendance_sheet.attendance_line" t-as="line">
+                <tr>
+                    <td t-esc="line.id"/>
+                    <td t-esc="line.student_id.name"/>
+                    <td>
+                        <input type="checkbox" t-att-name="'attendance_present_' + str(line.id)" t-att-checked="line.present" class="attendance-checkbox" data-line-id="line.id" data-field="present"/>
+                    </td>
+                    <td>
+                        <input type="checkbox" t-att-name="'attendance_late_' + str(line.id)" t-att-checked="line.late" class="attendance-checkbox" data-line-id="line.id" data-field="late"/>
+                    </td>
+                    <td>
+                        <input type="checkbox" t-att-name="'attendance_excused_' + str(line.id)" t-att-checked="line.excused" class="attendance-checkbox" data-line-id="line.id" data-field="excused"/>
+                    </td>
+                    <td>
+                        <input type="checkbox" t-att-name="'attendance_absent_' + str(line.id)" t-att-checked="line.absent" class="attendance-checkbox" data-line-id="line.id" data-field="absent"/>
+                    </td>
+                    <td>
+                        <input type="text" t-att-name="'attendance_remark_' + str(line.id)" t-att-value="line.remark"/>
+                    </td>
+                </tr>
+            </t>
+
+
+            
+        </tbody>
+    </table>
+    <button type="submit">Submit</button>
+</form>
+
+                    </div>
+                </div>
+
+                <script src="/student_portal/static/src/js/index.js"></script>
+            </body>
+        </t>
+    </template>
+</odoo>

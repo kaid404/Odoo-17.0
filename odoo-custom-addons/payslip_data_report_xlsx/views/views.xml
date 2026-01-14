@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+        <record id="action_report_payslip_details" model="ir.actions.report">
+            <field name="name">Payslip Data Report</field>
+            <field name="model">hr.payslip</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">payslip_data_report_xlsx.payslip_data_report</field>
+            <field name="report_file">payslip_data_report_xlsx.payslip_data_report</field>
+            <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    <record id="action_report_payslip_data_excel" model="ir.actions.server">
+        <field name="name">Payslip Data Report</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="state">code</field>
+        <field name="binding_type">action</field>
+        <field name="code">action = env.ref('payslip_data_report_xlsx.action_report_payslip_details').report_action(env.context.get('active_ids'))</field>
+    </record>
+
+</odoo>
+

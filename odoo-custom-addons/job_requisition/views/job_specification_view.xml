@@ -1,0 +1,45 @@
+<odoo>
+    <record id="view_job_specifications_form" model="ir.ui.view">
+        <field name="name">Role Requirements</field>
+        <field name="model">job.specifications</field>
+        <field name="arch" type="xml">
+            <form string="Job Specifications Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_job_specifications_tree" model="ir.ui.view">
+        <field name="name">Role Requirements</field>
+        <field name="model">job.specifications</field>
+        <field name="arch" type="xml">
+            <tree string="Role Requirements">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_job_specifications_tree" model="ir.actions.act_window">
+        <field name="name">Role Requirements</field>
+        <field name="res_model">job.specifications</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="view_job_specifications_tree"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the first Role Requirements.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_job_specifications_tree"
+              name="Role Requirements"
+              parent="menu_configuration"
+              sequence="40"
+              action="action_job_specifications_tree"/>
+</odoo>

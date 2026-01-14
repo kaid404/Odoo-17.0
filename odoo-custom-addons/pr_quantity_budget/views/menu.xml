@@ -1,0 +1,7 @@
+<odoo>
+    <menuitem id="menu_quantity_budget"
+              name="Quantity Budgets"
+              parent="purchase_request.parent_menu_purchase_request"
+              action="action_quantity_budget"
+              sequence="40"/>
+</odoo>

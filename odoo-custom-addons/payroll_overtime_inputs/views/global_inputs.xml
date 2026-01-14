@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_global_input_tree" model="ir.ui.view">
+            <field name="name">view.global.input.tree</field>
+            <field name="model">global.input</field>
+            <field name="arch" type="xml">
+                <tree string="Global Inputs">
+                    <field name="name"/>
+                    <field name="apply_by"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_global_inp_master_form" model="ir.ui.view">
+            <field name="name">view.global.inp.form</field>
+            <field name="model">global.input</field>
+            <field name="arch" type="xml">
+                <form string="Global Inputs">
+                    <header>
+                        <button string="Set to Draft" name="set_draft" type="object"
+                                invisible="state == 'draft'"/>
+                        <button string="Add Inputs" name="add_inputs" type="object"
+                                class="oe_highlight" invisible="state == 'done'"/>
+                        <field name="state" widget="statusbar"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="apply_by"/>
+                                <field name="is_emp" invisible="1"/>
+
+                            </group>
+                            <group>
+                                <field name="batch_id" string="Batch" invisible="apply_by != 'batch'"/>
+                                <field name="department_id" string="Department" invisible="apply_by != 'dpt'"/>
+                                <field name="company_id" string="Company" invisible="apply_by != 'comp'"/>
+
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+
+
+                        </group>
+                        <notebook>
+
+                            <page string='Input Lines'>
+                                <field name="input_line_ids" colspan="4" nolabel="1">
+                                    <tree string="Input Data" editable="bottom">
+                                        <field name="employee_id"
+                                               column_invisible="parent.is_emp != True"/>
+                                        <field name="input_type_id"/>
+                                        <field name="name"/>
+                                        <field name="amount"/>
+                                        <field name="sequence" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
+
+                    </sheet>
+                    <!--                    <div class="oe_chatter">-->
+                    <!--                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>-->
+                    <!--                        <field name="activity_ids" widget="mail_activity"/>-->
+                    <!--                        <field name="message_ids" widget="mail_thread"/>-->
+                    <!--                    </div>-->
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_view_global_input">
+            <field name="name">Global Inputs</field>
+            <field name="res_model">global.input</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_global_input_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_no_content_create">
+                    Create New Record
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="global_input_menu"
+                  name="Global Inputs"
+                  parent="hr_payroll.menu_hr_payroll_payslips"
+                  action="action_view_global_input"
+                  sequence="500"/>
+    </data>
+</odoo>

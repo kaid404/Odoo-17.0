@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_student_fee_update,student.fee.update,model_student_fee_update,,1,1,1,1,
+access_op_categoryy,op.categoryy,model_op_categoryy,,1,1,1,1,

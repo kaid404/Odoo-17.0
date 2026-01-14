@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <record id="prospectus_tree" model="ir.ui.view">
+        <field name="name">tree</field>
+        <field name="model">op.prospectus</field>
+        <field name="arch" type="xml">
+            <tree create="0" delete="1">
+                <field name="application_id"/>
+                <field name="applicant_name"/>
+                <field name="father_name"/>
+                <field name="guardian_cnic"/>
+                <field name="amount" sum="Total" widget="monetary"/>
+                <field name="company_id"/>
+                <field name="register_id"/>
+                <field name="create_uid" invisible="0"/>
+                <field name="create_date" invisible="0"/>
+            </tree>
+        </field>
+    </record>
+
+   
+   
+    <!-- To-Do Task List view -->
+    <record id="prospectus_action" model="ir.actions.act_window">
+        <field name="name">Prospectus Details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">op.prospectus</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref='prospectus_tree'/>
+    </record>
+
+    
+
+    <menuitem id="menu_Prospectus_Details"
+              name="Prospectus Details"
+              action="prospectus_action"
+              parent="gxs_admission.menu_op_admission_submenu"
+              sequence="100"/>
+
+
+
+
+</odoo>

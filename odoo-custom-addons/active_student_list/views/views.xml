@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+        <record id="active_student_list_form_view" model="ir.ui.view">
+            <field name="name">Active Student List</field>
+            <field name="model">active.student.list</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="st_class"/>
+                            <field name="campus"/>
+                        </group>
+                        <group>
+                            <field name="section"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_student_list" string="Print PDF Report" type="object"
+                                class="btn-success"/>
+                        <button string="Discard" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="active_students_list_action" model="ir.actions.act_window">
+            <field name="name">Active Student List</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">active.student.list</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="active_student_list_menu"
+                  name="Active Student List"
+                  parent="account.menu_finance_reports"
+                  action="active_students_list_action"
+                  sequence="500"/>
+<!--                menu item for the actual report:-->
+<!--        studio_customization.school_fee_reports_0f3dc4a4-b55b-40b3-b66c-aafbcc3b4133-->
+
+<!--        for local -->
+<!--        account.menu_finance_reports-->
+
+    </data>
+</odoo>

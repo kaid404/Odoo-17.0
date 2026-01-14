@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="att_summary_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                    <h3 style="text-align:center;">
+                        Attendance Summary Report
+                    </h3>
+                    <p style="text-align:center; margin-bottom:15px;">
+                        <strong>
+                            <t t-esc="period"/>
+                        </strong>
+                    </p>
+
+                    <table class="table table-bordered"
+                           style="width:100%; font-size:12px; border-top:4px solid #007bff;">
+                        <thead>
+                            <tr style="background:#f0f0f0;">
+                                <th>S#</th>
+                                <th>Employee</th>
+                                <th>Details</th>
+                                <th>Schedule Days</th>
+                                <t t-if="show_presents">
+                                    <th>Total Present</th>
+                                </t>
+                                <t t-if="show_leaves">
+                                    <th>Total Leave</th>
+                                </t>
+                                <t t-if="show_absents">
+                                    <th>Total Absent</th>
+                                </t>
+                                <t t-if="show_lates">
+                                    <th>Total Late</th>
+                                </t>
+                                <t t-if="show_hd">
+                                    <th>Total HalfDay</th>
+                                </t>
+                                <t t-if="show_schedule_hours">
+                                    <th>Total Scheduled Hours</th>
+                                </t>
+                                <t t-if="show_worked_hours">
+                                    <th>Total Worked Hours</th>
+                                </t>
+                                <t t-if="show_extra_time">
+                                    <th>Short/Excess Time</th>
+                                </t>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <t t-set="sr" t-value="1"/>
+                            <t t-foreach="employee_lines" t-as="row">
+                                <tr>
+                                    <td>
+                                        <t t-esc="sr"/>
+                                        <t t-set="sr" t-value="sr + 1"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="row['employee_name']"/>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <strong>Department:</strong>
+                                            <t t-esc="row['department']"/>
+                                        </div>
+                                        <div>
+                                            <strong>Team:</strong>
+                                            <t t-esc="row['team']"/>
+                                        </div>
+                                        <div>
+                                            <strong>Designation:</strong>
+                                            <t t-esc="row['designation']"/>
+                                        </div>
+                                        <div>
+                                            <strong>Punch Code:</strong>
+                                            <t t-esc="row['code']"/>
+                                        </div>
+                                        <div>
+                                            <strong>Status:</strong>
+                                            <t t-esc="row['status']"/>
+                                        </div>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <t t-esc="row['schedule_days']"/>
+                                    </td>
+                                    <t t-if="show_presents">
+                                        <td class="text-center">
+                                            <t t-esc="row['present_days']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="show_leaves">
+                                        <td class="text-center">
+                                            <t t-esc="row['leave_days']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="show_absents">
+                                        <td class="text-center">
+                                            <t t-esc="row['absent_days']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="show_lates">
+                                        <td class="text-center">
+                                            <t t-esc="row['late_days']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="show_hd">
+                                        <td class="text-center">
+                                            <t t-esc="row['half_days']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="show_schedule_hours">
+                                        <td class="text-center">
+                                            <t t-esc="row['scheduled_hours']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="show_worked_hours">
+                                        <td class="text-center">
+                                            <t t-esc="row['worked_hours']"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="show_extra_time">
+                                        <td class="text-center">
+                                            <t t-esc="row['extra_hours']"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_att_summary_report" model="ir.actions.report">
+        <field name="name">Attendance Summary Report</field>
+        <field name="model">att.summary.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">attendance_summary_report.att_summary_report_template</field>
+        <field name="report_file">attendance_summary_report.att_summary_report_template</field>
+    </record>
+</odoo>

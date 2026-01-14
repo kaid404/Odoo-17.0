@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="high_school_detail">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" style="font-size:20px;">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-6" rowspan="2" style="text-align:right;">
+                                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
+                                         width="160px%"
+                                         height="180px"/>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <h1 style="text-align:center;color:blue; font-size: 70px;font-style: italic;">
+                                    <b>CITY HIGH</b>
+                                    <br/>
+                                    <b>SCHOOL</b>
+                                </h1>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-4"/>
+                            <div class="col-4">
+                                <h4 style="text-align:center; font-size: 30px;">
+                                    <b>ADMISSION FORM</b>
+                                </h4>
+                            </div>
+                            <div class="col-4" style="text-align:left; font-size:22px;">
+                                <span style="border-bottom: 1px solid black;">
+                                    <b>Application Number #</b>&#160;&#160;&#160;
+                                    <t t-esc="o.application_number"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-3">Student's Name (in capital
+                                letters)
+                            </div>
+                            <div class="col-9 border-1 border-bottom border-dark">
+                                <t t-esc="o.name"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2">Father's Name</div>
+                            <div class="col-10 border-1 border-bottom border-dark">
+                                <t t-esc="o.father_name"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2">Date of Birth</div>
+                            <div class="col-3 border-1 border-bottom border-dark">
+                                <t t-esc="o.birth_date"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2">Father's Occupation</div>
+                            <div class="col-10 border-1 border-bottom border-dark">
+                                <t t-esc="o.father_occupation"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-3">Father's Educational
+                                Qualification
+                            </div>
+                            <div class="col-9 border-1 border-bottom border-dark">
+                                <t t-esc="o.father_education"/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-3">Mother's Educational
+                                Qualification
+                            </div>
+                            <div class="col-9 border-1 border-bottom border-dark">
+                                <t t-esc="o.mother_education"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1">Address</div>
+                            <div class="col-11 border-1 border-bottom border-dark">
+                                <t t-esc="o.street"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1">Phone#</div>
+                            <div class="col-3 border-1 border-bottom border-dark">
+                                <t t-esc="o.phone"/>
+                            </div>
+                            <div class="col-2" style="text-align:right;">Mobile#</div>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <div class="col-7 border-1 border-bottom border-dark">
+                                <t t-esc="o.mobile"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1">E-mail</div>
+                            <div class="col-11 border-1 border-bottom border-dark">
+                                <t t-esc="o.email"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-3">Class in which admission is
+                                required
+                            </div>
+                            <div class="col-9 border-1 border-bottom border-dark">
+                                <t t-esc="o.course_id.name"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-3">School Last Attended(if
+                                any)
+                            </div>
+                            <div class="col-9 border-1 border-bottom border-dark">
+                                <t t-esc="o.prev_institute_id"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <h4>I hereby solemnly declare that I will strictly abide by the rules and regulations of the
+                            school. In case of misconduct, the principal shall be justified to take any action. The
+                            particulars given above are correct to the best of my knowledge and belief.
+                        </h4>
+                        <br/>
+                        <br/>
+                        <u>
+                            <h4 style="text-align:center;">
+                                <b>FOR OFFICE USE ONLY</b>
+                            </h4>
+                        </u>
+                        <br/>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">
+                                        <strong>Student Fee Plan</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="total_fees" t-value="0"/>
+                                <t t-foreach="o.fee_structure.fee_details" t-as="line">
+                                    <tr t-if="o.fee_structure.fee_details">
+                                        <td>
+                                            <strong t-esc="line.product_id.name"/>
+                                        </td>
+                                        <td>
+                                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<t
+                                                t-esc="line.amount"/>
+                                        </td>
+                                    </tr>
+                                    <!--                                    <t t-set="total_fees" t-value="total_fees + line.amount"/>-->
+                                    <t t-set="total_fees" t-value="total_fees + float(line.amount or 0)"/>
+                                </t>
+<!--                                 <tr t-if="o.fee_structure.late_fee">
+                                    <td>
+                                        <strong>Late Fee</strong>
+                                    </td>
+                                    <td>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span
+                                            t-esc="o.fee_structure.late_fee"/>
+                                        <t t-set="total_fees"
+                                           t-value="total_fees + float(o.fee_structure.late_fee or 0)"/>
+                                    </td>
+                                </tr> -->
+                                <tr t-if="o.fee_structure.admission_fee">
+                                    <td>
+                                        <strong>Admission Fee</strong>
+                                    </td>
+                                    <td>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span
+                                            t-esc="o.fee_structure.admission_fee"/>
+                                        <t t-set="total_fees"
+                                           t-value="total_fees + float(o.fee_structure.admission_fee or 0)"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="o.fee_structure.annual_charges">
+                                    <td>
+                                        <strong>Annual Charges</strong>
+                                    </td>
+                                    <td>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span
+                                            t-esc="o.fee_structure.annual_charges"/>
+                                        <t t-set="total_fees"
+                                           t-value="total_fees + float(o.fee_structure.annual_charges or 0)"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="o.fee_structure.security_fee">
+                                    <td>
+                                        <strong>Security Fee</strong>
+                                    </td>
+                                    <td>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span
+                                            t-esc="o.fee_structure.security_fee"/>
+                                        <t t-set="total_fees"
+                                           t-value="total_fees + float(o.fee_structure.security_fee or 0)"/>
+                                    </td>
+                                </tr>
+<!--                                 <tr t-if="o.fee_structure.registration_fee">
+                                    <td>
+                                        <strong>Registration Fee</strong>
+                                    </td>
+                                    <td>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span
+                                            t-esc="o.fee_structure.registration_fee"/>
+                                        <t t-set="total_fees"
+                                           t-value="total_fees + float(o.fee_structure.registration_fee or 0)"/>
+                                    </td>
+                                </tr> -->
+                                <tr t-if="o.discount_tags">
+                                    <th colspan="2" style="border-bottom: 2px solid black;"/>
+                                </tr>
+                                <t t-set="total_discounts" t-value="0"/>
+                                <t t-foreach="o.discount_tags" t-as="tage">
+
+                                    <tr t-if="o.discount_tags">
+                                        <td>
+                                            <strong t-esc="tage.name"/>
+                                        </td>
+                                        <td>
+                                            <t>
+                                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;-
+                                                <t t-esc="tage.amount"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+
+                                    <t t-set="total_discounts" t-value="total_discounts + float(tage.amount or 0)"/>
+                                </t>
+                                <tr>
+                                    <td>
+                                        <strong>Grand Total</strong>
+                                    </td>
+                                    <td>
+                                        <t t-set="grand_total" t-value="total_fees - total_discounts"/>
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<strong
+                                            t-esc="grand_total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1">Date</div>
+                            <div class="col-11 border-1 border-bottom border-dark">
+                                <t t-esc="o.application_date"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2">Signature Father/
+                                Guardian
+                            </div>
+                            <div class="col-10 border-1 border-bottom border-dark"/>
+
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2">Signature Account Officer
+                            </div>
+                            <div class="col-4 border-1 border-bottom border-dark"/>
+
+                            <div class="col-2">Signature Principal</div>
+                            <div class="col-12 border-1 border-bottom border-dark"/>
+                        </div>
+                        <br/>
+                        <br/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

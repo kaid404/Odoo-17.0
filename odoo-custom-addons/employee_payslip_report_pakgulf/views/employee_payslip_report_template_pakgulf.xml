@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="employee_payslip_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-if="not o" t-set="o" t-value="docs.env['hr.payslip'].search([('id','=',docs_1)])"/>
+                <t t-if="not company">
+                    <!-- Multicompany -->
+                    <t t-if="company_id">
+                        <t t-set="company" t-value="company_id"/>
+                    </t>
+                    <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                        <t t-set="company" t-value="o.company_id.sudo()"/>
+                    </t>
+                    <t t-else="else">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                </t>
+                <div class="header" style="position:relative;">
+                    <div class="row" style="position:absolute;top:20px;left:0;">
+                        <div class="col-12">
+                            <t t-if="o.employee_id.company_id">
+                                <img t-att-src="'data:image/png;base64,%s' % o.employee_id.company_id.logo.decode('ascii')"
+                                     alt="company_logo" height="80px" width="80px"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2" style="font-size: 10px;">
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                        </div>
+                        <div class="col-8 text-center fw-bold" style="font-size: 30px;">
+                            <span t-esc="company.name"/>
+                        </div>
+                        <div class="col-2 text-end" style="font-size: 10px;">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <span class="page"/>
+                                </li>
+                                <li class="list-inline-item">/</li>
+                                <li class="list-inline-item">
+                                    <span class="topage"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 fw-bold text-center" style="font-size: 23px;">Payslip</div>
+                    </div>
+                    <div class="row pt-2" style="font-size: 16px;">
+                        <div class="col-4 fw-bold text-center"></div>
+                        <div class="col-4 fw-bold text-center">
+                            <t t-if="o.date_from">
+                                <t t-esc="o.date_from.strftime('%B %Y')"/>
+                            </t>
+                            <t t-if="not o.date_from">
+                                <span>No date available</span>
+                            </t>
+                        </div>
+                        <div class="col-4 fw-bold text-end">Confidential</div>
+                    </div>
+                </div>
+
+                <div class="page" style="font-size: 12px;">
+                    <div class="row p-1">
+                        <div class="col-12 text-end fw-bold">
+                            <t t-if="o.employee_id.paid_by == 'Bank'">Paid By Bank</t>
+                            <t t-if="o.employee_id.paid_by == 'Cash'">Paid By Cash</t>
+                            <t t-if="o.employee_id.paid_by == 'Cheque'">Paid By Cheque</t>
+                        </div>
+                    </div>
+                    <div class="row p-1">
+                        <div class="col-6"></div>
+                        <div class="col-3 text-end">
+                            <!--                            <strong>Lwp Days &#160;&#160;&#160;: &#160;&#160;&#160;</strong>-->
+                            <!--                            <span t-esc=""/>-->
+                        </div>
+                        <div class="col-3 text-end">
+                            <strong>Days Worked &#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                            <span t-esc="worked_days"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 p-2 border border-1 border-dark">
+                            <div class="pb-1">
+                                <strong>Emp. Code&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.employee_id.barcode"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Emp. Name &#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.employee_id.name"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Company&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.x_studio_company_name.name"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Department&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.emp_department_id.name"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Designation&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.emp_job_id.name"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Emp. Type&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.emp_employee_type"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Section/Division&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.emp_department_id.name"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Grade&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-if="o.emp_employee_grade" t-esc="o.emp_employee_grade"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>DOJ&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.contract_id.date_start"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>DOC&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.contract_id.date_conf"/>
+                            </div>
+                        </div>
+                        <div class="col-6 p-2 border border-1 border-dark">
+                            <div class="pb-1">
+                                <strong>Address&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.employee_id.private_street"/>
+                                <t t-if="o.employee_id.private_street">,</t>
+                                <span t-esc="o.employee_id.private_city"/>
+                                <t t-if="o.employee_id.private_city">,</t>
+                                <span t-esc="o.employee_id.private_state_id.name"/>
+                                <t t-if="o.employee_id.private_state_id.name">,</t>
+                                <span t-esc="o.employee_id.private_country_id.name"/>
+                                <t t-if="o.employee_id.private_country_id.name">.</t>
+                            </div>
+
+                            <div class="pb-1">
+                                <strong>EOBI&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-if="o.employee_id.x_studio_eobi_" t-esc="o.employee_id.x_studio_eobi_"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Bank Branch&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.employee_id.bank_name"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Bank Account #&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.emp_employee_bank"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>CNIC&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.employee_id.identification_id"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>NTN&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-if="o.employee_id.x_studio_ntn_" t-esc="o.employee_id.x_studio_ntn_"/>
+                            </div>
+                            <div class="pb-1">
+                                <strong>Contract Type&#160;&#160;&#160;: &#160;&#160;&#160;</strong>
+                                <span t-esc="o.employee_id.contract_id.contract_type_id.name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-1">
+                        <div class="col-6">
+                            <table class="table border-dark text-center">
+                                <thead class="border border-1 border-dark">
+                                    <tr class="bg-light">
+                                        <th colspan="3">Pay &amp; Allowance</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>Standard</th>
+                                        <th>Current Month</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="allowances" t-as="allowance">
+                                        <tr>
+                                            <td class="text-start">
+                                                <t t-esc="allowance['Allowance Name']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="'{:,.0f}'.format(allowance['Standard'])"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="'{:,.0f}'.format(allowance['Current Month'])"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td>
+                                            <t t-esc="'{:,.0f}'.format(sum(allowance['Standard'] for allowance in allowances if allowance.get('Standard')))"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="'{:,.0f}'.format(sum(allowance['Current Month'] for allowance in allowances if allowance.get('Current Month')))"/>
+                                        </td>
+                                    </tr>
+                                    <!--                                    <tr>-->
+                                    <!--                                        <th colspan="2">Gross Pay &amp; Allowances</th>-->
+                                    <!--                                        <th class="text-center">-->
+                                    <!--                                            <t t-esc="'{:,.0f}'.format(sum(allowance['Current Month'] for allowance in allowances if allowance.get('Current Month')))"/>-->
+                                    <!--                                        </th>-->
+                                    <!--                                    </tr>-->
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="col-6">
+                            <table class="table border-dark text-center">
+                                <thead class="border border-1 border-dark">
+                                    <tr class="bg-light">
+                                        <th colspan="3">Deductions</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>Standard</th>
+                                        <th>Current Month</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="deductions" t-as="deduction">
+                                        <tr>
+                                            <td class="text-start">
+                                                <t t-esc="deduction['Deduction Name']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="'{:,.0f}'.format(deduction['Standard'])"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="'{:,.0f}'.format(deduction['Amount'])"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <!--                                    <tr>-->
+                                    <!--                                        <th>Total</th>-->
+                                    <!--&lt;!&ndash;                                        <td>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;                                            <t t-esc=""/>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;                                        </td>&ndash;&gt;-->
+                                    <!--                                        <td>-->
+                                    <!--                                            <t t-esc=""/>-->
+                                    <!--                                        </td>-->
+                                    <!--                                    </tr>-->
+                                    <tr>
+                                        <th>Total</th>
+                                        <th class="text-center">
+                                            <t t-esc="'{:,.0f}'.format(sum(deduction['Standard'] for deduction in deductions))"/>
+                                        </th>
+                                        <th class="text-center">
+                                            <t t-esc="'{:,.0f}'.format(sum(deduction['Amount'] for deduction in deductions))"/>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--                     <br/> -->
+                    <!--                     <br/> -->
+                    <!--                     <br/> -->
+                    <!--                     <br/> -->
+                    <!--                     <br/><br/><br/> -->
+                    <!--                     <div style="page-break-after:always;"> </div> -->
+                    <div class="row border border-1 border-dark">
+                        <div class="col-6 fw-bold  p-2">
+                            Gross Pay and Allowances&#160;&#160;&#160;: &#160;&#160;&#160;<t
+                                t-esc="'{:,.0f}'.format(sum(allowance['Current Month'] for allowance in allowances if allowance.get('Current Month')))"/>
+                        </div>
+                        <!--                        <div class="col-6 fw-bold  p-2">-->
+                        <!--                            Total Deductions&#160;&#160;&#160;: &#160;&#160;&#160;<t t-esc="'{:,.0f}'.format(sum(deduction['Amount'] for deduction in deductions))"/>-->
+                        <!--                        </div>-->
+                        <div class="col-6  p-2 fw-bold" style="border-left:1px solid black">
+                            Total Deductions&#160;&#160;&#160;: &#160;&#160;&#160;<t
+                                t-esc="'{:,.0f}'.format(sum(deduction['Amount'] for deduction in deductions))"/>
+                        </div>
+                    </div>
+
+                    <div class="row border border-1 border-dark">
+                        <div class="col-3 fw-bold  p-2">
+                            Net Pay (Rs)&#160;&#160;&#160;: &#160;&#160;&#160;<t t-esc="'{:,.0f}'.format(net_salary)"/>
+                        </div>
+                        <div class="col-9  p-2 text-start border border-1 border-dark">
+                            <t t-esc="net_salary_words"/>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-6 pe-1">
+                            <table class="table border-dark text-center">
+                                <tr>
+                                    <th>Loan Summary Title</th>
+                                    <td>Sanctioned Amt.</td>
+                                    <td colspan="2">Current Month
+                                        <table class="table border-light m-0 text-center">
+                                            <tr>
+                                                <td>Ded.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td colspan="2">Remaining
+                                        <table class="table border-light m-0 text-center">
+                                            <tr>
+                                                <td>Install.</td>
+                                                <td>Balance</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <t t-if="loans" t-foreach="loans" t-as="loan">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="loan['Title']"/>
+                                        </td>
+                                        <td colspan="2">
+                                            <t t-esc="'{:,.0f}'.format(loan['Sanctioned Amount'])"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="'{:,.0f}'.format(loan.get('current_month_deduction'))"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="'{:,.0f}'.format(loan['Installment'])"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="'{:,.0f}'.format(loan['Balance'])"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <!--                                <t t-if="advances" t-foreach="advances" t-as="advance">-->
+                                <!--                                    <tr>-->
+                                <!--                                        <td>Advance Salary</td>-->
+                                <!--                                        <td colspan="2">-->
+                                <!--                                            <t t-esc="'{:,.0f}'.format(advance['Sanctioned Amount'])"/>-->
+                                <!--                                        </td>-->
+                                <!--                                        <td>-->
+                                <!--                                             <t t-esc="'{:,.0f}'.format(advance.get('current_month_deduction'))"/> -->
+                                <!--                                        </td>-->
+                                <!--                                        <td>-->
+                                <!--                                            <t t-esc="'{:,.0f}'.format(advance['Installment'])"/>-->
+                                <!--                                        </td>-->
+                                <!--                                        <td>-->
+                                <!--                                            <t t-esc="'{:,.0f}'.format(advance['Balance'])"/>-->
+                                <!--                                        </td>-->
+                                <!--                                    </tr>-->
+                                <!--                                </t>-->
+                                <tr>
+                                    <th colspan="4">Loan Balance (Net)</th>
+                                    <td colspan="2">
+                                        <b>
+                                            <t t-esc="'{:,.0f}'.format(loan_balance_net)"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-6 ps-1">
+                            <table class="table border-dark">
+                                <tr>
+                                    <th colspan="4">Income Tax Details</th>
+                                </tr>
+                                <tr>
+                                    <td>Taxable</td>
+                                    <td>
+                                        <!--                                        <t t-esc="'{:,.0f}'.format(sum(allowance['Current Month'] for allowance in allowances if allowance.get('Current Month')) * 12)"/>-->
+                                        <t t-esc="'{:,.0f}'.format(texable)"/>
+                                    </td>
+                                    <td>Payable</td>
+                                    <td>
+                                        <t t-esc="'{:,.0f}'.format(payable)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Paid (YTD)</td>
+                                    <td>
+                                        <t t-esc="'{:,.0f}'.format(paid_tax)"/>
+                                    </td>
+                                    <td>Remaining</td>
+                                    <td>
+                                        <t t-esc="'{:,.0f}'.format(remaining)"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="row mt-5"
+                         style="border-top: 1px solid black; font-size: 10px; padding-top: 5px;">
+                        <div class="col-6 text-start">
+                            Printed by:
+                            <t t-esc="user.name"/>
+                        </div>
+                        <div class="col-6 text-end">
+                            Print Time:
+                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_pakgulf_payslip_report" model="report.paperformat">
+        <field name="name">Pakgulf Custom Payslip Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">28</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="employee_payslip_report_action" model="ir.actions.report">
+        <field name="name">Pakgulf Payslip Report</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_payslip_report_pakgulf.employee_payslip_report_template</field>
+        <field name="report_file">employee_payslip_report_pakgulf.employee_payslip_report_template</field>
+        <field name="print_report_name">'Payslip %s' %object.name</field>
+        <field name="binding_model_id" ref="model_hr_payslip"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_pakgulf_payslip_report"/>
+    </record>
+
+</odoo>

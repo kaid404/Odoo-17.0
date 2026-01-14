@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="emp_grant_loan_application_pdf_doc">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="record_list" t-as="employee">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-2">
+                                <img t-att-src="'data:image/png;base64,%s' % company_logo"
+                                     style="max-width: 100px; max-height: 100px;"/>
+                            </div>
+                            <div class="col-8" style="text-align:center">
+                                <div class="row">
+                                    <h1>
+                                        <span t-esc="company_name"/>
+                                    </h1>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" style="text-align:center">
+                                        <h5 style="background-color: #C1C1C1;">
+                                            <strong>APPLICATION FOR GRANT Of LOAN/ADVANCE To STAFF</strong>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <table class="table table-bordered" style="border:0px solid transparent;">
+                            <tbody style="border:0px solid transparent;">
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Employee Code:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('employee_code')"/>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Joining Date:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('joining')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Employee Name:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('employee_name')"/>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Appointment Date:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('appointment')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Father,s Name:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('father_name')"/>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Loan Required:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('required_amount')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Department:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('department')"/>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Status:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('status')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Designation:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('designation')"/>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Loan Type:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('loan_type')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Employee Type:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('employee_type')"/>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Emp Bank Name:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('bank')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Grade:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('grade')"/>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Account No:
+                                        </strong>
+                                    </td>
+                                    <td style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('account#')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Gross Pay:
+                                        </strong>
+                                    </td>
+                                    <td colspan="3" style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('gross_pay')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Basic Pay:
+                                        </strong>
+                                    </td>
+                                    <td colspan="3" style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('basic_pay')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Return Mode:
+                                        </strong>
+                                    </td>
+                                    <td colspan="3" style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('return_mode')"/>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px solid transparent;">
+                                    <td style="border:0px solid transparent;">
+                                        <strong>
+                                            Reason/Remarks:
+                                        </strong>
+                                    </td>
+                                    <td colspan="3" style="border:0px solid transparent;">
+                                        <span t-esc="employee.get('remarks')"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-12"
+                                 style="border-bottom: 1px solid black; text-align:center;">
+                                <h5 style="text-align:center;">
+                                    <strong>UNDERTAKING</strong>
+                                </h5>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-12">
+                                <strong>I undertake to pay the entire amount
+                                    <span
+                                            t-esc="employee.get('installments')"
+                                            style="border-bottom: 1px solid black"/>
+                                    equally monthly
+                                    installments from my salary/bonus/also authorize Company
+                                    <br/>
+                                    to recover the amount out of my provident fund balance if his
+                                    loan is not recovered from me.
+                                </strong>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-8"/>
+                            <div class="col-4"
+                                 style="border-top: 1px solid black; text-align:center;">
+                                <br/>
+                                <strong>Signature of Applicant</strong>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Recommendation of Head Of Department:</strong>
+                            </div>
+                            <div class="col-8" style="border-bottom: 1px solid black;"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2"/>
+                            <div class="col-2">
+                                <strong>Administration:</strong>
+                            </div>
+                            <div class="col-8" style="border-bottom: 1px solid black;"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2">
+                                <strong style="border-bottom: 1px solid black; text-align:center; ">
+                                    DIRECTOR:
+                                </strong>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Remarks (Approved/Not Approved):</strong>
+                            </div>
+                            <div class="col-8" style="border-bottom: 1px solid black;"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-12" style="border-bottom: 1px solid black;"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2">
+                                <strong>Amount Sanctioned:</strong>
+                            </div>
+                            <div class="col-4" style="border-bottom: 1px solid black;"/>
+                        </div>
+                    </div>
+                    <p style="page-break-before: always;"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="emp_grant_loan_app_paperformat" model="report.paperformat">
+        <field name="name">Employee Application for Grant Loan/Adv PDF</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">12</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">27</field>
+        <field name="dpi">100</field>
+    </record>
+
+
+    <record id="emp_grant_loan_app_report_action" model="ir.actions.report">
+        <field name="name">Employee Application for Grant Loan/Adv PDF</field>
+        <field name="model">pak.emp.grant.loan.application</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pakgulf_employee_pf_loan_application.emp_grant_loan_application_pdf_doc</field>
+        <field name="report_file">pakgulf_employee_pf_loan_application.emp_grant_loan_application_pdf_doc</field>
+        <field name="binding_model_id" ref="model_pak_emp_grant_loan_application"/>
+        <!-- <field name="paperformat_id"
+        ref="pakgulf_employee_pf_loan_application.emp_grant_loan_app_paperformat"/> -->
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

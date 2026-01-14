@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_att_analysis_report_form" model="ir.ui.view">
+        <field name="name">att.analysis.report.form</field>
+        <field name="model">att.analysis.report</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Analysis Report">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="filter_by"/>
+                        <field name="employee_ids" widget="many2many_tags" invisible="filter_by != 'employee'"
+                               options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="job_ids" widget="many2many_tags" invisible="filter_by != 'job'"
+                               options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="team_ids" widget="many2many_tags" invisible="filter_by != 'team'"
+                               options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+
+                    </group>
+                </group>
+                <group string="Filters">
+                    <group>
+                        <field name="report_of" widget="radio"/>
+                        <field name="sorting_method" widget="radio"/>
+                    </group>
+                    <group>
+                        <field name="minimum_count"/>
+                        <field name="maximum_count"/>
+                        <field name="show_email" widget="boolean_toggle"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print_attendance_report" type="object" string="Print PDF"
+                            class="btn-primary"/>
+                    <button name="action_print_attendance_report_xlsx" type="object" string="Print Xlsx"
+                            class="btn-success"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_att_analysis_report_wizard" model="ir.actions.act_window">
+        <field name="name">Attendance Analysis Report</field>
+        <field name="res_model">att.analysis.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Reports for Lates, Leaves &amp; Absences"
+              id="menu_attendance_analysis_report"
+              parent="hr_attendance.menu_hr_attendance_reporting"
+              action="action_att_analysis_report_wizard"
+              sequence="51"/>
+
+</odoo>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="high_school_prospectus_reciept">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <style>
+                    .main{position:relative;font-size:12px;height:522px;width:760px;border-radius:0px;border:2px solid
+                    silver;background-image:url("/city_school/static/src/img/bg_img.png");background-repeat:no-repeat;background-size:100%
+                    100%;background-position:
+                    center;}
+                    .main_inner{height:100%;width:100%;background-color:rgba(255, 255, 255,
+                    .6);opacity:0.95;border-radius:0px;}
+                    .inner_container{z-index:1000;height:100%;width:100%;background-color:transparent;opacity:1;border-radius:0px;}
+                    .right_corner{z-index:-1;position:absolute;top:0;right:0;height:150px;}
+                    .lft_corner{z-index:0;position:absolute;bottom:0px;left:0;height:250px;width:100%;}
+                    .head{padding-top:25px;text-align:center;}
+                    .logo{text-align:center;}
+                    .head h5{font-size:25px;margin:0;}
+                    .address{font-size:13px;}
+                    .title{font-size:15px;}
+                    .dynamic_data_lines{border-bottom:0px dotted;margin-bottom:3px;}
+                    table{border:1px dotted silver;width:100%;}
+                    table td ,th{border-bottom:1px dotted silver;padding:3px;text-align:center;}
+                    <!--                                        table,right_corner,lft_corner,head,row{z-index:20000;color:black;opacity:1;}-->
+                </style>
+
+                <t t-foreach="docs" t-as="o">
+                    <!--                    <t t-set="o" t-value="o.sudo()"/>-->
+                    <div class="main">
+                        <!--                        <img class="lft_corner" src="/city_school/static/src/img/bg9.png"/>-->
+                        <div class="main_inner">
+                            <!--                            <img class="right_corner" src="/city_school/static/src/img/bg8_right.png"/>-->
+                            <div class="inner_container">
+                                <div class="head">
+                                    <div class="row">
+                                        <div class="logo col-2">
+                                            <!--                                            <img t-if="o.company_id.logo"-->
+                                            <!--                                                 t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"-->
+                                            <!--                                                 alt="Company Logo" style="max-height: 80px;"/>-->
+                                            <img src="/city_school_prospectus_reciept/static/src/img/logo.png"
+                                                 alt="Company Logo"
+                                                 style="max-height: 80px;"/>
+                                        </div>
+                                        <div class="col-8">
+                                            <h5>
+                                                <strong>CITY HIGH SCHOOL (
+                                                    <t t-esc="o.company_id.name"/>
+                                                    )
+                                                </strong>
+                                            </h5>
+                                            <div class="address">
+                                                <span t-esc="o.company_id.street"/>
+                                                <span t-esc="o.company_id.street2"/>
+                                                <span t-esc="o.company_id.city"/>
+                                                <!--                                    </div>-->
+                                                <!--                                    <div>-->
+                                                <t t-if="o.company_id.state_id.name or o.company_id.country_id.name or o.company_id.phone">
+                                                    ,
+                                                </t>
+                                                <span t-esc="o.company_id.state_id.name"/>
+                                                <span t-esc="o.company_id.country_id.name"/>
+                                                <span t-esc="o.company_id.phone"/>
+                                                .
+                                            </div>
+                                            <div class="title">
+                                                <strong>Prospectus RECEIPT</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 logo">
+                                            <img src="/city_school_prospectus_reciept/static/src/img/image.png"
+                                                 alt="https://www.cityhighschool.pk" height="80px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--                                <div class="row p-2" style="text-align:center;font-size:12px;">-->
+                                <!--                                    <div class="col-3">-->
+                                <!--                                        <span>Receipt :</span>-->
+                                <!--                                        <strong>-->
+                                <!--                                            <t t-esc="o.name"/>-->
+                                <!--                                        </strong>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="col-3">-->
+                                <!--                                        <span>Due Date :</span>-->
+                                <!--                                        <strong>-->
+                                <!--                                            <t t-esc="o.invoice_date_due"/>-->
+                                <!--                                        </strong>-->
+
+                                <!--                                    </div>-->
+                                <!--                                    <div class="col-3">-->
+                                <!--                                        <span>Student ID :</span>-->
+                                <!--                                        <strong t-if="o.student_id.gr_no">-->
+                                <!--                                            <t t-esc="o.student_id.gr_no"/>-->
+                                <!--                                        </strong>-->
+                                <!--                                        <strong t-else="">-->
+                                <!--                                            &#160;&#160;&#160;&#160;&#160;-->
+                                <!--                                        </strong>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="col-3">-->
+
+                                <!--                                        <span>Challan :</span>-->
+                                <!--                                        <strong>-->
+                                <!--                                            <t t-esc="o.name"/>-->
+                                <!--                                        </strong>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <div class="row px-4" style="font-size:12px;">
+                                    <div class="col-2">
+                                        <div class="dynamic_data_lines">
+                                            <span>Student Name :</span>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Father Name :</span>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Campus :</span>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Class :</span>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Section :</span>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Application Number</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.name">
+                                                <t t-esc="o.name"/>
+                                            </strong>
+                                            <strong t-else="">&#160;</strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.father_name">
+                                                <t t-esc="o.father_name"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.company_id.name">
+                                                <t t-esc="o.company_id.name"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.academic_years_id.name">
+                                                <t t-esc="o.academic_years_id.name"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.x_studio_section.name">
+                                                <t t-esc="o.x_studio_section.name"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.application_number">
+                                                <t t-esc="o.application_number"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;
+                                            </strong>
+                                        </div>
+                                        <!--                                        <div class="dynamic_data_lines">-->
+                                        <!--                                            <strong t-if="o.student_id.gr_no">-->
+                                        <!--                                                <t t-esc="o.extract_integers(o.student_id.gr_no)"/>-->
+                                        <!--                                            </strong>-->
+                                        <!--                                            <strong t-else="">-->
+                                        <!--                                                &#160;-->
+                                        <!--                                            </strong>-->
+                                        <!--                                        </div>-->
+
+                                    </div>
+                                    <div class="col-5">
+                                        <table>
+                                            <tr>
+                                                <th colspan="2"
+                                                    style="background-color:#026ab2;color:white;text-align:center;font-weight:bold;font-size:15;">
+                                                    CHALLAN
+                                                </th>
+                                            </tr>
+                                            <t t-if="fee.price_unit >= 0">
+                                                <tr>
+                                                    <th>
+                                                        <strong>Prospectus Fee?</strong>
+                                                    </th>
+                                                    <td>
+                                                        <t t-esc="o.prospectus_fee"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <tr style="background-color:#82bcc6;">
+                                                <th>Total Fee</th>
+                                                <td>
+                                                    <t t-set="total_fee"
+                                                       t-value="sum(o.prospectus_fee)"/>
+                                                    <t t-esc="total_fee"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row px-4" style="font-size:12px;">
+                                    <div class="col-7">
+                                        <div class="dynamic_data_lines">
+                                            <span>RECEIVED WITH THANKS (RS) &#160;&#160;&#160;:&#160;&#160;&#160;</span>
+                                            <strong>
+                                                <t t-set="balance" t-value="total_fee"/>
+                                                <t t-if="o.state == 'done'">
+                                                    <t t-esc="balance"/>/
+                                                    <span>Paid</span>
+                                                </t>
+                                                <t t-if="o.state == 'draft'">
+                                                    <t t-esc="balance"/>
+                                                    <span>Unpaid</span>
+                                                </t>
+                                                <!-- If the invoice is cancelled, show "Cancelled" -->
+                                                <t t-if="o.state == 'cancel'">
+                                                    <t t-esc="balance"/>
+                                                    <span>Cancelled</span>
+                                                </t>
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>IN WORDS &#160;&#160;&#160;:&#160;&#160;&#160; TWO THOUSAND</span>
+                                            <strong>
+                                                <t t-esc="o.amount_to_words(balance)"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+<!--                                    <div class="col-5">-->
+<!--                                        <table style="border:1px dotted silver;">-->
+<!--                                            <tr>-->
+<!--                                                <th>Waiver Amount</th>-->
+<!--                                                <td>-->
+<!--                                                    <t t-foreach="o.invoice_line_ids" t-as="fee">-->
+<!--                                                        <t t-if="fee.product_id.name == 'Fee Waiver'">-->
+<!--                                                            <t t-esc="round(fee.price_unit)"/>-->
+<!--                                                        </t>-->
+<!--                                                    </t>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr style="background-color:#82bcc6;">-->
+<!--                                                <th>Total Paid</th>-->
+<!--                                                <td>-->
+<!--                                                    <t t-set="waiver_amount" t-value="0"/>-->
+<!--                                                    <t t-foreach="o.invoice_line_ids" t-as="fee">-->
+<!--                                                        <t t-if="fee.product_id.name == 'Fee Waiver'">-->
+<!--                                                            <t t-set="waiver_amount" t-value="fee.price_unit * -0"/>-->
+<!--                                                        </t>-->
+<!--                                                    </t>-->
+<!--                                                    <t t-set="total_fee"-->
+<!--                                                       t-value="sum(line.price_unit for line in o.invoice_line_ids) + (waiver_amount)"/>-->
+<!--                                                    <t t-esc="round(total_fee)"/>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr style="background-color:#026ab2;color:white;">-->
+<!--                                                <th>Balance Amount</th>-->
+<!--                                                <td>-->
+<!--                                                    <t t-esc="o.get_installment_amount()"/>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+                                </div>
+                                <div class="row px-4">
+<!--                                    <div class="col-7 py-1" style="font-size:12px;">-->
+<!--                                        <div>-->
+<!--                                            <strong>Dear Parents,</strong>-->
+<!--                                            <br/>-->
+<!--                                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;-->
+<!--                                            &#160;&#160;&#160;&#160;&#160;&#160;-->
+<!--                                            <span>-->
+<!--                                                please note carefully that <i>"LATE FEE DEPOSIT FINE"</i> wil-->
+<!--                                                not be remitted after due date .Thanks-->
+<!--                                            </span>-->
+<!--                                        </div>-->
+<!--                                        <strong>- Due date is 8th of every month. After due date Rs.-->
+<!--                                            <t t-esc="o.get_fine_amount_year_base()"/>/- fine will be-->
+<!--                                            imposed.-->
+<!--                                        </strong>-->
+<!--                                    </div>-->
+                                    <div class="col-5 ps-2 pt-4" style="font-size:12px;">
+                                        <div class="dynamic_data_lines" style="border-bottom:1px dotted gray;">
+                                            <span>RECEIVED BY &#160;&#160;&#160;:&#160;&#160;&#160;</span>
+                                            <strong>
+                                                <t t-esc="o.get_create_user()"/>
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines" style="border-bottom:1px dotted gray;">
+                                            <span>Date &#160;&#160;&#160;:&#160;&#160;&#160;</span>
+                                            <strong>
+                                                <t t-esc="o.get_create_date()"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-9"></div>
+                                    <div class="col-1 pt-1 pe-1" style="text-align:right;">
+                                        <img src="/city_school/static/src/img/www.png"
+                                             alt="https://www.cityhighschool.pk" width="17px" class="pb-1"/>
+                                        <br/>
+                                        <img src="/city_school/static/src/img/Instagram_icon.png"
+                                             alt="https://www.instagram.com/cityhighschoolfsd_/?hl=en" width="17px"
+                                             class="pb-1"/>
+                                        <br/>
+                                        <img src="/city_school/static/src/img/facebook.png"
+                                             alt="https://www.facebook.com/cityhighschoolfsd" width="17px"
+                                             class="pb-1"/>
+                                        <br/>
+                                        <img src="/city_school/static/src/img/youtub.png"
+                                             alt="https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw"
+                                             width="18px" style="margin-right:2px;"/>
+                                    </div>
+                                    <div class="col-2" style="text-align:left;">
+                                        <img src="/city_school/static/src/img/final_qr.jpeg"
+                                             style="width: 85px; height: 85px;" alt="Social Media QR Code"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="prospectus_paper_format" model="report.paperformat">
+        <field name="name">Prospectus Receipt Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A5</field>
+        <!--        <field name="height">148</field>-->
+        <!--        <field name="width">210</field>-->
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="city_school_prospectus_reciept_action" model="ir.actions.report">
+        <field name="name">Prospectus Receipt</field>
+        <field name="model">op.admission</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">city_school_prospectus_reciept.high_school_prospectus_reciept</field>
+        <field name="report_file">city_school_prospectus_reciept.high_school_prospectus_reciept</field>
+        <field name="binding_model_id" ref="gxs_admission.model_op_admission"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="city_school_prospectus_reciept.prospectus_paper_format"/>
+    </record>
+</odoo>

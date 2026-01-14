@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="hr_contract_form_inherit2" model="ir.ui.view">
+        <field name="name">hr.contract.view.form.inherit2</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='information']/group[@name='salary_info']/group[@name='salary']" position="after">
+                <group>
+                    <field name="per_hour" string="Per Hour"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_overtime_calculate_tree" model="ir.ui.view">
+        <field name="name">gxs.overtime.calculate.tree</field>
+        <field name="model">gxs.overtime.calculate</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Overtime">
+                <field name="employee_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="total_amount"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_hr_overtime_calculate_form" model="ir.ui.view">
+        <field name="name">hr.overtime.calculate.form.view</field>
+        <field name="model">gxs.overtime.calculate</field>
+        <field name="arch" type="xml">
+            <form string="Overtime">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="total_amount" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="date_from" invisible="0" readonly="1"/>
+                            <field name="date_to" invisible="0" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Overtime" name="overtime_view_tree">
+                            <field name="attendance_ids" readonly="1">
+                                <tree string="Overtime">
+                                    <field name="employee_id" invisible="1"/>
+                                    <field name="attendance_id" invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="date_check_in"/>
+                                    <field name="date_check_out"/>
+                                    <field name="overtime_hours"/>
+                                    <field name="total_amount_day"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_overtime_calculate_form_view" model="ir.actions.act_window">
+        <field name="name">Overtime</field>
+        <field name="res_model">gxs.overtime.calculate</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">main</field>
+    </record>
+
+<!--    <menuitem-->
+<!--            id="menu_hr_overtime_calculate"-->
+<!--            parent="hr_attendance.menu_hr_attendance_view_attendances"-->
+<!--            name="Overtime"-->
+<!--            action="hr_overtime_calculate_form_view"-->
+<!--            sequence="5"/>-->
+
+    <menuitem
+            id="menu_hr_attendance_views_attendances"
+            name="Attendances"
+            parent="hr_attendance.menu_hr_attendance_view_attendances"
+            sequence="-10"
+            groups="hr_attendance.group_hr_attendance_own_reader"
+            action="hr_attendance.hr_attendance_action"/>
+
+    <!--    <record id="stock_ledger_group_without_price" model="res.groups">-->
+    <!--        <field name="name">Stock Ledger Without Price</field>-->
+    <!--        <field name="category_id" ref="base.module_category_inventory_inventory"/>-->
+    <!--        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+    <!--    </record>-->
+    <!--    <record id="stock_ledger_group_pricing" model="res.groups">-->
+    <!--        <field name="name">Stock Ledger pricing</field>-->
+    <!--        <field name="category_id" ref="base.module_category_inventory_inventory"/>-->
+    <!--        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+    <!--    </record>-->
+    <!--    <report id="report_stock_ledger_price_excel"-->
+    <!--            model="wej.stock.ledger.report.wiz"-->
+    <!--            string="Stock Ledger Report With Price XLSX"-->
+    <!--            name="wej_stock_ledger_report.report_stock_ledger_price_xlsx"-->
+    <!--            file="wej_stock_ledger_report.report_stock_ledger_price_xlsx"-->
+    <!--            report_type="xlsx"-->
+    <!--            menu="False"-->
+    <!--    />-->
+    <!--    <report id="report_stock_ledger_without_price_excel"-->
+    <!--            model="wej.stock.ledger.report.wiz"-->
+    <!--            string="Stock Ledger Report Without Price XLSX"-->
+    <!--            name="wej_stock_ledger_report.report_stock_without_price_xlsx"-->
+    <!--            file="wej_stock_ledger_report.report_stock_without_price_xlsx"-->
+    <!--            report_type="xlsx"-->
+    <!--            menu="False"-->
+    <!--    />-->
+</odoo>

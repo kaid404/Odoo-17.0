@@ -1,0 +1,292 @@
+<odoo>
+    <template id="fee_report_template">
+        <t t-name="school_fee_report.fee_report_template">
+            <t t-call="web.html_container">
+                <t t-set="report_data" t-value="env['fee.report.wizard'].sudo().search([('id','=',id)]).print_report_data()"/>
+                <t t-foreach="report_data.get('rec')" t-as="doc">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-8">
+                                <h2>City High School</h2>
+                                <div>Fee Receipt BY :  ALL Detail (
+                                     <t t-esc="doc.get('date')"/>
+                                    ) Campus :
+                                     <t t-esc="doc.get('campus')"/>
+                                </div>
+                            </div>
+                            <div class="col-4">
+
+                            </div>
+                        </div>
+                    </div>
+                     <style>
+                            table{
+                         width: 100%; font-size: 12px; text-align:center;
+                         border-collapse:collapse;
+                            }
+                            tr td,th{
+                            padding:5px; 0;
+                            border:1px solid black;
+                            }
+                        </style>
+                    <div class="page">
+                        <table>
+                            <thead style="background-color:silver;">
+                                <tr style="">
+                                    <th>SR #</th>
+                                    <th>Receipt #</th>
+                                    <th>Name</th>
+                                    <th>Campus</th>
+                                    <th>Sec</th>
+<!--                                    <th>CHN</th>-->
+                                    <th>ID</th>
+                                    <th>Due Date</th>
+                                    <th>Rec Date</th>
+                                    <th>Received By</th>
+                                    <th>Received Time</th>
+                                    <th>Tuition</th>
+                                    <th>Fine</th>
+                                    <th>arrears</th>
+                                    <th>Reg &amp; Pros</th>
+                                    <th>ADM</th>
+                                    <th>SEC</th>
+<!--                                    <th>OTH</th>-->
+                                    <th>Recvd</th>
+                                    <th>Wav</th>
+                                    <th>Bal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="a1" t-value="0"/>
+                                <t t-set="a2" t-value="0"/>
+                                <t t-set="a3" t-value="0"/>
+                                <t t-set="a4" t-value="0"/>
+                                <t t-set="a5" t-value="0"/>
+                                <t t-set="a6" t-value="0"/>
+                                <t t-set="a7" t-value="0"/>
+                                <t t-set="a8" t-value="0"/>
+                                <t t-set="a9" t-value="0"/>
+                                <t t-set="sr" t-value="0"/>
+                                <t t-foreach="doc.get('final_list')" t-as="fee">
+                                    <t t-set="sr" t-value="sr + 1"/>
+                                    <tr>
+                                        
+                                        <td>
+                                            <t t-esc="sr"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('receipt_number')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('name')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('campus')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('section', '')"/>
+                                        </td>
+<!--                                        <td>-->
+<!--&lt;!&ndash;                                            <t t-esc="fee.chn"/>&ndash;&gt;-->
+<!--                                        </td>-->
+                                        <td>
+                                            <t t-esc="fee.get('roll_id', '')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('due_date')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('rec_date')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('write_uid')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('write_date')"/>
+                                        </td>
+
+                                        <td>
+                                            <t t-esc="fee.get('tuition')"/>
+                                            <t t-set="a1" t-value="a1 + fee.get('tuition')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('fine')"/>
+                                            <t t-set="a2" t-value="a2 + fee.get('fine')"/>
+<!--                                            <t t-esc="fee.fine | 0"/>-->
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('arrears')"/>
+                                            <t t-set="a3" t-value="a3 + fee.get('arrears')"/>
+                                        </td>
+                                        <td>
+<!--                                            <t t-foreach="doc.get('prosp_details')" t-as="prosp">-->
+                                            <t t-esc="fee.get('reg_pros')"/>
+                                            <t t-set="a4" t-value="a4 + fee.get('reg_pros')"/>
+<!--                                            </t>-->
+<!--                                            <t t-esc="fee.get('reg_pros')"/>-->
+                                        </td>
+                                        <td>
+                                            <t t-if="fee.get('adm')">
+                                            <t t-esc="fee.get('adm')"/>
+                                            
+                                            <t t-set="a5" t-value="a5 + fee.get('adm')"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('sec')"/>
+                                            <t t-set="a6" t-value="a6 + fee.get('sec')"/>
+                                        </td>
+<!--                                        <td>-->
+<!--&lt;!&ndash;                                            <t t-esc="fee.oth | 0"/>&ndash;&gt;-->
+<!--                                        </td>-->
+                                        <td>
+                                            <t t-esc="fee.get('recvd')"/>
+                                            <t t-set="a7" t-value="a7 + fee.get('recvd')"/>
+<!--                                            <t t-esc="fee.recvd | 0"/>-->
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('wav')"/>
+                                            <t t-set="a8" t-value="a8 + fee.get('wav')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fee.get('bln')"/>
+                                            <t t-set="a9" t-value="a9 + fee.get('bln')"/>
+<!--                                            <t t-esc="fee.bln | 0"/>-->
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    
+                                        <td>
+                                           
+                                        </td>
+                                        <td>
+                                           
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                           
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+<!--                                        <td>-->
+<!--&lt;!&ndash;                                            <t t-esc="fee.chn"/>&ndash;&gt;-->
+<!--                                        </td>-->
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                                                                    </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+
+                                        <td><b>
+                                            <t t-esc="round(a1,2)"/>
+                                        </b>
+                                            
+                                        </td>
+                                        <td>
+                                            <b>
+                                            <t t-esc="round(a2,2)"/>
+                                        </b>
+<!--                                            <t t-esc="fee.fine | 0"/>-->
+                                        </td>
+                                        <td>
+                                                        <b>
+                                            <t t-esc="round(a3,2)"/>
+                                        </b>                            </td>
+                                        <td>
+                                            <b>
+                                            <t t-esc="round(a4,2)"/>
+                                        </b>
+<!--                                            <t t-foreach="doc.get('prosp_details')" t-as="prosp">-->
+                                            
+<!--                                            </t>-->
+<!--                                            <t t-esc="fee.get('reg_pros')"/>-->
+                                        </td>
+                                        <td>
+                                            <b>
+                                            <t t-esc="round(a5,2)"/>
+                                        </b>
+                                            
+                                        </td>
+                                        <td>
+                                            <b>
+                                            <t t-esc="round(a6,2)"/>
+                                        </b>
+                                        </td>
+<!--                                        <td>-->
+<!--&lt;!&ndash;                                            <t t-esc="fee.oth | 0"/>&ndash;&gt;-->
+<!--                                        </td>-->
+                                        <td>
+                                            <b>
+                                            <t t-esc="round(a7,2)"/>
+                                        </b>
+                                            
+<!--                                            <t t-esc="fee.recvd | 0"/>-->
+                                        </td>
+                                        <td>
+                                            <b>
+                                            <t t-esc="round(a8,2)"/>
+                                        </b>
+                                                                                    </td>
+                                        <td>
+                                            <b>
+                                            <t t-esc="round(a9,2)"/>
+                                        </b>
+                                            
+<!--                                            <t t-esc="fee.bln | 0"/>-->
+                                        </td>
+                                    </tr>
+
+                                <tr>
+                                        <td style="text-align:right;padding:20px 0;" colspan="19"><strong>Total Received =</strong>  <strong><t t-esc="a4 + a7"/></strong></td>
+                                    <!--    <td colspan='2'>-->
+                                    <!--<strong><t t-esc="a4 + a7"/></strong>-->
+                                    <!--</td>-->
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_fee_report" model="report.paperformat">
+        <field name="name">Fee Report Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">28</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">22</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="action_fee_report_pdf" model="ir.actions.report">
+        <field name="name">Fee Report</field>
+        <field name="model">fee.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fee_report.fee_report_template</field>
+        <field name="report_file">fee_report.fee_report_template</field>
+        <field name="binding_model_id" ref="model_fee_report_wizard"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="fee_report.paperformat_fee_report"/>
+    </record>
+
+</odoo>

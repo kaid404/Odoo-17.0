@@ -1,0 +1,382 @@
+<odoo>
+    <data>
+        <record id="customer_wizard_form" model="ir.ui.view">
+            <field name="name">customer_wizard_form_view</field>
+            <field name="model">campus.summary</field>
+            <field name="arch" type="xml">
+                <form string="Campus Summary Report">
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                        </group>
+                        <group>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_pdf_action" type="object" string="Get Summary" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="campus_summary_report_wizard" model="ir.actions.act_window">
+            <field name="name">Campus Summary Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">campus.summary</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="customer_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+        <menuitem id="campus_summary_report" parent="gxs_school_fee.menu_school_fee_form"
+                  name="Campus Summary Report" action="campus_summary_report_wizard"
+                  sequence="20"
+        />
+
+        <template id="reports_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <t t-set="logo" t-value="company_logo"/>
+                    <header class="header">
+                        <div class="row">
+                            <div class="col-2 text-center">
+                                <t t-set='logo' t-value="env['res.company'].search([('id','=',1)]).logo"/>
+                                <div t-if="logo">
+                                    <img t-att-src="image_data_uri(logo)" alt="Company Logo" style="height: 100px;"/>
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <h2 style="margin:0;padding:0;">
+                                    <strong>City High School</strong>
+                                </h2>
+                                <div>
+                                    <strong style="color:#8C2586;">Fee Balance Summary of All Campuses</strong>
+                                </div>
+                                <div>
+                                    <strong>From:</strong>&#160;
+                                    <span style="color:#4b1869" t-esc="form.get('from_date')"/>
+                                    <strong>To:</strong>&#160;
+                                    <span style="color:#4b1869" t-esc="form.get('to_date')"/>
+                                </div>
+                            </div>
+                            <div class="col-3" style="font-size:10px;text-align:right;">
+                                <t t-set="dt" t-value="current_datetime"/>
+                                <span>Printed on:
+                                    <t t-esc="dt"/>
+                                </span>
+                                <br/>
+                                <span>Page
+                                    <span class="page"/>
+                                    of
+                                    <span class="topage"/>
+                                </span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="page" style="padding:10px 0;font-size:12px;">
+                        <style>
+                            table{width:100%;border-collapse:collapse;}
+                            table td,th{border:1px solid; padding:5px;text-align:center;}
+                            table thead{background-color:#acadac;}
+                        </style>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;width:2%">Nos</th>
+                                    <th style="text-align:center;width:4%">Campus Name</th>
+                                    <th style="text-align:center;width:4%">Arrears</th>
+                                    <th style="text-align:center; width:4%">Current</th>
+                                    <th style="text-align:center; width:4%">Total</th>
+                                    <th style="text-align:center; width:4%" colspan="3">Left</th>
+                                    <th style="text-align:center; width:4%">Total</th>
+                                    <th style="text-align:center; width:4%" colspan="3">Received</th>
+                                    <th style="text-align:center; width:4%" colspan="3">Balance</th>
+                                </tr>
+                            </thead>
+                            <t t-set="nos_total" t-value='0'/>
+                            <t t-set="arrears_total" t-value='0'/>
+                            <t t-set="current_total" t-value='0'/>
+                            <t t-set="total" t-value='0'/>
+                            <t t-set="left_total" t-value='0'/>
+                            <t t-set="total_after_left_amount" t-value='0'/>
+                            <t t-set="count_left" t-value='0'/>
+                            <t t-set="rec_nos" t-value='0'/>
+                            <t t-set="rec_total" t-value='0'/>
+                            <t t-set="bal_nos" t-value='0'/>
+                            <t t-set="bal_amount" t-value='0'/>
+                            <t t-foreach="form.get('campus_data')" t-as="rec">
+                                <t t-set="nos_total" t-value="nos_total + rec.get('nos')"/>
+                                <t t-set="arrears_total" t-value="arrears_total + rec.get('arrears')"/>
+                                <t t-set="current_total" t-value="current_total + rec.get('current')"/>
+                                <t t-set="total" t-value="total + rec.get('total')"/>
+                                <t t-set="rec_nos" t-value="rec_nos + rec.get('received_count')"/>
+                                <t t-set="rec_total" t-value="rec_total + rec.get('received')"/>
+                                <t t-set="bal_nos" t-value="bal_nos + rec.get('bal_count')"/>
+                                <t t-set="bal_amount" t-value="bal_amount + rec.get('bal_amount')"/>
+                                <tr style="font-size:12px;">
+                                    <td>
+                                        <span t-esc="rec.get('nos')"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="rec.get('name')"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('arrears'),2)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('current'),2)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('total'),2)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="rec.get('left_count')"/>
+                                        <t t-set="count_left" t-value="rec.get('left_count') + count_left"/>
+
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('left_stds_amount'),2)"/>
+                                        <t t-set="left_total" t-value="rec.get('left_stds_amount') + left_total"/>
+
+                                    </td>
+                                    <td>
+                                        <span t-esc="rec.get('left_std_percentage')"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('total_after_left_amount'),2)"/>
+                                        <t t-set="total_after_left_amount"
+                                           t-value="rec.get('total_after_left_amount') + total_after_left_amount"/>
+
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('received_count'),2)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('received'),2)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="rec.get('received_perc')"></span>
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('bal_count'),2)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="round(rec.get('bal_amount'),2)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="rec.get('bal_perc')"></span>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr style="background-color:#d1cfcf;">
+                                <td>
+
+                                    <span t-esc="nos_total"/>
+                                </td>
+                                <td>
+                                    <span>Total</span>
+                                </td>
+                                <td>
+                                    <span>
+                                        <t t-esc="round(arrears_total,2)"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+
+                                        <t t-esc="round(current_total,2)"/>
+
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+                                        <t t-esc="round(total,2)"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+                                        <t t-esc="round(count_left,2)"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+                                        <t t-esc="round(left_total,2)"/>
+                                    </span>
+                                </td>
+
+
+                                <td></td>
+                                <td>
+                                    <span>
+                                        <t t-esc="round(total_after_left_amount,2)"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+                                        <t t-esc="round(rec_nos,2)"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+                                        <t t-esc="round(rec_total,2)"/>
+                                    </span>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <span>
+                                        <t t-esc="bal_nos"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span>
+                                        <t t-esc="round(bal_amount,2)"/>
+                                    </span>
+                                </td>
+
+
+                            </tr>
+                        </table>
+                        <div class="row py-3">
+                            <!--                            <div class="w-1/2">-->
+                            <!--                                <p class="font-bold border border-black p-2">Total Partial Balance :</p>-->
+                            <!--                                <p class="font-bold border border-black p-2">Today Partial Balance :</p>-->
+                            <!--                            </div>-->
+                            <div class="col-5 pe-1">
+                                <div>
+                                    <strong>Advance Received :
+                                        <t t-esc="advance_amt"/>
+                                    </strong>
+                                    <table>
+                                        <tbody>
+                                            <t t-foreach="form.get('advance_rec')" t-as="adv">
+                                                <tr>
+                                                    <td>
+                                                        <t t-esc="adv.get('date')"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="adv.get('amount')"/>
+                                                    </td>
+                                                </tr>
+
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div>
+                                    <strong>Tuition Fee :
+                                        <t t-esc="tuition_total"/>
+                                    </strong>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Arear :</td>
+                                                <td>
+                                                    <t t-esc="fee_arrears"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Late Fine :</td>
+                                                <td> <t t-esc="fine_amt"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Amission :</td>
+                                                <td>
+                                                    <t t-esc="adm_amt"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                 </div>
+                               <!-- <div>
+                                    <strong>Late Fine / New Adm :
+                                        <t t-esc="fine_amt"/>
+                                    </strong>
+                                </div> -->
+                                <div>
+                                    <strong>This Month Total :
+                                        <t t-esc="f_total_amt"/>
+                                    </strong>
+                                </div>
+                                <div>
+                                    <strong>Already Paid :
+                                        <t t-esc="paid_amt"/>
+                                    </strong>
+                                    <table>
+                                        <tbody>
+                                            <t t-foreach="form.get('paid_rec')" t-as="paid">
+                                                <tr>
+                                                    <td>
+                                                        <t t-esc="paid.get('date')"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="paid.get('amount')"/>
+                                                    </td>
+                                                </tr>
+
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-7 ps-1">
+                                <strong>LEFT DETAIL :
+                                    <t t-esc="round(left_total,2)"/>
+                                </strong>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>SR</th>
+                                            <th>Campus</th>
+                                            <th>Roll Nbr</th>
+                                            <th>Name</th>
+                                            <th>Date</th>
+                                            <th>Fee</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="sr" t-value="0"/>
+                                        <t t-foreach="left_student_lines" t-as="left">
+                                            <t t-set="sr" t-value="sr + 1"/>
+                                        <tr>
+                                            <td><t t-esc="sr"/> </td>
+                                            <td><t t-esc="left.get('campus')"/> </td>
+                                            <td><t t-esc="left.get('roll_nbr')"/> </td>
+                                            <td><t t-esc="left.get('std_name')"/> </td>
+                                            <td><t t-esc="left.get('write_date')"/> </td>
+                                            <td><t t-esc="left.get('amount')"/> </td>
+                                        </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <record id="paperformat_summary_report" model="report.paperformat">
+            <field name="name">Fee Report Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="disable_shrinking" eval="True"/>
+            <field name="dpi">96</field>
+        </record>
+        <record id="campus_summary" model="ir.actions.report">
+            <field name="name">Campus Summary</field>
+            <field name="model">campus.summary</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">campus_summary_report.reports_pdf</field>
+            <field name="report_file">campus_summary_report.reports_pdf</field>
+            <field name="binding_model_id" ref="model_campus_summary"/>
+            <field name="paperformat_id" ref="campus_summary_report.paperformat_summary_report"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

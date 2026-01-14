@@ -1,0 +1,20 @@
+{
+    'name': 'Turbo Reports',
+    'version': '16.0.1',
+    'category': 'Sale Order',
+    'sequence': '-1001',
+    'author': 'Hasnain Jutt',
+    'website': 'http://www.globalxs.co',
+    'license': 'LGPL-3',
+    'depends': ['base', 'hr', 'sale'],
+    'data': [
+        'views/invoice_turbo_international_print.xml',
+        'views/invoice_turbo_solution_print.xml',
+        'views/turbo_custom_sale_order_print.xml',
+        'views/deleivery_print.xml',
+        'views/payment_report.xml',
+        'views/purchase_order.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+}

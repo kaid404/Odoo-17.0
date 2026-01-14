@@ -1,0 +1,193 @@
+<odoo>
+    <data>
+
+        <template id="active_student_list_report">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div classs="page">
+                        <style>
+                            table {
+                            width: 100%;
+                            border-collapse: collapse; /* Removes extra spacing between cells */
+                            table-layout: fixed;
+                            }
+                            table, th, td {
+                            border: 1px solid black;
+                            }
+                            th, td {
+                            padding: 2px 3px; /* Adjust padding to reduce height */
+                            height: 2px; /* Set a fixed height similar to Excel */
+                            font-size: 14pt; /* Reduce font size to make cells compact */
+                            vertical-align: middle;
+                            word-wrap: break-word; /* Allows long words to wrap */
+                            white-space: normal; /* Enables line wrapping */
+                            overflow-wrap: break-word; /* Ensures wrapping works properly */
+                            }
+                        </style>
+
+
+                        <t t-foreach="st_data.items()" t-as="data">
+<!--                            HEADER-->
+                            <div class="row" height="10px">
+                            <div class="col-1" align="left">
+                                <img t-if="company_logo" t-att-src="company_logo" alt="logo 2" width="84px"
+                                     height="84px" style="margin-top:8px;"/>
+                            </div>
+                            <div class="col-9" align="left" style="margin-top:35px;margin-left:27px;text-align:center">
+                                <strong style="font-size: 15pt;">
+                                    <t t-esc="company_name"/>
+                                </strong>
+                            </div>
+                            <div class="row" height="10px">
+                                <div class="col-12">
+                                    <h5 style="text-align: center; font-size: 16px">
+                                        <strong>Active Student List</strong>
+                                        <br/>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+
+                            <table style="padding-top:5px; margin-bottom:10px;">
+                                <thead>
+                                    <tr>
+                                        <th>Comp #</th>
+                                        <th>Adm #</th>
+                                        <th>Adm Date</th>
+                                        <th>Name</th>
+                                        <th>Father Name</th>
+                                        <th>DOB</th>
+                                        <th>Mob #</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size:16px;">
+                                    <tr>
+                                        <td colspan="7" style="text-align: center">
+                                            <strong t-esc="data[0]"/>
+                                        </td>
+                                    </tr>
+                                    <t t-set="total_st" t-value="0"/>
+                                    <t t-foreach="data[1]" t-as="st">
+                                        <t t-set="total_st" t-value="total_st + 1"/>
+                                        <tr>
+                                            <td>
+                                                <t t-esc="st['roll_number']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="st['adm#']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="st['adm_date']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="st['name']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="st['father_name']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="st['dob']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="st['mob']"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td colspan="7" style="text-align:left; font-weight:bold;font-size: 14pt">
+                                            Total Students in&#160;<t t-esc="data[0]"/>:&#160;<t t-esc="total_st"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Force a page break after each table except the last one -->
+                            <t t-if="data[0] != list(st_data.keys())[-1]">
+                                <div style="page-break-after: always;"/>
+                            </t>
+                        </t>
+
+                        <!--                        <table style="padding-top:3px;">-->
+                        <!--                            <thead>-->
+                        <!--                                <tr>-->
+                        <!--                                    <th>Comp #</th>-->
+                        <!--                                    <th>Adm #</th>-->
+                        <!--                                    <th>Adm Date</th>-->
+                        <!--                                    <th>Name</th>-->
+                        <!--                                    <th>Father Name</th>-->
+                        <!--                                    <th>DOB</th>-->
+                        <!--                                    <th>Mob #</th>-->
+                        <!--                                </tr>-->
+                        <!--                            </thead>-->
+                        <!--                            <tbody style="font-size:16px;">-->
+                        <!--                                <t t-foreach="st_data.items()" t-as="data">-->
+                        <!--                                    <tr>-->
+                        <!--                                        <td colspan="7" style="text-align: center">-->
+                        <!--                                            <strong t-esc="data[0]"/>-->
+                        <!--                                        </td>-->
+                        <!--                                    </tr>-->
+                        <!--                                    <t t-set="total_st" t-value="0"/>-->
+                        <!--                                    <t t-foreach="data[1]" t-as="st">-->
+                        <!--                                        <t t-set="total_st" t-value="total_st + 1"/>-->
+                        <!--                                        <tr>-->
+                        <!--                                            <td>-->
+                        <!--                                                <t t-esc="st['roll_number']"/>-->
+                        <!--                                            </td>-->
+                        <!--                                            <td>-->
+                        <!--                                                <t t-esc="st['adm#']"/>-->
+                        <!--                                            </td>-->
+                        <!--                                            <td>-->
+                        <!--                                                <t t-esc="st['adm_date']"/>-->
+                        <!--                                            </td>-->
+                        <!--                                            <td>-->
+                        <!--                                                <t t-esc="st['name']"/>-->
+                        <!--                                            </td>-->
+                        <!--                                            <td>-->
+                        <!--                                                <t t-esc="st['father_name']"/>-->
+                        <!--                                            </td>-->
+                        <!--                                            <td>-->
+                        <!--                                                <t t-esc="st['dob']"/>-->
+                        <!--                                            </td>-->
+                        <!--                                            <td>-->
+                        <!--                                                <t t-esc="st['mob']"/>-->
+                        <!--                                            </td>-->
+                        <!--                                        </tr>-->
+                        <!--                                    </t>-->
+                        <!--                                    <tr>-->
+                        <!--                                        <td colspan="7" style="text-align:left; font-weight:bold;font-size: 14pt">-->
+                        <!--                                            Total Students in &#160;<t t-esc="data[0]"/>:&#160;-->
+                        <!--                                            <t t-esc="total_st"/>-->
+                        <!--                                        </td>-->
+                        <!--                                    </tr>-->
+                        <!--                                </t>-->
+                        <!--                            </tbody>-->
+                        <!--                        </table>-->
+                    </div>
+                </t>
+            </t>
+        </template>
+
+
+        <record id="active_student_list_paper_format" model="report.paperformat">
+            <field name="name">Paper Format for Active Student List Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+        </record>
+
+        <record id="active_student_action_report" model="ir.actions.report">
+            <field name="name">Active Student List</field>
+            <field name="model">active.student.list</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">active_student_list.active_student_list_report</field>
+            <field name="report_file">active_student_list.active_student_list_report</field>
+            <field name="paperformat_id" ref="active_student_list.active_student_list_paper_format"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

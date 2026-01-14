@@ -1,0 +1,143 @@
+<odoo>
+    <data>
+
+        <template id="print_attendance_specific_employees">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page"
+                         style="font-size: 8pt;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;">
+                        <h3 style="text-align: center;">Daily Attendance Report By Shift</h3>
+                        <p style="text-align: center;">Date:
+                            <span t-esc="form.get('start_date')"/>
+                        </p>
+                        <t t-foreach="form.get('employee_rec')"
+                           t-as="o">
+                            <!--                    <h3 class="text-center"><span t-esc="form.get('start_date')"/> to <span t-esc="form.get('end_date')"/></h3>-->
+<!--                            <div id="informations" class="row mt32 mb32" style="border:1px solid black;">-->
+<!--                                <div class="col-auto mw-100 mb-2" name="barcode" style="margin-top:10px;">-->
+<!--                                    <strong>Employee Code:</strong>-->
+<!--                                    <span class="m-0" t-esc="o.get('badge')"/>-->
+<!--                                    <br/>-->
+<!--                                    <strong>Employee Name:</strong>-->
+<!--                                    <span class="m-0" t-esc="o.get('name')"/>-->
+<!--                                </div>-->
+<!--                                <div style="margin-left: 150px; margin-top:10px;" class="col-auto mw-100 mb-2"-->
+<!--                                     name="employee_id">-->
+<!--                                    <strong>Department:</strong>-->
+<!--                                    <span class="m-0" t-esc="o.get('dept')"/>-->
+<!--                                    <br/>-->
+<!--                                    <strong>Designation:</strong>-->
+<!--                                    <span class="m-0" t-esc="o.get('position')"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </t>
+                        <table class="table table-sm table-bordered">
+                            <t t-set="total_work_hrs" t-value="0"/>
+                            <thead style="border:1px solid black;">
+                                <tr>
+                                    <th class="text-center">
+                                        <strong>Employee Code</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Name</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Designation</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Department</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Planned Shift</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Check In</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Check Out</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Stay</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Late Arrival</strong>
+                                    </th>
+<!--                                    <th class="text-center">-->
+<!--                                        <strong>Early Departure </strong>-->
+<!--                                    </th>-->
+                                    <th class="text-center">
+                                        <strong>Status</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="form.get('attendances')" t-as="l">
+                                    <td class="text-center">
+                                        <span t-esc="l.get('code')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('name')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('job_id')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('department_id')"/>
+                                    </td>
+                                    <td>
+                                        <t t-if="l.get('shift_from')">
+
+
+                                        <span t-esc="l.get('shift_from')" t-options='{"widget": "float_time"}'/>
+                                            <span>-</span>
+                                        <span t-esc="l.get('shift_to')" t-options='{"widget": "float_time"}'/>
+
+
+                                        </t>
+                                        <t t-else="">
+                                        <span t-esc="l.get('shift')"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="l.get('check_in')">
+                                            <span t-esc="l.get('check_in')"/>
+                                        </t>
+                                    </td>
+                                     <td t-if="l.get('check_out')" class="text-center">
+                                        <span t-esc="l.get('check_out')"/>
+                                    </td>
+                                     <td class="text-center">
+                                         <t t-if="l.get('worked_hours')">
+                                            <span t-esc="l.get('worked_hours')" t-options='{"widget": "float_time"}'/>
+                                         </t>
+                                        <t t-else="">
+                                            <span>00.00</span>
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="l.get('late_time') > 0">
+                                        <span t-esc="l.get('late_time')" t-options='{"widget": "float_time"}'/>
+                                        </t>
+                                        <t t-else="">
+                                            <span>00.00</span>
+                                        </t>
+                                    </td>
+<!--                                    <td class="text-center">-->
+
+<!--                                         <t t-if="0 > l.get('early_depart')">-->
+<!--                                        <span t-esc="l.get('early_depart')" t-options='{"widget": "float_time"}'/>-->
+<!--                                        </t>-->
+<!--                                        <t t-else="">-->
+<!--                                            <span>00.00</span>-->
+<!--                                        </t>-->
+
+<!--                                    </td>-->
+
+                                    <td class="text-center">
+                                        <span t-esc="l.get('status')"/>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div></t></t></template></data></odoo>

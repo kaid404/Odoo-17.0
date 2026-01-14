@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+    <record id="ir_cron_model_account_move" model="ir.cron">
+            <field name="name">Fine On Fee</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">model.action_mark_fine()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field eval="False" name="doall"/>
+            <field name="priority">1000</field>
+        </record>
+
+
+    
+    <record id="fee_structure_tree" model="ir.ui.view">
+        <field name="name">fee.structure.tree</field>
+        <field name="model">fee.structure</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="classes"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+            </tree>
+        </field>
+    </record>
+    <record id="fee_structure_form" model="ir.ui.view">
+        <field name="name">fee.structure.form</field>
+        <field name="model">fee.structure</field>
+        <field name="arch" type="xml">
+            <form class="o_lead_opportunity_form">
+                <header>
+                    <!-- Add any header buttons or fields here -->
+                    <!--Doctor Buttons-->
+
+                </header>
+                <sheet>
+
+                    <!--                              <div name="button_box" class="oe_button_box" position="inside">-->
+                    <!--                 <button name="action_view_issuance" type="object"-->
+                    <!--                                class="oe_stat_button" icon="fa-truck"-->
+                    <!--                                string="Issuance">-->
+                    <!--                        </button>-->
+                    <!--            </div>-->
+                    <h3>
+                        <field name="name"/>
+                    </h3>
+                    <group>
+                        <group>
+                            <field name="classes"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="company_id"/>
+
+                        </group>
+                        <group>
+                            <field name="late_fee"/>
+                            <field name="admission_fee"/>
+                            <field name="annual_charges"/>
+                            <field name="security_fee"/>
+                            <field name="registration_fee"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Fee Details">
+                            <field name="fee_details">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+
+                                    <field name="amount"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="product_id"/>
+                                        <field name="tax_ids" widget="many2many_tags"/>
+                                        <field name="amount"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <!-- Add more pages as needed -->
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+
+        </field>
+    </record>
+    <!--              web_icon="med_exam,static/description/icon.svg"-->
+    <record model="ir.actions.act_window" id="action_structure_form">
+        <field name="name">Fee Structure</field>
+        <field name="res_model">fee.structure</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new Fee Structure</p>
+        </field>
+    </record>
+
+
+    <record id="action_odoocms_receipt" model="ir.actions.act_window">
+            <field name="name">Fee Receipts</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('move_type','=','out_invoice'), ('is_fee_invoice', '=', True)]</field>
+<!--            <field name="context">{'type':'out_invoice', 'journal_type': 'sale', 'search_default_current':1,}</field>-->
+<!--            <field name="search_view_id" ref="view_fee_receipts_filter"/>-->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a fee receipts.
+                </p>
+                <p>
+                    Odoo's electronic fee register allows to ease and fasten the
+                    collection of Student Payments. Your students receives the
+                    receipts by email and they can pay online and/or import it
+                    in his own system.
+                </p>
+                <p>
+                    The discussions with your students are automatically displayed at
+                    the bottom of each invoice.
+                </p>
+            </field>
+        </record>
+
+    <menuitem name="School Fee"
+              id="menu_school_fee_form"
+              sequence="4" web_icon="gxs_school_fee,static/description/icon.png"/>
+    <menuitem name="Fee Receipt"
+              id="menu_s_receipt_form"
+              parent="menu_generate_monthly_invoices_1"
+              action="action_odoocms_receipt"
+              sequence="5"/>
+    <menuitem name="Configuration"
+              id="menu_s_conf_form"
+              parent="menu_school_fee_form"
+              sequence="50"/>
+
+
+    <menuitem name="Fee Structures"
+              id="menu_structure_form"
+              parent="menu_s_conf_form"
+              action="action_structure_form"
+              sequence="51"/>
+</odoo>

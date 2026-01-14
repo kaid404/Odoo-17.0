@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018-2019 ForgeFlow, S.L.
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <template id="report_pos_receipt">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <style>
+                        .company-name {
+                        text-align: center;
+                        font-size: 23px;
+                        font-weight: bold;
+                        margin-top: 7px;
+                        font-family: Times New Roman, Georgia;
+
+                        }
+                        .ESTIMATED-SLIP {
+                        text-align: center;
+                        font-size: 10px;
+                        font-weight: bold;
+                        margin-top: 7px;
+                        font-family: Times New Roman, Georgia;
+
+                        }
+                        .company-address {
+                        text-align:center;
+                        font-size:18px;
+                        }
+                        .company-contact {
+                        text-align:center;
+                        margin-top: 5px;
+                        font-size:16px;
+                        }
+                        .company-other-contact {
+                        text-align:center;
+                        font-size:18px;
+                        }
+                        .list-1 {
+                        display: flex;
+                        font-size: 13px;
+                        justify-content: space-between;
+                        }
+                        .list-2 {
+                        display: flex;
+                        font-size: 12px;
+                        justify-content: space-between;
+                        list-style:none; padding:0;
+                        }
+                        .list-3 {
+                        display: flex;
+                        font-size: 12px;
+                        justify-content: space-between;
+                        }
+                        .orderline-label-en {
+                        display:flex;
+                        font-size: 12px;
+                        justify-content: space-between;
+                        }
+                        .invisible {
+                        display: none;
+                        }
+                        .pos-receipt-qrcode {
+                        display:flex;
+                        justify-content: center;
+                        }
+                        .btn-delivery {
+                        justify-content: center;
+                        }
+
+                        .pos-main-div {
+                        width:170mm; direction:ltr; margin:0; font-family: 'Arial', sans-serif;
+                        }
+
+                        .pos-receipt-company-logo-div {
+                        text-align:center; margin-bottom:5px;
+                        }
+                        .center-div {
+                        text-align:center;
+                        font-size:17px;
+                        }
+                        .div-text-left{
+                        text-align:left;
+                        }
+
+                        .img-logo-custom {
+                        max-height:120px;
+                        }
+                        .ul-authentic {
+                        font-size:20px; font-family:Times New Roman, Georgia;
+                        text-align:left;
+
+                        }
+                        .div-take-away-dine-in {
+                        font-weight:bold;font-size: 17px; text-align:center;
+                        }
+                        .div-border-bottom {
+                        border-bottom: 1px solid #000; margin: 5px 0;
+                        }
+                        .table-border-style {
+                        width: 100%; border: 0px solid transparent;
+                        }
+                        .table-th-1 {
+                        width: 5%; border-bottom: 1px solid #ddd; font-size: 10px; font-weight: bold; text-align:
+                        center;
+                        }
+                        .table-th-2 {
+                        width: 35%; border-bottom: 1px solid #ddd; font-size: 10px; font-weight: bold; text-align: left;
+                        }
+                        .table-th-3 {
+                        width: 10%; border-bottom: 1px solid #ddd; font-size: 10px; font-weight: bold; text-align:
+                        center;
+                        }
+                        .table-th-4 {
+                        width: 15%; border-bottom: 1px solid #ddd; font-size: 10px; font-weight: bold; text-align:
+                        center;
+                        }
+                        .table-th-5 {
+                        width: 20%; border-bottom: 1px solid #ddd; font-size: 10px; font-weight: bold; text-align:
+                        center;
+                        }
+                        .table-td-1 {
+                        width: 5%;
+                        }
+                        .table-td-2 {
+                        width: 35%; text-align: left;
+                        }
+                        .table-td-3 {
+                        width: 10%;
+                        }
+                        .table-td-4 {
+                        width: 15%;
+                        }
+                        .table-td-5 {
+                        width: 20%;
+                        }
+
+
+                        .class-visibility-hidden {
+                        visibility: hidden;
+                        }
+                        .table-tr-custom {
+                        text-align: center; border-bottom: 1px solid #ddd; font-size:
+                        12px;margin-top:5px;padding-top:5px;
+                        }
+                        .pos-receipt-order-data {
+                        text-align: center;
+                        font-size: 75%;
+                        }
+                        .pos-receipt-right-align {
+                        display: flex;
+                        text-align:right;
+                        }
+                        .ms-auto {
+                        margin-inline-start: auto;
+                        margin-left: auto !important;
+
+                        }
+                        .fw-bolder {
+                        font-weight: bolder !important;
+                        }
+                        .d-flex {
+                        display: flex !important;
+                        }
+                        .class-visibility-hidden {
+                        visibility: hidden;
+                        }
+                        .receipt_fbr_qr {
+                        img {
+                        width: 45%;
+                        }
+                        width: 50%;
+                        text-align: center;
+                        }
+                        .lint-2 {
+                        display: flex;
+                        justify-content: space-between;
+                        padding-top: 5px;
+                        font-size: 13px;
+                        }
+
+                    </style>
+                    <div class="page">
+                        <!--                        <div style="font-size:30px;  font-family: 'Times New Roman', Times, serif;color:#666666; font-weight:bold;">-->
+                        <!--                            PRA-->
+                        <!--                        </div>-->
+                        <!--                        <div t-if="env.company"-->
+                        <!--                             class="pos-receipt-company-logo pos-receipt-company-logo-div">-->
+                        <!--                            <img t-attf-src="/web/image?model=res.company&amp;id={{env.company.id}}&amp;field=logo"-->
+                        <!--                                 alt="Logo" class="pos-receipt-logo img-logo-custom"/>-->
+                        <!--                        </div>-->
+
+                        <div class="align-items-left">
+                            <div class="pos-receipt-contact div-text-left">
+                                <div class="company-name">
+                                    Unique Hotel and Resort PLC
+                                    <br/>
+                                    UHRL Lounge-HSIA
+                                </div>
+                                <div class="company-address">
+                                    Reg.Add: Plot No #01,CWN(B), Road #45
+                                    <br/>
+                                    Gulshan-2, Dhaka-1212, Bangladesh
+                                    <br/>
+                                    <span><strong>Tell:</strong>8802222291988, <strong>Fax:</strong>8802222299661
+                                    </span>
+                                    <br/>
+                                    <strong>BIN:</strong>000000487-0002, <strong>MUSHAK:</strong>6.3
+                                </div>
+                                <!--                                <div class="company-name" align="center">-->
+                                <!--                                    <t t-if="env.company">-->
+                                <!--                                        <t t-esc="env.company.name"/>-->
+                                <!--                                    </t>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="company-address">-->
+                                <!--                                    <t t-if="env.company and env.company.partner_id">-->
+                                <!--                                        <div>-->
+                                <!--                                            <t t-esc="env.company.partner_id.street or ''"/>-->
+                                <!--                                            <br/>-->
+                                <!--                                            <t t-esc="env.company.partner_id.street2 or ''"/>-->
+                                <!--                                            <t t-esc="env.company.partner_id.city or ''"/>,-->
+                                <!--                                            <t t-esc="env.company.partner_id.state_id.name or ''"/>-->
+                                <!--                                            <t t-esc="env.company.partner_id.zip or ''"/>,-->
+                                <!--                                            <t t-esc="env.company.partner_id.country_id.name or ''"/>-->
+                                <!--                                        </div>-->
+                                <!--                                    </t>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="company-contact" align="center">-->
+                                <!--                                    <t t-if="env.company and env.company.partner_id">-->
+                                <!--                                        <strong>Tel:</strong>-->
+                                <!--                                        <t t-esc="env.company.partner_id.phone or ''"/>,-->
+                                <!--                                        <strong>Fax:</strong>-->
+                                <!--                                        <t t-esc="env.company.partner_id.mobile or ''"/>-->
+                                <!--                                    </t>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="company-other-contact" align="center">-->
+                                <!--                                    <strong>BIN:</strong>000000487-0002.<strong>MUSHAK-</strong>6.3-->
+                                <!--                                    &lt;!&ndash;                                        <t t-esc="env.company.partner_id.phone or ''"/>,&ndash;&gt;-->
+                                <!--                                    &lt;!&ndash;                                        <strong>Fax:</strong><t t-esc="env.company.partner_id.mobile or ''"/>&ndash;&gt;-->
+                                <!--                                </div>-->
+                                <!--                                <div class="ul-authentic">-->
+                                <!--                                    <div>-->
+                                <!--                                        <t>Authentic Desi Cuisine</t>-->
+                                <!--                                    </div>-->
+
+                                <!--                                </div>-->
+                                <!--                                <div class="list-2">-->
+                                <!--                                    <div>PNTN:-->
+                                <!--                                        <t t-if="env.company"-->
+                                <!--                                           t-esc="env.company.vat"/>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="ul-authentic">-->
+                                <!--                                    <div>Invoice</div>-->
+                                <!--                                </div>-->
+
+                                <div style="border-top: 1px dotted #000; margin-top: 20px;">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span>Invoice No.</span>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <span>
+                                                <t t-esc="o.name"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!--                                    <span>Invoice No.</span>&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;-->
+                                    <!--                                    <span style="text-align:right;">001</span>-->
+                                    <!--                                    <t t-esc="o.tracking_number"/>-->
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span>Date</span>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <span>
+                                                <t t-if="o.date_order"
+                                                   t-esc="o.date_order"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!--                                    <div>Date:-->
+                                    <!--                                        <t t-if="o.date_order"-->
+                                    <!--                                           t-esc="o.date_order"/>-->
+                                    <!--                                    </div>-->
+                                </div>
+                                <!--                                <div class="cashier list-2">-->
+                                <!--                                    <div>Cashier:-->
+                                <!--                                        <t t-if="o.user_id"-->
+                                <!--                                           t-esc="o.user_id.name"/>-->
+                                <!--                                    </div>-->
+                                <!--                                    &lt;!&ndash;                                    <t t-if="o.is_dine_in">&ndash;&gt;-->
+                                <!--                                    <t t-if="">-->
+                                <!--                                        <div>Table:-->
+                                <!--                                            <t t-if="o.table_id"-->
+                                <!--                                               t-esc="o.table_id.table_number or 'N/A'"/>-->
+                                <!--                                        </div>-->
+                                <!--                                    </t>-->
+                                <!--                                </div>-->
+                                <!--                                <t t-if="not o.is_dine_in">-->
+                                <!--                                <t t-if="">-->
+                                <!--                                    <div class="center-div">-->
+                                <!--                                        <span class="div-take-away-dine-in">-->
+                                <!--                                            Take Away-->
+                                <!--                                        </span>-->
+                                <!--                                    </div>-->
+                                <!--                                    <t t-if="o.tracking_number">-->
+                                <!--                                        <div class="center-div">-->
+                                <!--                                            <span class="div-take-away-dine-in">-->
+                                <!--                                                Token #-->
+                                <!--                                                <t t-esc="o.tracking_number"/>-->
+                                <!--                                            </span>-->
+                                <!--                                        </div>-->
+                                <!--                                    </t>-->
+                                <!--                                </t>-->
+                                <!--                                &lt;!&ndash;                                <t t-if="o.is_dine_in">&ndash;&gt;-->
+                                <!--                                <t t-if="">-->
+                                <!--                                    <div class="center-div">-->
+                                <!--                                        <span class="div-take-away-dine-in">-->
+                                <!--                                            Dine-In-->
+                                <!--                                        </span>-->
+                                <!--                                    </div>-->
+                                <!--                                </t>-->
+                                <!--                                <div class="div-border-bottom"></div>-->
+                            </div>
+                        </div>
+                        <div class="" style="margin:12px;">
+                            <table class="table-border-style" border="0">
+                                <!-- Table Headers -->
+                                <!--                                <thead>-->
+                                <!--                                    <tr>-->
+                                <!--                                        &lt;!&ndash; English and Arabic labels combined for clarity &ndash;&gt;-->
+                                <!--                                        <th class="table-th-1">-->
+                                <!--                                            ID-->
+                                <!--                                        </th>-->
+                                <!--                                        <th class="table-th-2">-->
+                                <!--                                            Item-->
+                                <!--                                        </th>-->
+                                <!--                                        <th class="table-th-3">-->
+                                <!--                                            QTY-->
+                                <!--                                        </th>-->
+                                <!--                                        <th class="table-th-4">-->
+                                <!--                                            U. Pr-->
+                                <!--                                        </th>-->
+                                <!--                                        <th class="table-th-5">-->
+                                <!--                                            T. Pr-->
+                                <!--                                        </th>-->
+                                <!--                                    </tr>-->
+                                <!--                                </thead>-->
+                                <tbody>
+                                    <t t-set="sr" t-value="1"/>
+                                    <t t-set="grouped" t-value="{}"/>
+                                    <t t-foreach="o.lines or []" t-as="line">
+                                        <t t-set="pid" t-value="line.product_id.id"/>
+                                        <t t-set="existing" t-value="grouped.get(pid)"/>
+                                        <t t-if="existing">
+                                            <t t-set="new_qty" t-value="existing['qty'] + (line.qty or 0)"/>
+                                            <t t-set="new_total"
+                                               t-value="existing['total'] + (line.price_subtotal_incl or 0)"/>
+                                            <t t-set="temp_grouped" t-value="dict(grouped)"/>
+                                            <t t-set="discard"
+                                               t-value="temp_grouped.update({pid: {'product_name': existing['product_name'], 'qty': new_qty, 'total': new_total}})"/>
+                                            <t t-set="grouped" t-value="temp_grouped"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-set="temp_grouped" t-value="dict(grouped)"/>
+                                            <t t-set="discard"
+                                               t-value="temp_grouped.update({pid: {'product_name': line.full_product_name, 'qty': line.qty or 0, 'total': line.price_subtotal_incl or 0}})"/>
+                                            <t t-set="grouped" t-value="temp_grouped"/>
+                                        </t>
+                                    </t>
+                                    <t t-foreach="grouped.items()" t-as="item">
+                                        <t t-set="product" t-value="item[1]"/>
+                                        <tr>
+                                            <td colspan="2" style="font-weight: bold;">
+                                                <t t-esc="product['product_name'] or 'N/A'"/>
+                                            </td>
+                                            <td style="text-align: right; font-weight: bold;">
+                                                <t t-esc="product['total']" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" style="font-size: 12px;">
+                                                <span style="font-weight: bold; border: 1px solid #ddd; border-radius: 3px; margin: 4px;">
+                                                    <t t-esc="'%.2f' % (product['qty'])"/>
+                                                </span>
+                                                ×
+                                                <t t-if="product['qty']">
+                                                    <t t-set="unit_price" t-value="product['total'] / product['qty']"/>
+                                                    <t t-esc="unit_price" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                </t>
+                                                <t t-else="">0.00</t>
+                                                / Units
+                                            </td>
+                                        </tr>
+                                        <t t-set="sr" t-value="sr + 1"/>
+                                    </t>
+                                    <!--                                    <t t-foreach="o.lines or []"-->
+                                    <!--                                       t-as="line" t-key="line.id or line.productName or index">-->
+                                    <!--                                        <tr>-->
+                                    <!--                                            <td colspan="2" style="font-weight: bold;">-->
+                                    <!--                                                <t t-esc="line.full_product_name or 'N/A'"/>-->
+                                    <!--                                            </td>-->
+                                    <!--                                            <td style="text-align: right; font-weight: bold;">-->
+                                    <!--                                                <t t-esc="line.price_subtotal_incl or '0.00'"-->
+                                    <!--                                                   t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>-->
+                                    <!--                                            </td>-->
+                                    <!--                                        </tr>-->
+                                    <!--                                        <tr>-->
+                                    <!--                                            <td colspan="3" style="font-size: 12px;">-->
+                                    <!--                                                <span style="font-weight: bold; border: 1px solid #ddd; border-radius: 3px;margin: 4px;">-->
+                                    <!--                                                    <t t-esc="'%.2f' % (line.qty or 0)"/>-->
+                                    <!--                                                </span>-->
+                                    <!--                                                ×-->
+                                    <!--                                                <t t-if="line.price_subtotal_incl and line.qty">-->
+                                    <!--                                                    <t t-esc="round(line.price_subtotal_incl / line.qty, 2) or '0.00'"-->
+                                    <!--                                                       t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>-->
+                                    <!--                                                </t>-->
+                                    <!--                                                <t t-else="">-->
+                                    <!--                                                    0.00-->
+                                    <!--                                                </t>-->
+                                    <!--                                                / Units-->
+                                    <!--                                            </td>-->
+                                    <!--                                        </tr>-->
+                                    <!--                                        &lt;!&ndash;                                        <tr class="table-tr-custom">&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                            <td class="table-td-1">&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                <t t-esc="sr"/>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                            </td>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                            <td class="table-td-2">&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                <t t-esc="line.full_product_name or 'N/A'"/>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                            </td>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                            <td class="table-td-3">&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                <t t-esc="line.qty or '1'"/>&ndash;&gt;-->
+
+                                    <!--                                        &lt;!&ndash;                                            </td>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                            <td class="table-td-4">&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                <t t-if="line.price_subtotal_incl and line.qty">&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                    <t t-esc="round(line.price_subtotal_incl / line.qty,2) or '0.00'"&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                       t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                </t>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                <t t-else="">&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                    0.00&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                </t>&ndash;&gt;-->
+
+                                    <!--                                        &lt;!&ndash;                                            </td>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                            <td class="table-td-5">&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                <t t-esc="line.price_subtotal_incl or '0.00'"&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                                   t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                            </td>&ndash;&gt;-->
+                                    <!--                                        &lt;!&ndash;                                        </tr>&ndash;&gt;-->
+                                    <!--                                        <t t-set="sr" t-value="sr + 1"/>-->
+                                    <!--                                    </t>-->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="invoice-summary">
+                            <div class="center-div">
+                                <span>---------------------------------------</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="pos-receipt-taxes">
+                                <div class="justify-content-between">
+                                    <span class="fw-bolder">Untaxed Amount</span>
+                                    <span t-esc="o.amount_total - o.amount_tax"
+                                          t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"
+                                          style="float:right;"></span>
+                                </div>
+
+                                <div t-foreach="o.lines.mapped('tax_ids_after_fiscal_position')" t-as="tax"
+                                     t-key="tax.id">
+                                    <div class="justify-content-between">
+                                        <span t-esc="tax.name"></span>
+                                        <span t-if="o.amount_tax and tax.amount"
+                                              t-esc="round(((o.amount_total - o.amount_tax) / 100) * tax.amount,2)"
+                                              t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"
+                                              style="float:right;"></span>
+                                        <span t-else="" style="float:right;">0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--                            <t t-if="o.total_discount">-->
+                            <t t-if="">
+                                <div class="justify-content-between">
+                                    <span>Discount</span>
+                                    <!--                                    <span t-esc="o.total_discount"-->
+                                    <!--                                          t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></span>-->
+                                </div>
+                            </t>
+
+                            <div class="invoice-summary">
+                                <div class="center-div">
+                                    <span>---------------------------------------</span>
+                                </div>
+                            </div>
+                            <div class="justify-content-between pos-receipt-amount" style="font-size:18pt;">
+                                <span>Total</span>
+                                <span t-esc="o.amount_total"
+                                      t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"
+                                      style="float:right;"></span>
+                            </div>
+                            <div class="justify-content-between pos-receipt-amount">
+                                <t t-foreach="o.payment_ids" t-as="p">
+                                    <div class="justify-content-between pos-receipt-amount">
+                                        <span>
+                                            <t t-esc="p.payment_method_id.name or ''"/>
+                                        </span>
+                                        <span t-esc="p.amount"
+                                              t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"
+                                              style="float:right;"></span>
+                                    </div>
+                                </t>
+                                <!--                                <span><t t-esc="o.payment_method_id.name"/></span>-->
+                                <!--                                <span t-esc="o.amount_total"-->
+                                <!--                                      t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"-->
+                                <!--                                      style="float:right;"></span>-->
+                            </div>
+                            <!--                            <div class="receipt_fbr_qr">-->
+                            <!--                                <img t-if="o.invoice_number" t-att-src="'data:image/png;base64,' + o.generate_qr_code()"-->
+                            <!--                                     style="max-height:110px;"/>-->
+                            <!--                <img t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=100&amp;height=100' % o.invoice_number"-->
+                            <!--             alt="QR Code"-->
+                            <!--             class="qr_class"-->
+                            <!--             style="border: 1px solid #000; padding: 5px;"/>-->
+
+                            <!--                            </div>-->
+
+                            <div class="before-footer"></div>
+                            <br/>
+                            <!--                            <div class="text-center pos-receipt-order-data mb-2">-->
+                            <!--                                It Has Been A Pleasure Serving You-->
+                            <!--                                <br/>-->
+                            <!--                                We Hope To See You Again-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="report_pos_receipt_paperformat" model="report.paperformat">
+        <field name="name">POS Receipt Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">250</field>
+        <field name="page_width">78</field>
+        <field name="orientation">Portrait</field>
+        <field name="header_spacing">5</field>
+        <field name="margin_top">7</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="dpi">100</field>
+    </record>
+
+
+    <record id="action_report_purchase_requests" model="ir.actions.report">
+        <field name="name">Receipt</field>
+        <field name="model">pos.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_file">pos_report.report_pos_receipt</field>
+        <field name="report_name">pos_report.report_pos_receipt</field>
+        <field name="binding_model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pos_report.report_pos_receipt_paperformat"/>
+    </record>
+
+</odoo>

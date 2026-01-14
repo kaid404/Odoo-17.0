@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_deliveryslip_custom">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <style>
+                        table{
+                        width:100%;
+                        border-collapse:collapse;
+                        border:none;
+                        margin:0px 0;
+                        }
+                        thead{
+                        background-color:#1750ad;
+                        color:white;
+                        border:none;
+                        }
+                        tbody{
+                        border:none;
+                        }
+                        table th,
+                        table td{
+                        font-size:11px;
+                        text-align:center;
+                        border:none;
+                        padding:6px;
+                        }
+                        table tr{
+                        border:none;
+                        border-bottom:1px solid silver;
+                        }
+                        #terms_conditions p{
+                        line-height:1.5;
+                        font-size:11px;
+                        margin:0;
+                        padding:0;
+                        margin-bottom:7px;
+                        }
+                    </style>
+
+                    <div class="page">
+                        <div class="header">
+                            <t t-if="o.sale_id.turbo_solutions">
+                                <div class="row"
+                                     style="">
+                                    <div class="col-6" style="text-align:left;margin-left:-30px;margin-top:-4px;">
+                                        <img src="/turbo_direct_sale/static/turbosolutionlogo.jpg" alt="logo 1"
+                                             height="67.5px"
+                                             width="83.5%" style=""/>
+                                        <!--                                <h2 style="color:#1750ad;font-weight:bold;font-family:Courier New;">Turbo International Solutions</h2>-->
+                                    </div>
+                                    <div class="col-6"></div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <img src="/turbo_reports/static/turbo_logo_1.png" alt="logo 1"
+                                             height="67px"
+                                             width="95%" style=""/>
+                                    </div>
+                                    <div class="col-4"></div>
+
+
+                                    <div class="col-3" style="padding-top:20px;">
+                                        <img src="/turbo_reports/static/turbo_logo_2.png" alt="logo 2"
+                                             width="38%"
+                                             height="33px"
+                                        />
+                                        <img src="/turbo_reports/static/turbo_logo_3.png" alt="logo 3"
+                                             width="48%"
+                                             height="33px"
+                                             style="margin-left:20px;"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <br/>
+                        <div class="row"
+                             style="border-bottom:2px solid #1750ad;font-size:14px;font-weight:bold;margin-bottom:20px;">
+                            <div class="col-10" align="left">
+                                Delivery Note -
+                                <span t-field="o.name"/>
+                            </div>
+                            <div class="col-2" align="right">
+                                Original
+                            </div>
+                        </div>
+                        <div class="row" style="font-size:12px;margin-bottom:10px;">
+                            <div class="col-5">
+                                <strong>Client:</strong>
+                                <br/>
+                                <span t-esc="o.partner_id.name.split(',')[0]"/>
+                                <br/>
+                                <span t-esc="o.partner_id.street"/>
+                                <span t-esc="o.partner_id.street2"/>
+                                <span t-esc="o.partner_id.city"/>
+                                <br/>
+                                <span t-esc="o.partner_id.country_id.name"/>
+                                <span t-esc="o.partner_id.zip"/>
+                                <br/>
+                                <span t-esc="o.partner_id.ntn1"/>
+                                <!--                                <br/>-->
+                                <!--                                <span t-esc="o.partner_id.stn1"/>-->
+                            </div>
+                            <div class="col-7"></div>
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Delivery</th>
+                                    <th>PO NO</th>
+                                    <th>PO Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p t-if="o.state == 'done'" t-esc="o.date_done.date().strftime('%d-%m-%Y')"/>
+                                        <p t-else="" t-esc="o.scheduled_date.date().strftime('%d-%m-%Y')"/>
+                                    </td>
+                                    <td>
+                                        <span t-if="o.delivery_method" t-field="o.delivery_method"/>
+                                    </td>
+                                    <td>
+                                        <p t-if="o.po_no" t-field="o.po_no"/>
+                                    </td>
+                                    <td>
+                                        <p t-if="o.po_date" t-field="o.po_date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <!--                                    <th name="th_sm_ordered">-->
+                                    <!--                                        <strong>Sr.</strong>-->
+                                    <!--                                    </th>-->
+                                    <th name="th_sm_product" style="text-align:left;width:70%;">
+                                        <strong>Product</strong>
+                                    </th>
+                                    <th name="th_sm_quantity" style="text-align:right;width:30%;">
+                                        <strong>Quantity</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sr_no" t-value="0"/>
+                                <t t-set="total_qty" t-value="0"/>
+                                <tr t-foreach="o.move_ids_without_package" t-as="move">
+                                    <t t-set="sr_no" t-value="sr_no + 1"/>
+                                    <t t-set="total_qty" t-value="total_qty + move.product_packaging_quantity"/>
+                                    <!--                                    <td>-->
+                                    <!--                                        <span t-esc="sr_no"/>-->
+                                    <!--                                    </td>-->
+                                    <td style="text-align:left;width:70%;">
+                                        <span t-field="move.product_id.name"/>
+                                    </td>
+                                    <td style="text-align:right;width:30%;">
+                                        <t t-set="quantity" t-value="move.quantity"/>
+                                        <t t-esc="'{:,}'.format(round(quantity))"/>
+                                        <t t-set="total_qty" t-value="total_qty + move.quantity"/>
+                                    </td>
+                                </tr>
+                                <!--                                <tr>-->
+                                <!--                                    <td colspan="2">-->
+                                <!--                                        <strong>TOTAL Qty</strong>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <strong t-esc="round(total_qty,0)"/>-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+                            </tbody>
+                        </table>
+                        <div class="row" style="font-size:12px;">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-3"
+                                 style="border-bottom:1px solid silver;border-top:3px solid #1750ad;padding:5px;">
+                                <strong>TOTAL Qty</strong>
+                            </div>
+                            <div class="col-3" align="right"
+                                 style="border-bottom:1px solid silver;border-top:3px solid #1750ad;padding:5px;">
+                                <t t-esc="'{:,}'.format(round(total_qty))"/>
+                                <!--                                <t t-esc="doc.currency_id.symbol"/>-->
+                            </div>
+                        </div>
+                        <!--                        <br/>-->
+
+                        <!--                        <div class="row" style="font-size:15px;">-->
+                        <!--                            <div class="col-12">-->
+                        <!--                                <div t-if="o.delivery_method" class="col-auto" name="div_delivery_method">-->
+                        <!--                                    <span>Delivery Method:</span>&#160;&#160;&#160;&#160;-->
+                        <!--                                    <spanp t-if="o.delivery_method" t-field="o.delivery_method"/>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class="row" style="font-size:15px;" name="terms_and_conditions">
+                            <div class="col-12">
+                                <span>
+                                    <span>Delivery Terms:</span>
+                                    <br/>
+                                    1. Ensure that the goods are received by Buyer in good condition compliance with the
+                                    Purchase Order
+                                    <br/>
+                                    2. All invoices shall be issued in the currency as set out in the Purchase Order
+                                    <br/>
+                                    3. Any credit memos due to Buyer's organization shall be transacted within five (5)
+                                    business days
+                                    <br/>
+                                    4. Title and risk of loss shall pass to Buyer upon delivery at the destination
+                                    nominated by the Buyer or upon final acceptance by Buyer whichever is later
+                                    <br/>
+                                    5. The Buyer shall ensure that the terms of its order and any applicable
+                                    specification are complete and accurate
+                                    <br/>
+                                    6. Any quotation is valid for a period of 30 days only from its date, provided that
+                                    the Company has not previously withdrawn it
+                                    <br/>
+                                    7. The Goods are at the risk of the Buyer from the time of delivery
+                                    <br/>
+                                    8. The Supplier agrees to perform all of the Trading Arrangements in accordance with
+                                    the instructions in this PO
+                                    <br/>
+                                    9. The rates and/or prices for the Trading Arrangements shall be exclusive of VAT
+                                    but inclusive or all other taxes, charges, carriage and all other disbursements
+                                </span>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+<!--                         <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/> -->
+                        <div class="row">
+                            <div class="col-2" style="border-top:2px dotted black;font-size:14px;text-align:center;">
+                                Issued By
+                            </div>
+                            <div class="col-8"></div>
+                            <div class="col-2" style="border-top:2px dotted black;font-size:14px;text-align:center;">
+                                Received By
+                            </div>
+                        </div>
+                    </div>
+                    <div style="page-break-after:always;"/>
+
+
+                    <div class="page">
+                        <br/>
+<!--                         <br/>
+                        <br/> -->
+                        <div class="row"
+                             style="border-bottom:2px solid #1750ad;font-size:14px;font-weight:bold;margin-bottom:20px;">
+                            <div class="col-10" align="left">
+                                Delivery Note -
+                                <span t-field="o.name"/>
+                            </div>
+                            <div class="col-2" align="right">
+                                Duplicate
+                            </div>
+                        </div>
+
+                        <div class="row" style="font-size:12px;margin-bottom:10px;">
+                            <div class="col-5">
+                                <strong>Client:</strong>
+                                <br/>
+                                <span t-esc="o.partner_id.name.split(',')[0]"/>
+                                <br/>
+                                <span t-esc="o.partner_id.street"/>
+                                <span t-esc="o.partner_id.street2"/>
+                                <span t-esc="o.partner_id.city"/>
+                                <br/>
+                                <span t-esc="o.partner_id.country_id.name"/>
+                                <span t-esc="o.partner_id.zip"/>
+                                <br/>
+                                <span t-esc="o.partner_id.ntn1"/>
+                                <br/>
+                                <span t-esc="o.partner_id.stn1"/>
+                            </div>
+                            <div class="col-7"></div>
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Delivery</th>
+                                    <th>PO NO</th>
+                                    <th>PO Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p t-if="o.state == 'done'" t-esc="o.date_done.date().strftime('%d-%m-%Y')"/>
+                                        <p t-else="" t-esc="o.scheduled_date.date().strftime('%d-%m-%Y')"/>
+                                    </td>
+                                    <td>
+                                        <span t-if="o.delivery_method" t-field="o.delivery_method"/>
+                                    </td>
+                                    <td>
+                                        <p t-if="o.po_no" t-field="o.po_no"/>
+                                    </td>
+                                    <td>
+                                        <p t-if="o.po_date" t-field="o.po_date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <!--                                    <th name="th_sm_ordered">-->
+                                    <!--                                        <strong>Sr.</strong>-->
+                                    <!--                                    </th>-->
+                                    <th name="th_sm_product" style="text-align:left;width:70%;">
+                                        <strong>Product</strong>
+                                    </th>
+                                    <th name="th_sm_quantity" style="text-align:right;width:30%;">
+                                        <strong>Quantity</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sr_no" t-value="0"/>
+                                <t t-set="total_qty" t-value="0"/>
+                                <tr t-foreach="o.move_ids_without_package" t-as="move">
+                                    <t t-set="sr_no" t-value="sr_no + 1"/>
+                                    <t t-set="total_qty" t-value="total_qty + move.product_packaging_quantity"/>
+                                    <!--                                    <td>-->
+                                    <!--                                        <span t-esc="sr_no"/>-->
+                                    <!--                                    </td>-->
+                                    <td style="text-align:left;width:70%;">
+                                        <span t-field="move.description_picking"/>
+                                    </td>
+                                    <td style="text-align:right;width:30%;">
+                                        <t t-set="quantity" t-value="move.quantity"/>
+                                        <t t-esc="'{:,}'.format(round(quantity))"/>
+                                        <t t-set="total_qty" t-value="total_qty + move.quantity"/>
+                                    </td>
+                                </tr>
+                                <!--                                <tr>-->
+                                <!--                                    <td colspan="2">-->
+                                <!--                                        <strong>TOTAL Qty</strong>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <strong t-esc="round(total_qty,0)"/>-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+                            </tbody>
+                        </table>
+                        <div class="row" style="font-size:12px;">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-3"
+                                 style="border-bottom:1px solid silver;border-top:3px solid #1750ad;padding:5px;">
+                                <strong>TOTAL Qty</strong>
+                            </div>
+                            <div class="col-3" align="right"
+                                 style="border-bottom:1px solid silver;border-top:3px solid #1750ad;padding:5px;">
+                                <t t-esc="'{:,}'.format(round(total_qty))"/>
+
+                                
+                                <!--                                <t t-esc="doc.currency_id.symbol"/>-->
+                            </div>
+                        </div>
+
+                        <!--                        <br/>-->
+
+                        <!--                        <div class="row" style="font-size:15px;">-->
+                        <!--                            <div class="col-12">-->
+                        <!--                                <div t-if="o.delivery_method" class="col-auto" name="div_delivery_method">-->
+                        <!--                                    <span>Delivery Method:</span>&#160;&#160;&#160;&#160;-->
+                        <!--                                    <span t-if="o.delivery_method" t-field="o.delivery_method"/>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class="row" style="font-size:15px;" name="terms_and_conditions">
+                            <div class="col-12">
+                                <span>
+                                    <span>Delivery Terms:</span>
+                                    <br/>
+                                    1. Ensure that the goods are received by Buyer in good condition compliance with the
+                                    Purchase Order
+                                    <br/>
+                                    2. All invoices shall be issued in the currency as set out in the Purchase Order
+                                    <br/>
+                                    3. Any credit memos due to Buyer's organization shall be transacted within five (5)
+                                    business days
+                                    <br/>
+                                    4. Title and risk of loss shall pass to Buyer upon delivery at the destination
+                                    nominated by the Buyer or upon final acceptance by Buyer whichever is later
+                                    <br/>
+                                    5. The Buyer shall ensure that the terms of its order and any applicable
+                                    specification are complete and accurate
+                                    <br/>
+                                    6. Any quotation is valid for a period of 30 days only from its date, provided that
+                                    the Company has not previously withdrawn it
+                                    <br/>
+                                    7. The Goods are at the risk of the Buyer from the time of delivery
+                                    <br/>
+                                    8. The Supplier agrees to perform all of the Trading Arrangements in accordance with
+                                    the instructions in this PO
+                                    <br/>
+                                    9. The rates and/or prices for the Trading Arrangements shall be exclusive of VAT
+                                    but inclusive or all other taxes, charges, carriage and all other disbursements
+                                </span>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+<!--                         <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/> -->
+                        <div class="row">
+                            <div class="col-2" style="border-top:2px dotted black;font-size:14px;text-align:center;">
+                                Issued By
+                            </div>
+                            <div class="col-8"></div>
+                            <div class="col-2" style="border-top:2px dotted black;font-size:14px;text-align:center;">
+                                Received By
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <t t-if="o.sale_id.turbo_solutions">
+                                <div class="row">
+                                    <div class="col-12"
+                                         style="color: #1750ad;font-weight:bold;font-size:18px; text-align:center;">
+                                        <span>Raiwind Road Lahore</span>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="row" style="font-size:11px;">
+                                    <div class="col-3">
+                                        <p style="font-weight:bold; padding:25px 5px 0px 0px; color:#1750ad">
+                                            Turbo
+                                            Internacional Services Pvt. Ltd.
+                                        </p>
+                                    </div>
+                                    <div class="col-7"
+                                         style="border-left:3px solid #1750ad; color:#1750ad; padding:14px 0px 1px 5px;">
+                                        <strong>Karachi</strong>
+                                        <span>- Plot No. 11/1 Sector No. 17 Korangi Industrial Area.</span>
+                                        <strong>Lahore</strong>
+                                        <span>- 10-KM Raiwind Road.</span>
+                                        <p>N.T.N. 7404024-3 Tel : +92-307-7777200 info@turbointernacional.pk
+                                            <br/>
+                                            www.turbointernacional.pk
+                                        </p>
+                                    </div>
+                                    <div class="col-2">
+                                        <img src="/turbo_reports/static/turbo_logo_4.png" alt="logo 4"
+                                             width="80px"
+                                             height="40px"
+                                             style="padding:5px 5px 0px 0px"/>
+                                        <img src="/turbo_reports/static/turbo_logo_6.jpg" alt="logo 6"
+                                             width="50px"
+                                             height="50px"
+                                             style="padding:5px 0px 0px 5px"/>
+                                    </div>
+                                </div>
+
+                            </t>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="action_report_delivery_custom" model="ir.actions.report">
+        <field name="name">Delivery Slip Print</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">turbo_reports.report_deliveryslip_custom</field>
+        <field name="report_file">turbo_reports.report_deliveryslip_custom</field>
+        <field name="print_report_name">'Delivery Slip - %s - %s' % (object.partner_id.name or '', object.name)</field>
+        <!--        <field name="binding_model_id" ref="stock.model_stock_picking"/>-->
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="turbo_delivery_document" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div[@class='col-auto'][2]/p[1]" position="replace">
+            <p t-if="o.state == 'done'" t-esc="o.date_done.date().strftime('%d-%m-%Y')"/>
+        </xpath>
+        <xpath expr="//div[@class='col-auto'][2]/p[2]" position="replace">
+            <p t-else="" t-esc="o.scheduled_date.date().strftime('%d-%m-%Y')"/>
+
+        </xpath>
+    </template>
+
+
+
+
+</odoo>

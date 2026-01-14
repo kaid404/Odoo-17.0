@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_school_leaving_certificate_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <div class="header">
+                        <h1>CITY HIGH SCHOOL</h1>
+                        <div>
+                            <span>Registered &amp; Recognized</span>
+                            <span>S.L.C No.: <t t-esc="doc.name"/></span>
+                            <span>Date: <t t-esc="doc.date"/></span>
+                        </div>
+                    </div>
+
+                    <h2>Security Refund Voucher</h2>
+
+                    <div class="student-info">
+                        <p>ID: <t t-esc="doc.student_id.name"/> Received Date: <t t-esc="doc.date"/> </p>
+                    </div>
+
+                    <div class="signature">
+                        <p>Signature of Father/Guardian</p>
+                    </div>
+
+                    <h3>For Office Use Only</h3>
+                    <div class="office-use-info">
+                        <p>Reg. No.: <t t-esc="doc.gr_no"/></p>
+                        <p>Admission No.: <t t-esc="doc.admission_no"/></p>
+                        <p>Class: <t t-esc="doc.class_id.name"/> Section: <t t-esc="doc.section_id.name"/> Roll No.: <t t-esc="doc.roll_no"/></p>
+                        <p>Date up to which remained on roll: <t t-esc="doc.enrollment_date"/></p>
+                        <p>Possible Attendance: <t t-esc="doc.possible_attendance"/> Student’s Attendance: <t t-esc="doc.student_attendance"/></p>
+                        <p>Date: <t t-esc="doc.date"/></p>
+                    </div>
+
+                    <div class="signatures">
+                        <p>Class Incharge: __________________</p>
+                        <p>Accountant: __________________</p>
+                        <p>Principal: __________________</p>
+                    </div>
+
+                    <div class="footer">
+                        <p>Note: The student's name must be struck off from both Attendance and Admission Registers before issuing the School Leaving Certificate.</p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="report_school_leaving_certificate" model="ir.actions.report">
+        <field name="name">School Leaving Certificate</field>
+        <field name="model">school.leaving.certificate</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_leaving_certificate.report_school_leaving_certificate_template</field>
+        <field name="report_file">school_leaving_certificate.report_school_leaving_certificate_template</field>
+        <field name="print_report_name">'%s' % (object.name)</field>
+        <field name="binding_model_id" ref="school_leaving_certificate.model_school_leaving_certificate"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

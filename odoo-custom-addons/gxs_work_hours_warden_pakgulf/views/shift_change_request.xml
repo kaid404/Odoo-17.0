@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="shift_change_tree" model="ir.ui.view">
+        <field name="name">tree</field>
+        <field name="model">shift.change.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="description"/>
+                <field name="current_shift"  />
+                <field name="new_shift"  />
+<!--                  <field name="check_in"  />-->
+<!--                  <field name="check_out"  />-->
+            </tree>
+        </field>
+
+    </record>
+    <!-- To-Do Task Form view -->
+    <record id="shift_change_view" model="ir.ui.view">
+        <field name="name">loan.loan.wizards</field>
+        <field name="model">shift.change.request</field>
+        <field name="type">form</field>
+
+        <field name="arch" type="xml">
+        <header>
+<!--        <button name="create_attendance" type="object" string="Draft" class="oe_highlight" states="approve"/>-->
+        <button name="to_approve" type="object" string="To Approve" class="oe_highlight" states="draft"/>
+        <button name="reject" type="object" string="Reject" class="oe_highlight" states="to_approve"/>
+        <button name="create_shift" type="object" string="Approve" class="oe_highlight" states="to_approve"/>
+            <field name="state" widget="statusbar"/>
+        </header>
+            <form string='Wi Form'>
+                <group>
+                    <group>
+                        <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+
+                    </group>
+                    <group>
+<!--                  <field name="request_time" />-->
+                  <field name="current_shift" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                  <field name="new_shift" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+<!--                  <field name="check_out" attrs="{'readonly': [('state', '!=', 'draft')]}" />-->
+              </group>
+                </group>
+                <field name="description" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+
+                <!--              </footer>-->
+
+            </form>
+
+
+        </field>
+    </record>
+
+    <!-- To-Do Task List view -->
+
+
+    <record id="shift_change_action" model="ir.actions.act_window">
+        <field name="name">Shift Change Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shift.change.request</field>
+        <field name="view_mode">tree,form</field>
+        <!--      <field name="target">new</field>-->
+        <field name="view_id" ref='shift_change_tree'/>
+
+
+    </record>
+
+    <menuitem id="menu_hr_attendance_view_shift_change"
+              name="Shift Change Request"
+              parent="hr_attendance.menu_hr_attendance_view_attendances"
+              sequence="10"
+              groups="hr_attendance.group_hr_attendance_own_reader"
+              action="shift_change_action"/>
+
+</odoo>

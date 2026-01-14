@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="fee_opining_tree" model="ir.ui.view">
+        <field name="name">op.fee.opining.tree</field>
+        <field name="model">op.fee.opining</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="student_id"/>
+                <field name="amount"/>
+                
+            </tree>
+        </field>
+    </record>
+    <record id="fee_opining_form" model="ir.ui.view">
+        <field name="name">op.fee.opining.form</field>
+        <field name="model">op.fee.opining</field>
+        <field name="arch" type="xml">
+            <form class="o_lead_opportunity_form">
+               
+                <sheet>
+
+                    <h3>
+                        <field name="student_id"/>
+                    </h3>
+                    <group>
+                        <group>
+                            <field name="amount"/>
+                            
+
+                        </group>
+                        
+                    </group>
+                
+                </sheet>
+               
+            </form>
+
+        </field>
+    </record>
+    <!--              web_icon="med_exam,static/description/icon.svg"-->
+    <record model="ir.actions.act_window" id="action_opining_form">
+        <field name="name">Fee Structure</field>
+        <field name="res_model">op.fee.opining</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new fee opining</p>
+        </field>
+    </record>
+
+
+    <menuitem name="Opening"
+              id="menu_opining_form"
+              parent="menu_s_conf_form"
+              action="action_opining_form"
+              sequence="51"/>
+
+</odoo>

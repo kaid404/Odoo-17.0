@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_op_parent_marksheet" name="PTM"
+              parent="menu_op_parent_root" sequence="10"
+              action="gxs_exam.act_open_op_marksheet_line_view"
+    />
+</odoo>

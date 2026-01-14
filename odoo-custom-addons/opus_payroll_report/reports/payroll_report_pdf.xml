@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="employee_payroll_report_pdf">
+        <t t-call="web.html_container">
+            <!--            <t t-call="web.internal_layout">-->
+            <!--            <t t-foreach="docs" t-as="doc">-->
+            <div class="header">
+                <t t-if="not o" t-set="o" t-value="doc"/>
+                <t t-if="not company">
+                    <!-- Multicompany -->
+                    <t t-if="company_id">
+                        <t t-set="company" t-value="company_id"/>
+                    </t>
+                    <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                        <t t-set="company" t-value="o.company_id.sudo()"/>
+                    </t>
+                    <t t-else="else">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                </t>
+                <div class="row">
+                    <div class="col-4">
+                        <img t-if="not company.logo" t-att-src="'/web/static/src/img/placeholder.png'" border="1" width="40%"/>
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" border="1" width="40%"/>
+                    </div>
+                    <div class="col-4" style="text-align:center">
+                        <h1 style="font-size:80px;">
+                            <t t-esc="company.name"/>
+                        </h1>
+                        <h3 style="font-size:60px;">Employee Payroll Report</h3>
+                        <h4 style="font-size:60px;" t-esc="batch_name"></h4>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+
+            <div class="page">
+                <!--                <br/>-->
+                <!--                <br/>-->
+                <!--                <br/>-->
+
+                <style>
+                    table{
+                    width:100%;
+                    font-size:20px;
+                    border-collapse:collapse;
+                    }
+                    th,td{
+                    text-align:center; padding: 3px;border:1px solid ;
+                    }
+                    .total_tr,.total_tr td{
+                    border:none;
+                    }
+
+                </style>
+                <table>
+                    <thead>
+                        <tr style="background-color:#abaeb3;">
+                            <th>Emp Code</th>
+                            <th>Employee Name</th>
+                            <th>Employment</th>
+                            <th>Designation</th>
+                            <th>Location</th>
+                            <th>Region</th>
+                            <th>DOJ</th>
+                            <th>Days</th>
+                            <th>Gross</th>
+                            <th>Basic Salary</th>
+                            <th>Fixed Allowance</th>
+                            <th>House Allowance</th>
+                            <th>Utility Allowance</th>
+                            <th>No of Days</th>
+                            <th>Salary Payable</th>
+                            <th>Overtime</th>
+                            <th>Loan</th>
+                            <th>Increment</th>
+                            <th>Reimbursement</th>
+                            <th>Arrears</th>
+                            <th>PF Employee</th>
+                            <th>EOBI Employee</th>
+                            <th>PF Employer</th>
+                            <th>EOBI Employer</th>
+                            <th>Staff Advance</th>
+                            <th>Other Deduction</th>
+                            <th>Income Tax</th>
+                            <th>Total Payable</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table table-bordered">
+                        <tr t-foreach="employee_data" t-as="employee">
+                            <td>
+                                <t t-esc="employee['code']"/>
+                            </td>
+                            <td>
+                                <t t-esc="employee['name']"/>
+                            </td>
+                            <td>
+                                <t t-esc="employee['employment']"/>
+                            </td>
+                            <td>
+                                <t t-esc="employee['designation']"/>
+                            </td>
+                            <td>
+                                <t t-esc="employee['location']"/>
+                            </td>
+                            <td>
+                                <t t-esc="employee['region']"/>
+                            </td>
+                            <td>
+                                <t t-esc="employee['doj']"/>
+                            </td>
+                            <td>
+                                <t t-esc="employee['days']"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['gross'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['basic'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['fixed'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['house'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['utility'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['no_of_days'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['salary_payable'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['overtime'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['loan'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['increment'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['reimbursement'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['arrear'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['pf_emp'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['eobi_emp'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['pf_empl'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['eobi_empl'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['staff_adv'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['other_ded'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['income_tax'])"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(employee['total_payable'])"/>
+                            </td>
+                        </tr>
+                        <tr style="font-weight: bold;text-align:center;" class="total_tr">
+
+                            <td colspan="8" style="text-align:right;padding-right:120px;">Total</td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(round(total_gross))"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_basic)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_fixed)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_house)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_utility)"/>
+                            </td>
+                            <td>
+                                <!--                                <t t-esc="'{:,.2f}'.format(total_utility)"/>-->
+                            </td>
+                            <td>
+                                                                <t t-esc="'{:,.0f}'.format(total_salary_payable)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_overtime)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_loan)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_increment)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_reimbursement)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_arrear)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_pf_emp)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_eobi_emp)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_pf_empl)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_eobi_empl)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_staff_adv)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_other_ded)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(total_income_tax)"/>
+                            </td>
+                            <td>
+                                <t t-esc="'{:,.0f}'.format(grand_total_payable)"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="footer">
+                    <div class="row" style="padding:100px;">
+                        <div class="col-1"/>
+
+                        <div class="col-2" style="border-top: 2px solid black; text-align:center">
+                            <strong>Prepared By</strong>
+                        </div>
+                        <div class="col-2"/>
+                        <div class="col-2" style="border-top: 2px solid black; text-align:center">
+                            <strong>Approved By</strong>
+                        </div>
+                        <div class="col-2"/>
+
+                        <div class="col-2" style="border-top: 2px solid black; text-align:center">
+                            <strong>Finance</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+        <!--        </t>-->
+        <!--        </t>-->
+
+    </template>
+
+    <record id="payroll_report_action_pdf" model="ir.actions.report">
+        <field name="name">Employees Payroll Report</field>
+        <field name="model">opus.employees.payroll.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">opus_payroll_report.employee_payroll_report_pdf</field>
+        <field name="report_file">opus_payroll_report.employee_payroll_report_pdf</field>
+        <field name="paperformat_id" ref="paperformat_employee_payroll_report"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

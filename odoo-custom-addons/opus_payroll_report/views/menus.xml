@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <menuitem id="menu_batch_wise_payroll_report"
+              name="Employee Payroll Report"
+              parent="hr_payroll.menu_hr_payroll_report"
+              action="batch_wise_payroll_action"
+              sequence="104"/>
+</odoo>

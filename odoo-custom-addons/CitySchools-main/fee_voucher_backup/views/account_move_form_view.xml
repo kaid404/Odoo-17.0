@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="fee_voucher_template_old">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <style>
+                    .main{position:relative;font-size:12px;height:522px;width:760px;border-radius:0px;border:2px solid
+                    silver;background-image:url("/city_school/static/src/img/bg_img.png");background-repeat:no-repeat;background-size:100%
+                    100%;background-position:
+                    center;}
+                    .main_inner{height:100%;width:100%;background-color:rgba(255, 255, 255,
+                    .6);opacity:0.95;border-radius:0px;}
+                    .inner_container{z-index:1000;height:100%;width:100%;background-color:transparent;opacity:1;border-radius:0px;}
+                    .right_corner{z-index:-1;position:absolute;top:0;right:0;height:150px;}
+                    .lft_corner{z-index:0;position:absolute;bottom:0px;left:0;height:250px;width:100%;}
+                    .head{padding-top:25px;text-align:center;}
+                    .logo{text-align:center;}
+                    .head h5{font-size:25px;margin:0;}
+                    .address{font-size:13px;}
+                    .title{font-size:15px;}
+                    .dynamic_data_lines{border-bottom:0px dotted;margin-bottom:3px;}
+                    table{border:1px dotted silver;width:100%;}
+                    table td ,th{border-bottom:1px dotted silver;padding:3px;text-align:center;}
+                    <!--                                        table,right_corner,lft_corner,head,row{z-index:20000;color:black;opacity:1;}-->
+                </style>
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.sudo()"/>
+                    <div class="main">
+                        <!--                        <img class="lft_corner" src="/city_school/static/src/img/bg9.png"/>-->
+                        <div class="main_inner">
+                            <!--                            <img class="right_corner" src="/city_school/static/src/img/bg8_right.png"/>-->
+                            <div class="inner_container">
+                                <div class="head">
+                                    <div class="row">
+                                        <div class="logo col-2">
+                                            <!--                                            <img t-if="o.company_id.logo"-->
+                                            <!--                                                 t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"-->
+                                            <!--                                                 alt="Company Logo" style="max-height: 80px;"/>-->
+                                            <img src="/city_school/static/src/img/logo.png" alt="Company Logo"
+                                                 style="max-height: 80px;"/>
+                                        </div>
+                                        <div class="col-8">
+                                            <h5>
+                                                <strong>CITY HIGH SCHOOL (
+                                                    <t t-esc="o.company_id.name"/>
+                                                    )
+                                                </strong>
+                                            </h5>
+                                            <div class="address">
+                                                <span t-esc="o.company_id.street"/>
+                                                <span t-esc="o.company_id.street2"/>
+                                                <span t-esc="o.company_id.city"/>
+                                                <!--                                    </div>-->
+                                                <!--                                    <div>-->
+                                                <t t-if="o.company_id.state_id.name or o.company_id.country_id.name or o.company_id.phone">
+                                                    ,
+                                                </t>
+                                                <span t-esc="o.company_id.state_id.name"/>
+                                                <span t-esc="o.company_id.country_id.name"/>
+                                                <span t-esc="o.company_id.phone"/>
+                                                .
+                                            </div>
+                                            <div class="title">
+                                                <strong>FEE VOUCHER</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 logo">
+                                            <img src="/city_school/static/src/img/image.png"
+                                                 alt="https://www.cityhighschool.pk" height="80px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row px-4">
+                                    <div class="col-7"></div>
+                                    <div class="col-5 pt-2" style="text-align:right;">
+                                        <strong>PARENT COPY</strong>
+                                    </div>
+                                </div>
+                                <div class="row px-4">
+                                    <div class="col-2 ps-2">
+<!--                                        <div style="margin-bottom:2px;height:25px;">-->
+<!--                                            &lt;!&ndash;                                    <span>Serial No :</span>&ndash;&gt;-->
+
+<!--                                        </div>-->
+                                        <div class="dynamic_data_lines">
+                                            <span>Invoice No :</span>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Month :</span>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Class :</span>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Roll No :</span>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Student Name :</span>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>Father Name :</span>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>
+                                                Mobile :
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 text-left">
+<!--                                        <div style="margin-bottom:2px;text-align:center;font-size:20px;">-->
+<!--                                            <strong t-if="o.company_id.name">-->
+<!--                                                <t t-esc="o.company_id.name"/>-->
+<!--                                            </strong>-->
+<!--                                            <strong t-else="">-->
+<!--                                                &#160;&#160;&#160;&#160;&#160;-->
+<!--                                            </strong>-->
+
+<!--                                        </div>-->
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.name">
+                                                <t t-esc="o.name"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;&#160;&#160;&#160;&#160;
+                                            </strong>
+
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong>
+                                                <t t-esc="o.get_current_month_formatted()"/>
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.student_id.year_id.name">
+                                                <t t-esc="o.student_id.year_id.name"/> (<t t-esc="o.student_id.section_id.name"/>)
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;&#160;&#160;&#160;&#160;
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.student_id.gr_no">
+                                                <t t-esc="o.student_id.gr_no"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;&#160;&#160;&#160;&#160;
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.student_id.name">
+                                                <t t-esc="o.student_id.name"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;&#160;&#160;&#160;&#160;
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.student_id.father_name">
+                                                <t t-esc="o.student_id.father_name"/>
+                                            </strong>
+                                            <strong t-else="">
+                                                &#160;&#160;&#160;&#160;&#160;
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong t-if="o.mobile">
+                                                <t t-esc="o.mobile"/>
+                                                <!--                                        &#160;&#160;&#160;&#160;&#160;-->
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <table>
+                                            <tr>
+                                                <th colspan="2"
+                                                    style="background-color:#026ab2;color:white;text-align:center;padding:5px;">
+                                                    FEE CHALAN
+                                                </th>
+                                            </tr>
+                                            <t t-foreach="o.invoice_line_ids" t-as="fee">
+                                                <t t-if="fee.price_unit >= 0">
+                                                    <tr>
+                                                        <th>
+                                                            <t t-esc="fee.product_id.name"/>
+                                                        </th>
+                                                        <td>
+                                                            <t t-esc="round(fee.price_unit)"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                            <tr>
+                                                <th>
+                                                    Payable By :
+                                                    <t t-esc="o.invoice_date_due"/>
+                                                </th>
+                                                <td>
+                                                    <t t-set="balance"
+                                                       t-value="sum(line.price_unit for line in o.invoice_line_ids)"/>
+                                                    <t t-esc="round(balance)"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    Payable After Due Date :
+                                                </th>
+                                                <td>
+                                                    <t t-set="balance"
+                                                       t-value="sum(line.price_unit for line in o.invoice_line_ids)"/>
+                                                    <t t-esc="round(balance +  o.get_fine_amount_year_base())"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div style="font-size:11px;" class="row px-4">
+                                    <div class="col-7 pe-1">
+                                        <div class="dynamic_data_lines">
+                                            <span>
+                                                1- Tuition Fee should be payable in advance on One month basis and once
+                                                paid is
+                                                NON-REFUNDABLE.
+                                            </span>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>
+                                                2- Tuition Fee must be paid before the last date of payment stated on
+                                                the Fee
+                                                Bill.A Fine of Rs. <t t-esc="o.get_fine_amount_year_base()"/>/- will be charged after the lapse of due date.
+                                            </span>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <strong>
+                                                3- If a student fails to pay tuition fee within seven days after the
+                                                last date
+                                                of payment, he/she will not be permitted to sit in class.
+                                            </strong>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span>
+                                                4- If a student is to be withdrawn, a notice of one month must be given
+                                                in
+                                                writing or month's fee is payable in lieu of notice.
+                                            </span>
+                                        </div>
+                                        <div class="dynamic_data_lines">
+                                            <span style="border-bottom:1px solid;padding-bottom:3px;">
+                                                Office will remain open on every Saturday
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <table style="border:none;">
+                                            <tr>
+                                                <th colspan="2"
+                                                    style="background-color:#026ab2;color:white;text-align:center;">
+                                                    Kindly Bring This Challan For Fee Deposit
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style="border:none;border-bottom:1px dotted black;text-align:left;"
+                                                    colspan="2">
+                                                    <p>
+                                                        Dear Parents,
+                                                        <br/>
+                                                        please note carefully that <i>"LATE FEE DEPOSIT FINE"</i> wil
+                                                        not be remitted after due date Now to onwards.
+                                                        <br/>
+                                                        Thanks
+                                                    </p>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row px-4">
+                                    <div class="col-3 pt-4">
+                                        <span>Issue Date :</span>
+                                        <strong>
+                                            <t t-esc="o.invoice_date"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-3 pt-4">
+                                        <span>Due Date :</span>
+                                        <strong>
+                                            <t t-esc="o.invoice_date_due"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-3 pt-4">
+                                        <span style="border-top:1px solid;padding:5px;">Account Officer</span>
+                                    </div>
+                                     <div class="col-1 pt-1 pe-1" style="margin-top:-40px;text-align:right;">
+                                        <img src="/city_school/static/src/img/www.png"
+                                             alt="https://www.cityhighschool.pk" width="17px" class="pb-1"/>
+                                        <br/>
+                                        <img src="/city_school/static/src/img/Instagram_icon.png"
+                                             alt="https://www.instagram.com/cityhighschoolfsd_/?hl=en" width="17px"
+                                             class="pb-1"/>
+                                        <br/>
+                                        <img src="/city_school/static/src/img/facebook.png"
+                                             alt="https://www.facebook.com/cityhighschoolfsd" width="17px"
+                                             class="pb-1"/>
+                                        <br/>
+                                        <img src="/city_school/static/src/img/youtub.png"
+                                             alt="https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw"
+                                             width="18px" style="margin-right:2px;"/>
+                                    </div>
+                                    <div class="col-2" style="margin-top:-40px;text-align:left;">
+                                        <img src="/city_school/static/src/img/final_qr.jpeg"
+                                             style="width: 85px; height: 85px;" alt="Social Media QR Code"/>
+                                    </div>
+                                </div>
+<!--                                <div class="row px-4">-->
+<!--                                    <div class="col-9"></div>-->
+<!--                                    <div class="col-1 pt-1 pe-1" style="text-align:right;">-->
+<!--                                        <img src="/city_school/static/src/img/www.png"-->
+<!--                                             alt="https://www.cityhighschool.pk" width="17px" class="pb-1"/>-->
+<!--                                        <br/>-->
+<!--                                        <img src="/city_school/static/src/img/Instagram_icon.png"-->
+<!--                                             alt="https://www.instagram.com/cityhighschoolfsd_/?hl=en" width="17px"-->
+<!--                                             class="pb-1"/>-->
+<!--                                        <br/>-->
+<!--                                        <img src="/city_school/static/src/img/facebook.png"-->
+<!--                                             alt="https://www.facebook.com/cityhighschoolfsd" width="17px"-->
+<!--                                             class="pb-1"/>-->
+<!--                                        <br/>-->
+<!--                                        <img src="/city_school/static/src/img/youtub.png"-->
+<!--                                             alt="https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw"-->
+<!--                                             width="18px" style="margin-right:2px;"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-2" style="text-align:left;">-->
+<!--                                        <img src="/city_school/static/src/img/qr_code_final.png"-->
+<!--                                             style="width: 85px; height: 85px;" alt="Social Media QR Code"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <!--            <t t-call="web.basic_layout">-->
+            <!--                <t t-foreach="docs" t-as="o">-->
+            <!--                    <div class="">-->
+            <!--                        &lt;!&ndash;                        <div class="row">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                            <div class="col-2 text-center" style="">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <img t-if="o.company_id.logo"&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                     t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                     alt="Company Logo" style="max-height: 80px;"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                            </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                            <div class="col-5" style="">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <h5 class="p-0 m-0">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <strong>CITY HIGH SCHOOL</strong>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                </h5>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <div style="font-size:10px;" class="p-0">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span t-esc="o.company_id.street"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span t-esc="o.company_id.street2"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span t-esc="o.company_id.city"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <div style="font-size:10px;" class="p-0">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span t-esc="o.company_id.state_id.name"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span t-esc="o.company_id.country_id.name"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span t-esc="o.company_id.phone"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                &lt;!&ndash;                                <div>&ndash;&gt;&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                &lt;!&ndash;                                </div>&ndash;&gt;&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <div class="p-0 m-0">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <strong t-if="o.payment_state in ['in_payment','paid']">Fee Receipt</strong>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <strong t-else="">Fee Voucher</strong>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                            </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                            <div class="col-5 pt-1" style="font-size:9.4px;">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <div class="pb-2">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <img src="/city_school/static/src/img/www.png"&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                         alt="https://www.cityhighschool.pk" width="20px"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span>https://www.cityhighschool.pk</span>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <div class="pb-2" style="position:relative;">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <img src="/city_school/static/src/img/youtub.png"&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                         alt="https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw" width="20px"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span style="position:absolute;left:22px;top:2px;">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                        https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    </span>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                <div class="">&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <img src="/city_school/static/src/img/facebook.png"&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                         alt="https://www.facebook.com/cityhighschoolfsd" width="20px"/>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                    <span>https://www.facebook.com/cityhighschoolfsd</span>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                                </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                            </div>&ndash;&gt;-->
+            <!--                        &lt;!&ndash;                        </div>&ndash;&gt;-->
+            <!--                    </div>-->
+            <!--                    <div class="page" style="font-size:10px;">-->
+            <!--                        <div class="row">-->
+            <!--                            <div class="col-7"></div>-->
+            <!--                            <div class="col-5" style="text-align:right;">-->
+            <!--                                <strong>PARENT COPY</strong>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="row" style="padding:0;margin:0;position:relative;">-->
+            <!--                            <div class="col-2 pt-2 ps-2">-->
+            <!--                                <div style="margin-bottom:2px;height:25px;">-->
+            <!--                                    &lt;!&ndash;                                    <span>Serial No :</span>&ndash;&gt;-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <span>Invoice No :</span>-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <span>Month :</span>-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <span>Class :</span>-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <span>Roll No :</span>-->
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <span>Student Name :</span>-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <span>Father Name :</span>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-5 text-left pt-1">-->
+            <!--                                <div style="margin-bottom:2px;text-align:center;font-size:20px;">-->
+            <!--                                    <strong t-if="o.company_id.name">-->
+            <!--                                        <t t-esc="o.company_id.name"/>-->
+            <!--                                    </strong>-->
+            <!--                                    <strong t-else="">-->
+            <!--                                        &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    </strong>-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <strong t-if="o.name">-->
+            <!--                                        <t t-esc="o.name"/>-->
+            <!--                                    </strong>-->
+            <!--                                    <strong t-else="">-->
+            <!--                                        &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    </strong>-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <strong>-->
+            <!--                                        <t t-esc="o.get_current_month_formatted()"/>-->
+            <!--                                    </strong>-->
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <strong t-if="o.student_id.year_id.name">-->
+            <!--                                        <t t-esc="o.student_id.year_id.name"/>-->
+            <!--                                    </strong>-->
+            <!--                                    <strong t-else="">-->
+            <!--                                        &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    </strong>-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <strong t-if="o.student_id.gr_no">-->
+            <!--                                        <t t-esc="o.student_id.gr_no"/>-->
+            <!--                                    </strong>-->
+            <!--                                    <strong t-else="">-->
+            <!--                                        &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    </strong>-->
+
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <strong t-if="o.student_id.name">-->
+            <!--                                        <t t-esc="o.student_id.name"/>-->
+            <!--                                    </strong>-->
+            <!--                                    <strong t-else="">-->
+            <!--                                        &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    </strong>-->
+
+            <!--                                    &lt;!&ndash;                                    <strong t-if="o.student_id.section_id.name">&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                        <t t-esc="o.student_id.section_id.name"/>&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                    </strong>&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                    <strong t-else="">&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                        &#160;&#160;&#160;&#160;&#160;&ndash;&gt;-->
+            <!--                                    &lt;!&ndash;                                    </strong>&ndash;&gt;-->
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:2px;">-->
+            <!--                                    <strong t-if="o.student_id.father_name">-->
+            <!--                                        <t t-esc="o.student_id.father_name"/>-->
+            <!--                                    </strong>-->
+            <!--                                    <strong t-else="">-->
+            <!--                                        &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    </strong>-->
+            <!--                                    &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    &#160;&#160;&#160;&#160;&#160;-->
+            <!--                                    <span>-->
+            <!--                                        Mobile :-->
+            <!--                                    </span>-->
+            <!--                                    <strong t-if="o.mobile">-->
+            <!--                                        <t t-esc="o.mobile"/>-->
+            <!--                                        &lt;!&ndash;                                        &#160;&#160;&#160;&#160;&#160;&ndash;&gt;-->
+            <!--                                    </strong>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-5" style="padding:0;margin:0;">-->
+            <!--                                <table>-->
+            <!--                                    <tr>-->
+            <!--                                        <th colspan="2"-->
+            <!--                                            style="background-color:#111810;color:white;text-align:center;padding:5px;">-->
+            <!--                                            FEE CHALAN-->
+            <!--                                        </th>-->
+            <!--                                    </tr>-->
+            <!--                                    <t t-foreach="o.invoice_line_ids" t-as="fee">-->
+            <!--                                        <t t-if="fee.price_unit >= 0">-->
+            <!--                                            <tr>-->
+            <!--                                                &lt;!&ndash; Product Name &ndash;&gt;-->
+            <!--                                                <th style="text-align:right;padding-right:10px;">-->
+            <!--                                                    <t t-esc="fee.product_id.name"/>-->
+            <!--                                                </th>-->
+
+            <!--                                                &lt;!&ndash; Product Price &ndash;&gt;-->
+            <!--                                                <td style="text-align:right;padding-right:5px;">-->
+            <!--                                                    <t t-esc="fee.price_unit"/>-->
+            <!--                                                </td>-->
+            <!--                                            </tr>-->
+            <!--                                        </t>-->
+            <!--                                    </t>-->
+            <!--                                    <tr>-->
+            <!--                                        <th>-->
+            <!--                                            Payable By :-->
+            <!--                                            <t t-esc="o.invoice_date_due"/>-->
+            <!--                                        </th>-->
+            <!--                                        <td>-->
+            <!--                                            <t t-set="balance"-->
+            <!--                                               t-value="sum(line.price_unit for line in o.invoice_line_ids)"/>-->
+            <!--                                            <t t-esc="balance"/>-->
+            <!--                                        </td>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <th>-->
+            <!--                                            Payable After Due Date :-->
+            <!--                                            &lt;!&ndash;                                            <t t-esc="o.invoice_date_due"/>&ndash;&gt;-->
+            <!--                                        </th>-->
+            <!--                                        <td>-->
+            <!--                                            <t t-set="balance"-->
+            <!--                                               t-value="sum(line.price_unit for line in o.invoice_line_ids)"/>-->
+            <!--                                            <t t-esc="balance + o.get_late_fee()"/>-->
+            <!--                                        </td>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <th colspan="2"-->
+            <!--                                            style="background-color:#111810;color:white;text-align:center;padding:5px;">-->
+            <!--                                            Kindly Bring This Challan For Fee Deposit-->
+            <!--                                        </th>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <th style="border:none;border-bottom:1px dotted black;text-align:left;"-->
+            <!--                                            colspan="2">-->
+            <!--                                            <div>-->
+            <!--                                                Dear Parents,-->
+            <!--                                                <br/>-->
+            <!--                                                please note carefully that <i>"LATE FEE DEPOSIT FINE"</i> wil-->
+            <!--                                                not be remitted after due date Now to onwards.-->
+            <!--                                                <br/>-->
+            <!--                                                Thanks-->
+            <!--                                            </div>-->
+            <!--                                        </th>-->
+            <!--                                    </tr>-->
+            <!--                                </table>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="row" style="width:100%;position:absolute;bottom:-310px;left:17px;">-->
+            <!--                            <div class="col-7 pe-5">-->
+            <!--                                <div style="margin-bottom:3px;">-->
+            <!--                                    <span>-->
+            <!--                                        1- Tuition Fee should be payable in advance on One month basis and once paid is-->
+            <!--                                        NON-REFUNDABLE.-->
+            <!--                                    </span>-->
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:3px;">-->
+            <!--                                    <span>-->
+            <!--                                        2- Tuition Fee must be paid before the last date of payment stated on the Fee-->
+            <!--                                        Bill.A Fine of Rs. 200/- will be charged after the lapse of due date.-->
+            <!--                                    </span>-->
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:3px;">-->
+            <!--                                    <strong>-->
+            <!--                                        3- If a student fails to pay tuition fee within seven days after the last date-->
+            <!--                                        of payment, he/she will not be permitted to sit in class.-->
+            <!--                                    </strong>-->
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:3px;">-->
+            <!--                                    <span>-->
+            <!--                                        4- If a student is to be withdrawn, a notice of one month must be given in-->
+            <!--                                        writing or month's fee is payable in lieu of notice.-->
+            <!--                                    </span>-->
+            <!--                                </div>-->
+            <!--                                <div style="margin-bottom:3px;">-->
+            <!--                                    <span style="border-bottom:1px solid;padding-bottom:3px;">-->
+            <!--                                        Office will remain open on every Saturday-->
+            <!--                                    </span>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-5" style="position:relative;">-->
+            <!--                                <div style="padding-top:0px;text-align:center;position:absolute;top:-110px;left:-120px;height:85px; width:85px;background:white;">-->
+            <!--                                    <img src="/fee_voucher/static/src/img/31aniv.png"-->
+            <!--                                         alt="https://www.cityhighschool.pk" height="80px"/>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="row" style="width:100%;position:absolute;bottom:-350px;left:17px;">-->
+            <!--                            <div class="col-4">-->
+            <!--                                <span>Issue Date :</span>-->
+            <!--                                <strong>-->
+            <!--                                    <t t-esc="o.invoice_date"/>-->
+            <!--                                </strong>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-4">-->
+            <!--                                <span>Due Date :</span>-->
+            <!--                                <strong>-->
+            <!--                                    <t t-esc="o.invoice_date_due"/>-->
+            <!--                                </strong>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-4">-->
+            <!--                                <span style="border-top:1px solid;padding:5px;">Account Officer</span>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </t>-->
+            <!--            </t>-->
+        </t>
+    </template>
+
+    <record id="voucher_paper_format_old" model="report.paperformat">
+        <field name="name">Voucher Paper Format</field>
+         <field name="default" eval="True"/>
+        <field name="format">A5</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="fee_voucher_print_action_old" model="ir.actions.report">
+        <field name="name">Voucher</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fee_voucher_backup.fee_voucher_template_old</field>
+        <field name="report_file">fee_voucher_backup.fee_voucher_template_old</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="fee_voucher_backup.voucher_paper_format_old"/>
+    </record>
+</odoo>

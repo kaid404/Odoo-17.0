@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+
+        <record id="inherit_day_field" model="ir.ui.view">
+            <field name="name">inherit_day_field</field>
+            <field name="model">global.input</field>
+            <field name="inherit_id" ref="payroll_overtime_inputs.view_global_inp_master_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='apply_by']" position="after">
+                    <field name="hide_calculate_button" invisible="1"/>
+                    <field name="hide_day_field" invisible="1"/>
+                    <field name="show_day_field" invisible="hide_day_field"/>
+                </xpath>
+
+                <xpath expr="//header/button[@name='add_inputs']" position="after">
+                    <button name="calculate_absent" id="calculate_absent" string="Calculate Absent" class="btn-primary"
+                            type="object" invisible="hide_calculate_button"/>
+                </xpath>
+
+                <xpath expr="//field[@name='input_line_ids']/tree/field[@name='amount']" position="before">
+                    <field name="input_days" column_invisible="not parent.show_day_field"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

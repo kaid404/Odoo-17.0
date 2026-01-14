@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+
+        <record id="helpdesk_ticket_inherited" model="ir.ui.view">
+            <field name="name">Additional Fields for Ticket Screen</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='priority']" position="replace">
+                    <field name="priority"/>
+                </xpath>
+
+                <xpath expr="//group[2]" position="after">
+                    <group string="Additional Details" name="additional_details" colspan="2">
+                        <group>
+                            <field name="pro_id"/>
+                            <field name="tasks_tagging"/>
+                            <field name="functional_team"/>
+                        </group>
+                        <group>
+                            <field name="multi_assignees" widget="many2many_tags"/>
+                            <field name="video_link"/>
+                            <field name="functional_team"/>
+                        </group>
+
+                    </group>
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <!--SCHEDULE MESSAGE FOR USERS IF THE TICKET IS MORE THAN 3 DAYS OLD-->
+
+        <record id="ir_cron_helpdesk_ticket_alert" model="ir.cron">
+            <field name="name">Alert Assignees on Old Tickets</field>
+            <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+            <field name="state">code</field>
+            <field name="code">model.notifying_users_for_tickets()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

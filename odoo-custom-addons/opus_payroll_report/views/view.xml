@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- Group Company Location Department WISE Salary Summary Report Wizard -->
+    <record model="ir.ui.view" id="batch_wise_payroll">
+        <field name="name">Opus Employees Payroll Report</field>
+        <field name="model">opus.employees.payroll.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="payslip_run_id"/>
+                    <field name="employee_id" widget="many2many_tags"/>
+                    <field name="specific_date"/>
+                </group>
+                <footer>
+                    <!--                    <button name="print_com_loc_dep_wise_report" string="Print PDF" type="object" class="btn-warning"/>-->
+                    <button name="print_pdf" string="Print PDF" type="object" class="btn-primary"/>
+                    <button name="print_payroll_xlsx" string="Print EXCEL" type="object" class="btn-primary"/>
+                    <button string="Close" class="btn-danger" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!-- Group Company Location Department WISE Salary Summary Report Action Window -->
+    <record model="ir.actions.act_window" id="batch_wise_payroll_action">
+        <field name="name">Employee Payroll Report</field>
+        <field name="res_model">opus.employees.payroll.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="batch_wise_payroll"/>
+    </record>
+</odoo>

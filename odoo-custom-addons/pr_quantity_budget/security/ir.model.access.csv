@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_quantity_budget,access.quantity.budget,model_quantity_budget,,1,1,1,1
+access_quantity_budget_line,accecc.quantity.budget.line,model_quantity_budget_line,,1,1,1,1
+access_quantity_budget_exceed_wizard,access.quantity.budget.exceed.wizard,model_quantity_budget_exceed_wizard,,1,1,1,1

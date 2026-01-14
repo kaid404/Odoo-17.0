@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="city_admission_form_report_paper" model="report.paperformat">
+        <field name="name">ADMISSION FORM Report (PDF)</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="report_city_high_school_detail" model="ir.actions.report">
+        <field name="name">ADMISSION FORM</field>
+        <field name="model">op.admission</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">City_High_School.high_school_detail</field>
+        <field name="report_file">City_High_School.high_school_detail</field>
+        <field name="binding_model_id" ref="model_op_admission"/>
+        <field name="paperformat_id" ref="city_admission_form_report_paper"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <record id="view_admission_form_inherit" model="ir.ui.view">
+        <field name="name">op.admission</field>
+        <field name="model">op.admission</field>
+        <field name="inherit_id" ref="gxs_admission.view_op_admission_form"/>
+        <field name="arch" type="xml">
+            <field name="email" position="before">
+                <field name="father_name"/>
+                <field name="father_occupation"/>
+                <field name="father_education"/>
+                <field name="mother_education"/>
+                <field name="display_name" readonly="1"/>
+                <!--                <field name="phone"/>-->
+                <!--                <field name="mobile"/>-->
+            </field>
+
+        </field>
+    </record>
+
+</odoo>
+

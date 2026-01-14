@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+
+        <!--        <report id="report_hr_attendance"-->
+        <!--                model="attendance.report"-->
+        <!--                string="Print Attendance Report"-->
+        <!--                name="hcs_attendance_report.print_attendance_report_template"-->
+        <!--                file="hcs_attendance_report.print_attendance_report_template"-->
+        <!--                report_type="qweb-pdf"-->
+        <!--                menu="False"-->
+        <!--        />-->
+
+        <!--        <report id="report_hr_attendance_top_management"-->
+        <!--                model="attendance.report.test"-->
+        <!--                string="Print Attendance Report"-->
+        <!--                name="hcs_attendance_report.print_attendance_report_to_management"-->
+        <!--                file="hcs_attendance_report.print_attendance_report_to_management"-->
+        <!--                report_type="qweb-pdf"-->
+        <!--                menu="False"/>-->
+
+        <!--         <report id="report_hr_attendance_test"-->
+        <!--                model="attendance.report.shift"-->
+        <!--                string="Print Attendance Report"-->
+        <!--                name="kaytex_present_absent_report.print_attendance_specific_employees"-->
+        <!--                file="kaytex_present_absent_report.print_attendance_specific_employees"-->
+        <!--                report_type="qweb-pdf"-->
+        <!--                menu="False"/>-->
+
+        <record id="report_hr_attendance_test_17" model="ir.actions.report">
+            <field name="name">Print Attendance Report</field>
+            <field name="model">attendance.report.shift</field>
+            <field name="report_name">kaytex_present_absent_report.print_attendance_specific_employees</field>
+            <field name="report_file">kaytex_present_absent_report.print_attendance_specific_employees</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="binding_model_id" eval="False"/>
+        </record>
+
+        <!--        <report id="report_dept_hr_attendance"-->
+        <!--                model="department.attendance.report"-->
+        <!--                string="Print Department Attendance Report"-->
+        <!--                name="hcs_attendance_report.print_dept_attendance_report_template"-->
+        <!--                file="hcs_attendance_report.print_dept_attendance_report_template"-->
+        <!--                report_type="qweb-pdf"-->
+        <!--                menu="False"-->
+        <!--        />-->
+
+        <!--        <report id="print_absentee_xls_report"-->
+        <!--                model="monthly.absentee.report"-->
+        <!--                string="Monthly Absentee Report"-->
+        <!--                name="hcs_attendance_report.print_absentee_xls_report"-->
+        <!--                file="hcs_attendance_report.print_absentee_xls_report"-->
+        <!--                report_type="xlsx"-->
+        <!--                menu="False"/>-->
+    </data>
+</odoo>

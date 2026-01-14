@@ -1,0 +1,42 @@
+<odoo>
+    <record id="view_op_student_form_inherit" model="ir.ui.view">
+        <field name="name">op.admission.inherit</field>
+        <field name="model">op.admission</field>
+        <field name="inherit_id" ref="gxs_admission.view_op_admission_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+<!--                                                <field name="whatsapp_number"/>-->
+
+                        <field name="reference_id"/>
+
+            </xpath>
+
+            <xpath expr="//field[@name='mobile']" position="after">
+                                                <field name="whatsapp_number"/>
+
+
+            </xpath>
+
+             <xpath expr="//field[@name='mobile']" position="attributes">
+                <attribute name="string">Sim Number</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_op_student_form_attendance_inherit" model="ir.ui.view">
+            <field name="name">op.student.form.inherit</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="gxs_core.view_op_student_form"/>
+            <field name="priority" eval="4"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile']" position="after">
+                    <field name="sim_number"/>
+                </xpath>
+                <xpath expr="//field[@name='gender']" position="before">
+                    <field name="board_reg_number"/>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

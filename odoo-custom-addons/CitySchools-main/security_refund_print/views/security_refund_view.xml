@@ -1,0 +1,15 @@
+<odoo>
+    <record id="view_op_student_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <header>
+                <button name="%(security_refund_print.report_security_refund_print_detail)d" string="Print Security Refund" type="action" class="btn-primary" invisible="state != 'posted'"/>
+            </header>
+            <xpath expr="//field[@name='invoice_date']" position="after">
+                <field name="security_received_by"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="pf_hr_employee_inherit_form" model="ir.ui.view">
+        <field name="name">pf.hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[3]" position="after">
+                <page string="PF Employee And Employer" name="pf_employee_employer_page">
+                    <group>
+                        <group>
+                            <field name="pf_employee_amount"/>
+                            <field name="pf_employer_amount"/>
+                            <field name="total_amount"/>
+                            <field name="total_pf_paid"/>
+                            <field name="pf_total_remaining"/>
+                        </group>
+                        <group>
+                            <field name="empl_opening"/>
+                            <field name="empr_opening"/>
+                            <field name="total_opening"/>
+                            <field name="subtotal_pf"/>
+                        </group>
+                        <group>
+                            <field name="pf_employee_profit"/>
+                            <field name="pf_employer_profit"/>
+                            <field name="total_amount_profit"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

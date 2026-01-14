@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id="email_template_hr_recruitment_required_docs" model="mail.template">
+            <field name="name">Required Documents Email</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="subject">Required Documents for Hiring Process</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>
+                        <b>Required Document email:</b>
+                    </p>
+
+                    <p>We are all excited to welcome you to <t t-out="object.company_id.name"/>.
+                        As agreed, your start date is <t t-out="object.date_open or ''"/>.
+                    </p>
+
+                    <p>To initiate your hiring process please submit the following documents in reply to this email:</p>
+
+                    <ol>
+                        <li>CNIC (Front &amp; Back)</li>
+                        <li>Photocopies of Educational Documents/Degrees</li>
+                        <li>Appointment Letter (Last organization)</li>
+                        <li>Experience Letter</li>
+                        <li>Most recent salary Slip</li>
+                        <li>2 Next of Kin's ID Card Copies</li>
+                    </ol>
+
+                    <p>We are looking forward to working with you and seeing you achieve great things!</p>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

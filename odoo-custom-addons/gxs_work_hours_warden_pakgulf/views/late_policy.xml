@@ -1,0 +1,118 @@
+<!--<?xml version="1.0"?>-->
+<odoo>
+
+    <record id="time_policy_depart_tree" model="ir.ui.view">
+        <field name="name">tree</field>
+        <field name="model">gxs.late.policy.dep</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="department_ids" widget="many2many_tags"/>
+                <field name="user"/>
+                <field name="time" widget="float_time"/>
+                <field name="early_time" widget="float_time"/>
+                <field name="date_from"/>
+                <field name="date_to" />
+
+            </tree>
+        </field>
+
+    </record>
+    <!-- To-Do Task Form view -->
+    <record id="time_policy_depart_view"   model="ir.ui.view">
+        <field name="name">loan.loan.wizards</field>
+        <field name="model">gxs.late.policy.dep</field>
+        <field name="type">form</field>
+
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="department_ids" widget="many2many_tags"/>
+                            <field name="user"/>
+                            <field name="per_month"/>
+                            <field name="type" widget="radio" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="time" widget="float_time"/>
+                            <field name="early_time" widget="float_time"/>
+
+                            <field name="date_from"/>
+                            <field name="date_to" />
+
+                            <field name="on_each"  required="1"/>
+                            <field name="on_each_for_salary"  required="1"/>
+                                    <field name="regular_shift" widget="float_time" required="1"/>
+                                    <field name="half_day_shift" widget="float_time" required="1"/>
+                        </group>
+                    </group>
+
+
+                <notebook>
+                        <page string="Late Policy For Leaves">
+                            <group>
+                            <field name="late_leave_ids" readonly="0" widget="many2many_tags"
+                                    invisible = " type == 'by_depart' "/>
+                             </group>
+                            <field name="leave_ids" readonly="0" invisible="type == 'global' ">
+                                <tree editable="bottom">
+                                    <field name="leave_id" required="1"/>
+<!--                                    <field name="deduct_from" widget="float_time" required="1"/>-->
+<!--                                    <field name="deduct_to" widget="float_time" required="1"/>-->
+<!--                                    <field name="deduction" required="1"/>-->
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+
+    <record id="hr_leave_type_view_form" model="ir.ui.view">
+        <field name="name">hr.leave.type.view.form.inherit</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="is_unpaid"/>
+            </xpath>
+
+
+            <xpath expr="//form/sheet" position="inside">
+                <notebook>
+                        <page string="Late Policy For Unpaid">
+                            <field name="late_leave_ids" readonly="0">
+                                <tree editable="bottom">
+<!--                                    <field name="leave_id" required="0"/>-->
+                                    <field name="deduct_from" widget="float_time" required="1"/>
+                                    <field name="deduct_to" widget="float_time" required="1"/>
+
+                                    <field name="deduction" required="1"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <!-- To-Do Task List view -->
+    <record id="time_policy_depart_action" model="ir.actions.act_window">
+        <field name="name">Late Policy</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gxs.late.policy.dep</field>
+        <field name="view_mode">tree,form</field>
+        <!--      <field name="target">new</field>-->
+        <field name="view_id" ref='time_policy_depart_tree'/>
+    </record>
+    <menuitem id="menu_hr_attendance_time" name="Late Policy" parent="hr_attendance.menu_hr_attendance_view_attendances" sequence="30"
+              groups="hr_attendance.group_hr_attendance_own_reader" action="time_policy_depart_action"/>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_pak_emp_grant_loan_application,pak.emp.grant.loan.application,model_pak_emp_grant_loan_application,,1,1,1,1
+access_emp_loan_payment_schedule,emp.loan.payment.schedule,model_emp_loan_payment_schedule,,1,1,1,1
+access_emp_contribution_loan_details,emp.contribution.loan.details,model_emp_contribution_loan_details,,1,1,1,1

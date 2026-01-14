@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="email_template_job_rejection" model="mail.template">
+            <field name="name">Job Application Rejection</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="subject">Thank You for Applying – {{ object.job_id.name }} at {{ object.company_id.name }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>
+                        Dear <t t-out="object.partner_name or ''"/>,
+                    </p>
+                    <p>
+                        Thank you for taking the time to apply for the
+                        <t t-out="object.job_id.name or 'Job Title'"/>
+                        role at
+                        <t t-out="object.company_id.name"/>
+                        and for participating in our recruitment process. After careful review, we have decided to move forward with other candidates whose profiles
+                        more closely align with the role.
+                    </p>
+
+                    <p>
+                        We truly appreciate the effort you invested in your application and encourage you
+                        to apply for future opportunities with us.
+                        Wishing you continued success in your career ahead.
+                    </p>
+
+                    <p>
+                        <b>Best regards,</b>
+                        <br/>
+                        <t t-out="user.name"/>
+                        <br/>
+                        <t t-out="object.company_id.name"/>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

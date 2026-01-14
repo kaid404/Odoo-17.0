@@ -1,0 +1,43 @@
+<odoo>
+    <record id="view_reason_relieving_form" model="ir.ui.view">
+        <field name="name">Reason For Leaving</field>
+        <field name="model">reason.relieving</field>
+        <field name="arch" type="xml">
+            <form string="Reason Relieving Form">
+                <sheet>
+                    <field name="name"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_reason_relieving_tree" model="ir.ui.view">
+        <field name="name">Reason For Leaving</field>
+        <field name="model">reason.relieving</field>
+        <field name="arch" type="xml">
+            <tree string="Reason Relieving Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_reason_relieving_tree" model="ir.actions.act_window">
+        <field name="name">Reason For Leaving</field>
+        <field name="res_model">reason.relieving</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="view_reason_relieving_tree"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the first Reason.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_reason_relieving_tree"
+              name="Reason For Leaving"
+              parent="menu_configuration"
+              sequence="40"
+              action="action_reason_relieving_tree"/>
+</odoo>

@@ -1,0 +1,86 @@
+.company-name {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 7px;
+    font-family: Times New Roman, Georgia;
+    margin-bottom:3px;
+    }
+.ESTIMATED-SLIP {
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 7px;
+    font-family: Times New Roman, Georgia;
+
+    }
+.company-address {
+    text-align:center;
+    font-size:12px;
+}
+.list-col-6 {
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+}
+.ul-authentic {
+font-size:14px; font-family:Times New Roman, Georgia;
+text-align:center;
+    margin-bottom:5px;
+}
+.div-take-away-dine-in {
+font-weight:bold;font-size: 31px; text-align:center;
+}
+.div-border-bottom {
+border-bottom: 1px solid #000; margin: 5px 0;
+}
+.table-border-style {
+width: 100%; border-collapse: collapse;
+}
+.table-th-1 {
+width: 5%; border-bottom: 1px solid #ddd; font-size: 20px; font-weight: bold; text-align: center;margin-right:5px;
+}
+.table-th-2 {
+width: 35%; border-bottom: 1px solid #ddd; font-size: 20px; font-weight: bold; text-align: left;
+}
+.table-th-3 {
+width: 10%; border-bottom: 1px solid #ddd; font-size: 20px; font-weight: bold; text-align: center;
+}
+.table-th-4 {
+width: 15%; border-bottom: 1px solid #ddd; font-size: 20px; font-weight: bold; text-align: center;
+}
+.table-th-5 {
+width: 20%; border-bottom: 1px solid #ddd; font-size: 20px; font-weight: bold; text-align: center;
+}
+.table-td-1 {
+width: 5%;margin-right:5px;font-size: 20px;
+}
+.table-td-2 {
+width: 35%; text-align: left;font-size: 20px;
+}
+.table-td-3 {
+width: 10%;font-size: 20px;
+}
+.table-td-4 {
+width: 15%;font-size: 20px;
+}
+.table-td-5 {
+width: 20%;font-size: 20px;
+}
+
+
+.class-visibility-hidden {
+visibility: hidden;
+}
+.table-tr-custom {
+text-align: center; border-bottom: 1px solid #ddd; font-size: 23px;margin-top:5px;padding-top:5px;
+}
+
+
+.hidden {
+    display: none !important;
+}
+.pos-receipt .pos-receipt-amount {
+    font-size: 90%;
+    text-align:left;
+}

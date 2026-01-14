@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_job_requisition,job.requisition,model_job_requisition,,1,1,1,0
+access_reason_relieving,reason.relieving,model_reason_relieving,,1,1,1,0
+access_job_specifications,job.specifications,model_job_specifications,,1,1,1,0
+access_budget_information,budget.information,model_budget_information,,1,1,1,0
+access_approval_ceo,approval.ceo,model_approval_ceo,,1,1,1,0

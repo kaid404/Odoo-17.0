@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- To-Do Task Form view -->
+        <record id="assumption_request_tree" model="ir.ui.view">
+        <field name="name">tree</field>
+        <field name="model">assumption.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="request_date"/>
+                <field name="description"/>
+                <field name="request_time"/>
+                  <field name="check_in"  />
+                  <field name="check_out" />
+             </tree>
+        </field>
+
+    </record>
+
+    <record id="assumption_request_wizard_view" model="ir.ui.view">
+      <field name="name">assumption.request.wizards</field>
+      <field name="model">assumption.request</field>
+      <field name="type">form</field>
+      
+      <field name="arch" type="xml">
+        <header>
+            <button name="to_approve" type="object" string="To Approve" class="oe_highlight" states="draft"/>
+        <button name="reject" type="object" string="Reject" class="oe_highlight" states="to_approve"/>
+        <button name="approve" type="object" string="Approve" class="oe_highlight" states="to_approve"/>
+<!--        <button name="create_attendance" type="object" string="Draft" class="oe_highlight" states="approve"/>-->
+<!--        <button name="approve" type="object" string="Approve" class="oe_highlight"-->
+<!--                 attrs="{'invisible': [('attrs_condition', '=', False)]}"/>-->
+            <field name="state" widget="statusbar"/>
+        </header>
+        <form string='Wi Form'>
+          <group>
+              <group>
+                <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+                <field name="request_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+              </group>
+              <group>
+                  <field name="request_time" force_save="1" widget="float_time"/>
+                  <field name="check_in" force_save="1"/>
+                  <field name="check_out" force_save="1"/>
+              </group>
+          </group>
+            <field name="description" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+        </form>
+       
+
+      </field>
+    </record>
+
+    <!-- To-Do Task List view -->
+     
+     
+    <record id="assumption_request_actions" model="ir.actions.act_window">
+      <field name="name">Assumption Request</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">assumption.request</field>
+      <field name="view_mode">tree,form</field>
+<!--              <field name="target">new</field>-->
+      <field name="view_id" ref='assumption_request_tree'/>
+       
+      
+    </record>
+    <menuitem id="hr_attendance.menu_hr_attendance_view_attendances"
+              name="Attendances"
+              parent="hr_attendance.menu_hr_attendance_root"
+              sequence="10"
+              groups="hr_attendance.group_hr_attendance_own_reader"
+               />
+    <menuitem id="menu_hr_attendance_view_attendances_kaytex"
+              name="Attendances"
+              parent="hr_attendance.menu_hr_attendance_view_attendances"
+              sequence="10"
+              groups="hr_attendance.group_hr_attendance_own_reader"
+              action="hr_attendance.hr_attendance_action"/>
+    <menuitem id="menu_hr_attendance_view_attendances_assumption"
+              name="Assumption Request"
+              parent="hr_attendance.menu_hr_attendance_view_attendances"
+              sequence="10"
+              groups="hr_attendance.group_hr_attendance_own_reader"
+              action="assumption_request_actions"/>
+
+
+</odoo>
+
+
+<!-- 
+2 form with menus
+2nd form description
+name CHar
+Date date
+phone char
+amount float
+qty Int
+Task many2one relation 1st form
+status field / bar - selection
+2 button (Draft or validate)
+  draft - stage
+  validate - stage
+ -->

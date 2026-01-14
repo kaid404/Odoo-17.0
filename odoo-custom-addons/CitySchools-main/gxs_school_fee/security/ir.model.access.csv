@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fee_structure,fee.structure,model_fee_structure,,1,1,1,1
+access_fee_details,fee.details,model_fee_details,,1,1,1,1
+access_op_student_tag,op.student.tag,model_op_student_tag,,1,1,1,1
+access_op_fee_opining,op.fee.opining,model_op_fee_opining,,1,1,1,1
+access_generate_monthly_invoices_wizard,generate.monthly.invoices.wizard,model_generate_monthly_invoices_wizard,,1,1,1,1
+access_gxs_split_invoice,name_gxs_split_invoice,model_gxs_split_invoice,,1,1,1,1

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="attendance_form_template" name="Faculty Dashboard Template">
+        <t t-call="web.layout">
+            <head>
+
+                <link rel="stylesheet" href="/faculty_portal/static/src/css/style.css"/>
+                <link rel="stylesheet" href="/faculty_portal/static/src/css/responsive.css"/>
+                <!-- font-awsome CDN Link -->
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+                      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+                      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+                <link rel='stylesheet'
+                      href='https://cdn-uicons.flaticon.com/2.5.1/uicons-thin-rounded/css/uicons-thin-rounded.css'/>
+            </head>
+
+            <body>
+                <header>
+                    <div class="logosec">
+                        <div class="menuicn">
+                            <!-- <span> &#x2630;</span> -->
+                            <i class="fa-solid fa-bars-staggered"></i>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <!-- <span>&#128276;</span> -->
+                        <i class="fa-regular fa-bell"></i>
+                        <!-- <span id="fullscreen-toggle" onclick="toggleFullscreen()">&#x26F6;</span> -->
+                        <i class="fa-solid fa-expand" id="fullscreen-toggle" onclick="toggleFullscreen()"></i>
+                        <!-- <span id="theme-toggle">&#9789;</span> -->
+                        <i class="fa-solid fa-circle-half-stroke" id="theme-toggle"></i>
+                        <img class="nav-img profile_pic"
+                             t-att-src="image_data_uri(attendance_sheet.faculty_id.image_1920)" alt="Profile Pic"/>
+                    </div>
+                </header>
+                <div class="main-container">
+                    <div class="navcontainer">
+                        <nav class="nav">
+                            <div class="nav-upper-options">
+                                <a href="/dashboard">
+                                    <div class="nav-option">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/dashboard (2).png"
+                                             alt="animated_icon"/>
+                                        <h3>Dashboard</h3>
+                                    </div>
+                                </a>
+                                <a href="/profile">
+                                    <div class="option2 nav-option">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/user.png"
+                                             alt="profile"/>
+                                        <h3>Profile</h3>
+                                    </div>
+                                </a>
+                                <a href="/attendance">
+                                    <div class="nav-option option3">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/calendar.png"
+                                             alt="Attendance"/>
+                                        <h3>Attendance</h3>
+                                    </div>
+                                </a>
+                                <a href="/diary_form">
+                                    <div class="nav-option option3">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/calendar.png"
+                                             alt="Attendance"/>
+                                        <h3>Diary</h3>
+                                    </div>
+                                </a>
+                                <a href="/notification">
+                                    <div class="nav-option option6">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/box.png"
+                                             alt="Notifications"/>
+                                        <h3>Notifications</h3>
+                                    </div>
+                                </a>
+
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main">
+                        <form t-att-action="'/attendance_form/%d' % attendance_sheet.id" method="post">
+                            <!--                        <form t-att-action="/attendance_form/%s' % (attendance_sheet.id)" method="post">-->
+                            <input type="hidden" name="attendance_sheet_id" t-att-value="attendance_sheet.id"/>
+                            <article>
+                                <div>
+                                    <strong>Register :</strong>
+                                    <span t-esc="attendance_sheet.register_id.name"/>
+                                </div>
+                                <div>
+                                    <strong>Name :</strong>
+                                    <span t-esc="attendance_sheet.name"/>
+                                </div>
+                            </article>
+                            <article>
+                                <div>
+                                    <strong>Session :</strong>
+                                    <span t-esc="attendance_sheet.session_id.name"/>
+                                </div>
+                                <div>
+                                    <strong>Date :</strong>
+                                    <span t-esc="attendance_sheet.attendance_date"/>
+                                </div>
+                            </article>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sr no.</th>
+                                        <th>Name</th>
+                                        <th>Present</th>
+                                        <th>Late</th>
+                                        <th>Absent Excused</th>
+                                        <th>Absent Unexcused</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="attendance_sheet.attendance_line" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.id"/>
+                                            <td t-esc="line.student_id.name"/>
+                                            <td>
+                                                <input type="checkbox" t-att-name="'attendance_present_' + str(line.id)"
+                                                       t-att-checked="line.present" class="attendance-checkbox"
+                                                       t-att-id="'present_' + str(line.id)"
+                                                       data-line-id="line.id" data-field="present"
+                                                       onChange="updateCurrentRecords(value,id)"/>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" t-att-name="'attendance_late_' + str(line.id)"
+                                                       t-att-checked="line.late" class="attendance-checkbox"
+                                                       t-att-id="'late_' + str(line.id)"
+                                                       data-line-id="line.id" data-field="late"
+                                                       onChange="updateCurrentRecords(value,id)"/>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" t-att-name="'attendance_excused_' + str(line.id)"
+                                                       t-att-checked="line.excused" class="attendance-checkbox"
+                                                       t-att-id="'excused_' + str(line.id)"
+                                                       data-line-id="line.id" data-field="excused"
+                                                       onChange="updateCurrentRecords(value,id)"/>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" t-att-name="'attendance_absent_' + str(line.id)"
+                                                       t-att-checked="line.absent" class="attendance-checkbox"
+                                                       t-att-id="'absent_' + str(line.id)"
+                                                       data-line-id="line.id" data-field="absent"
+                                                       onChange="updateCurrentRecords(value,id)"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" t-att-name="'attendance_remark_' + str(line.id)"
+                                                       t-att-value="line.remark"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <button type="submit">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+
+                <script src="/faculty_portal/static/src/js/index.js"></script>
+            </body>
+        </t>
+
+        <script type="text/javascript">
+            function updateCurrentRecords(val,id){
+            console.log(val,id)
+            let intValue = parseInt(id.split('_')[1]);
+            let pr = document.getElementById("present_" + intValue.toString());
+            let lt = document.getElementById("late_" + intValue.toString());
+            let ae = document.getElementById("excused_" + intValue.toString());
+            let ab = document.getElementById("absent_" + intValue.toString());
+            if ("present_" + intValue.toString() == id){
+            ae.checked = false
+            ab.checked = false
+            }
+            if ("late_" + intValue.toString() == id){
+            ae.checked = false
+            ab.checked = false
+            }
+            if ("excused_" + intValue.toString() == id){
+            pr.checked = false
+            lt.checked = false
+            ab.checked = false
+            }
+            if ("absent_" + intValue.toString() == id){
+            pr.checked = false
+            lt.checked = false
+            ae.checked = false
+            }}
+        </script>
+    </template>
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="student_tag_view_form" model="ir.ui.view">
+        <field name="name">student_tag</field>
+        <field name="model">op.student.tag</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="is_admission_discount"/>
+                            <field name="is_security_discount"/>
+
+                        </group>
+                        <group>
+                            <field name="code"/>
+                            <field name="amount"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Student">
+                            <field name="student_ids">
+                                <tree>
+                                    <field name="name"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="student_tag_tree" model="ir.ui.view">
+        <field name="name">student_tag</field>
+        <field name="model">op.student.tag</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_student_tag">
+        <field name="name">Student Waiver</field>
+        <field name="res_model">op.student.tag</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="student_tag_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_no_content_create">
+                Create New Waiver
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_student_tag"
+              name="Fee Waiver"
+              parent="menu_generate_monthly_invoices_1"
+              action="action_student_tag"
+              sequence="5"/>
+
+</odoo>

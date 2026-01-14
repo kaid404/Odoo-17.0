@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="turbo_report_payment_receipt_document" inherit_id="account.report_payment_receipt_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <t t-call="turbo_reports.internal_layout_sale_order_turbo_print">
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <t t-set="values" t-value="o._get_payment_receipt_report_values()"/>
+                <div class="page">
+                    <t t-if="o.payment_type == 'outbound'">
+                        <h4 style="text-align:center">PAYMENT PAID</h4>
+                    </t>
+                    <t t-if="o.payment_type == 'inbound'">
+                        <h4 style="text-align:center">PAYMENT RECEIPT</h4>
+                    </t>
+                    <br/>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-4">
+                                    <span>Payment#</span>
+                                </div>
+                                <div class="col-8">
+                                    <strong t-esc="o.name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4"/>
+                                <div class="col-8">
+                                    <div class="col-12" style="background-color:#000000;">
+                                        <hr style="border-color: black; border-width: 1px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <span>Payment Date</span>
+                                </div>
+                                <div class="col-8">
+                                    <strong>
+                                        <t t-if="o.date">
+                                            <t t-esc="o.date.strftime('%d-%m-%Y')"/>
+                                        </t>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4"/>
+                                <div class="col-8">
+                                    <div class="col-12" style="background-color:#000000;">
+                                        <hr style="border-color: black; border-width: 1px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <span>Reference Number</span>
+                                </div>
+                                <div class="col-8">
+                                    <strong t-esc="o.ref"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4"/>
+                                <div class="col-8">
+                                    <div class="col-12" style="background-color:#000000;">
+                                        <hr style="border-color: black; border-width: 1px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <span>Cheque No</span>
+                                </div>
+                                <div class="col-8">
+                                    <strong t-esc="o.cheque_no"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4"/>
+                                <div class="col-8">
+                                    <div class="col-12" style="background-color:#000000;">
+                                        <hr style="border-color: black; border-width: 1px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <span>Payment Mode</span>
+                                </div>
+                                <div class="col-8">
+                                    <strong t-esc="o.journal_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4"/>
+                                <div class="col-8">
+                                    <div class="col-12" style="background-color:#000000;">
+                                        <hr style="border-color: black; border-width: 1px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div style="background-color:#78af54;color:white;padding:25px 0;text-align:center;font-weight:bold;margin-left:20px;width:70%;">
+                                <t t-if="o.payment_type == 'outbound'">
+                                    <span>Amount Paid</span>
+                                </t>
+                                <t t-if="o.payment_type == 'inbound'">
+                                    <span>Amount Received</span>
+                                </t>
+                                <br/>
+                                <span>
+                                        <t t-set="amount" t-value="o.amount"/>
+                                        <t t-esc="'{:,}'.format(round(amount, 2))"/>
+                                        <t t-esc="o.currency_id.symbol"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-6">
+                            <span>Received From:</span>
+                            <br/>
+                            <br/>
+                            <t t-if="o.partner_id.parent_id">
+                                <span t-esc="o.partner_id.parent_id.name.split(',')[0]"/>
+                                <br/>
+                                <div t-field="o.partner_id.parent_id"
+                                     t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                            </t>
+                            <t t-else="">
+                                <span t-esc="o.partner_id.name.split(',')[0]"/>
+                                <br/>
+                                <div t-field="o.partner_id"
+                                     t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                            </t>
+                        </div>
+                        <div class="col-6"/>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="oe_structure"></div>
+                    <table name="invoices"
+                           t-if="values['display_invoices']"
+                           class="table table-sm">
+                        <t t-set="partials" t-value="o.move_id._get_reconciled_invoices_partials()[0]"/>
+                        <t t-set="invoices" t-value="{partial[2].move_id for partial in partials}"/>
+                        <!-- Check if invoices include different currencies -->
+                        <t t-foreach="invoices" t-as="inv">
+                            <t t-if="any(inv.currency_id != par[2].currency_id for par in inv._get_reconciled_invoices_partials()[0])"
+                               t-set="otherCurrency" t-value="True"/>
+                        </t>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span>Invoice Date</span>
+                                </th>
+                                <th>
+                                    <span>Invoice Number</span>
+                                </th>
+                                <th>
+                                    <span>Reference</span>
+                                </th>
+                                <!-- Add a column if there are different currencies -->
+                                <th t-if="otherCurrency" class="text-end">
+                                    <span>Amount In Currency</span>
+                                </th>
+                                <th class="text-end">
+                                    <span>Amount</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="invoices" t-as="inv">
+                                <!-- MOVE -->
+                                <t t-if="inv.move_type != 'entry'">
+                                    <tr>
+                                        <td>
+                                            <span t-field="inv.invoice_date">2023-01-01</span>
+                                        </td>
+                                        <td>
+                                            <span t-field="inv.name">INV001</span>
+                                        </td>
+                                        <td>
+                                            <span t-field="inv.ref">Sample Ref</span>
+                                        </td>
+                                        <td t-if="otherCurrency"/>
+                                        <td class="text-end">
+                                            <span t-field="inv.amount_total">100.00 USD</span>
+                                        </td>
+                                    </tr>
+                                    <!-- PAYMENTS/REVERSALS -->
+                                    <tr t-foreach="inv._get_reconciled_invoices_partials()[0]" t-as="par">
+                                        <t t-set="payment" t-value="par[2].move_id"/>
+                                        <td>
+                                            <span t-field="payment.date">2023-01-05</span>
+                                        </td>
+                                        <td>
+                                            <span t-field="payment.name">PAY001</span>
+                                        </td>
+                                        <td>
+                                            <span t-field="payment.ref">Payment Ref</span>
+                                        </td>
+                                        <t t-set="amountPayment" t-value="-payment.amount_total"/>
+                                        <t t-set="amountInvoice" t-value="-par[1]"/>
+                                        <t t-set="currencyPayment" t-value="payment.currency_id"/>
+                                        <t t-set="currencyInvoice" t-value="inv.currency_id"/>
+                                        <!-- Fill the column "Amount In Currency" only if necessary -->
+                                        <td t-if="otherCurrency" class="text-end">
+                                            <span t-if="currencyPayment != currencyInvoice" t-out="amountPayment"
+                                                  t-options="{'widget': 'monetary', 'display_currency': currencyPayment}">
+                                                50.00 EUR
+                                            </span>
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-out="amountInvoice"
+                                                  t-options="{'widget': 'monetary', 'display_currency': currencyInvoice}">
+                                                25.00 USD
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- BALANCE -->
+                                    <tr>
+                                        <td/>
+                                        <td>
+                                            <strong>Due Amount for
+                                                <span t-field="inv.name">INV001</span>
+                                            </strong>
+                                        </td>
+                                        <td/>
+                                        <td t-if="otherCurrency"/>
+                                        <td class="text-end">
+                                            <strong>
+                                                <span t-field="inv.amount_residual">25.0 USD</span>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="oe_structure"></div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

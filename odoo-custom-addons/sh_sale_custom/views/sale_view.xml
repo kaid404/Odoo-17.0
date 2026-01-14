@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sale order form view -->
+    <record id="x_sh_custon_sale_inherit_view_order_form" model="ir.ui.view">
+        <field name="name">sh.inherit.view.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='price_unit']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='product_uom_qty']"
+                   position="after">
+                <field name="sh_mrp" optional="show" widget="monetary"/>
+                <field name="sh_tp" optional="show"/>
+                <field name="price_unit" string="Rate" optional="show"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='discount']"
+                   position="after">
+                <field name="sh_st_rate" optional="show"/>
+                <field name="sh_tax_amount" optional="show"/>
+                <field name="sh_st_amount" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Account form view -->
+    <record id="x_sh_custon_account_inherit_view_order_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='quantity']"
+                   position="after">
+                <field name="sh_mrp" optional="show" widget="monetary"/>
+                <field name="sh_tp" optional="show"/>
+                <field name="price_unit" string="Rate" optional="show"/>
+            </xpath>
+            <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='discount']"
+                   position="after">
+                <field name="sh_st_rate" optional="show"/>
+                <field name="sh_tax_amount" optional="show"/>
+                <field name="sh_st_amount" optional="show"/>
+                <field name="sh_lot_id" optional="show" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

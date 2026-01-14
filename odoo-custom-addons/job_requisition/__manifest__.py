@@ -1,0 +1,30 @@
+{
+    'name': 'Job Requisition',
+    'version': '17.0',
+    'category': 'Studio',
+    'summary': 'Module for Job Requisition',
+    'sequence': '-1005',
+    'license': 'AGPL-3',
+    'author': 'Hammad Asghar (GXS)',
+    'website': 'odoomates.com',
+    'depends': ['mail', 'hr','x_team'],
+    'demo': [],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/job_requisition_view.xml',
+        'views/reason_relieving_view.xml',
+        'views/job_specification_view.xml',
+        'views/budget_information_view.xml',
+        'views/approval_ceo_view.xml',
+        # 'views/cod_invoice_lines_view.xml',
+        # 'views/delivery_carrier_inherit.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'job_requisition/static/src/form_fix.css',
+        ],
+    },
+    'installable': True,
+    'application': True,
+    'auto install': False,
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="employee_schedule_report_form" model="ir.ui.view">
+        <field name="name">employee.schedule.report.form</field>
+        <field name="model">employee.schedule.report</field>
+        <field name="arch" type="xml">
+            <form string="Employee Schedule Report">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="filter_by"/>
+                        <field name="team_ids" widget="many2many_tags" invisible="filter_by != 'team'" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="employee_id" widget="many2many_tags" invisible="filter_by != 'employee'" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                        <field name="manager_ids" widget="many2many_tags" invisible="filter_by != 'manager'" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Print PDF"
+                            type="object"
+                            name="print_report"
+                            class="btn-primary"/>
+                    <button string="Print Xlsx"
+                            type="object"
+                            name="print_report_xlsx"
+                            class="btn-success"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="employee_schedule_report_action" model="ir.actions.report">
+        <field name="name">Employee Schedule Report</field>
+        <field name="model">employee.schedule.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_schedule_report.employee_schedule_report_template</field>
+        <field name="report_file">employee_schedule_report.employee_schedule_report_template</field>
+        <field name="print_report_name">'Employee Schedule Report'</field>
+    </record>
+
+
+    <record id="employee_schedule_action_window" model="ir.actions.act_window">
+        <field name="name">Employee Schedule Report</field>
+        <field name="res_model">employee.schedule.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="employee_schedule_report_menu"
+              name="Employee Schedule Report"
+              parent="hr_attendance.menu_hr_attendance_reporting"
+              action="employee_schedule_action_window"/>
+
+
+</odoo>

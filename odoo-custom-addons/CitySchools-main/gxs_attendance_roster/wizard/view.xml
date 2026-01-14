@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_op_gxs_course_inherit" model="ir.ui.view">
+            <field name="name">op.gxs.course.inherit</field>
+            <field name="model">op.student.course</field>
+            <field name="inherit_id" ref="gxs_core.view_op_student_course_form"/>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                                <xpath expr="//field[@name='roll_number']" position="after">
+                                    <field name="attendance_percentage"/>
+                                </xpath>
+                   <xpath expr="//notebook" position="inside">
+                       <page name="att_lines" string="Attendance Lines">
+
+                                                               <field name="att_line_ids"/>
+
+                       </page>
+                                </xpath>
+
+            </field>
+        </record>
+    </data>
+
+</odoo>

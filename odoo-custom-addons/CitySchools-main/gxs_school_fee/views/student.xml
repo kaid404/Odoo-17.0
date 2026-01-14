@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="account_move_client_inherit_view" model="ir.ui.view">
+        <field name="name">account.move.inherit.clinet.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[3]" position="before">
+                <field name="super_invoice" invisible="not super_invoice"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="op_student_form" model="ir.ui.view">
+        <field name="name">op.student.inherit.form</field>
+        <field name="model">op.student</field>
+        <field name="inherit_id" ref="gxs_core.view_op_student_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                    <button name="action_create_fee" type="object" string="Generate Monthly Invoices"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Academic Details">
+                    <group>
+                        <group>
+                            <field name="gr_no"/>
+                            <field name="class_id"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="id_old_student"/>
+                            <field name="amount_fee" invisible="not id_old_student"/>
+
+                        </group>
+                        <group>
+                            <field name="year_id"/>
+                            <field name="section_id"/>
+                            <field name="company_id" string="Campus"/>
+                             <field name="father_name"/>
+
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

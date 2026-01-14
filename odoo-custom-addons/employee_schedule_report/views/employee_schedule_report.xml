@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="employee_schedule_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <h3 style="text-align:center;">Daily Attendance Report</h3>
+                    <p style="text-align:center; margin-bottom:15px;">
+                        <strong>
+                            <t t-esc="period"/>
+                        </strong>
+                    </p>
+
+                    <t t-foreach="employees" t-as="emp">
+                        <table class="table table-bordered"
+                               style="width:100%; font-size:12px; border-top:4px solid #007bff;">
+                            <thead>
+                                <tr>
+                                    <th>Sr #</th>
+                                    <th>Date</th>
+                                    <th>Schedule</th>
+                                    <th>Scheduled In</th>
+                                    <th>Scheduled Out</th>
+                                    <th>Actual In</th>
+                                    <th>Actual Out</th>
+                                    <th>Worked Time</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color:#f0f0f0; font-weight:bold;">
+                                    <td colspan="3">Employee:
+                                        <t t-esc="emp['employee_info']['employee']"/>
+                                    </td>
+                                    <td colspan="3">Department:
+                                        <t t-esc="emp['employee_info']['dept'] or '-'"/>
+                                    </td>
+                                    <td colspan="3">Punch Code:
+                                        <t t-esc="emp['employee_info']['code'] or '-'"/>
+                                    </td>
+                                </tr>
+                                <tr style="background-color:#f0f0f0; font-weight:bold;">
+                                    <td colspan="3">Team:
+                                        <t t-esc="emp['employee_info']['team']"/>
+                                    </td>
+                                    <td colspan="3">Job:
+                                        <t t-esc="emp['employee_info']['Job'] or '-'"/>
+                                    </td>
+                                    <td colspan="3">Manager:
+                                        <t t-esc="emp['employee_info']['manager'] or '-'"/>
+                                    </td>
+                                </tr>
+                                <t t-set="sr" t-value="0"/>
+                                <t t-foreach="emp['lines']" t-as="line">
+                                    <t t-set="sr" t-value="sr + 1"/>
+                                    <tr>
+                                        <td>
+                                            <t t-esc="sr"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.get('date')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.get('name')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.get('scheduled_in')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.get('scheduled_out')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.get('check_in')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.get('check_out')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.get('worked_time')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.get('remarks')"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <!-- Totals -->
+                                <tr style="font-weight:bold; background-color:#e0e0e0;">
+                                    <td colspan="2">Scheduled Time:
+                                        <t t-esc="round(emp['totals']['scheduled_hours'],2)" t-options='{"widget": "float_time"}'/>
+                                    </td>
+                                    <td colspan="2">Worked Time:
+                                        <t t-esc="round(emp['totals']['worked_hours'],2)" t-options='{"widget": "float_time"}'/>
+                                    </td>
+                                    <td colspan="3">Total Scheduled Days:
+                                        <t t-esc="emp['totals']['scheduled_days']"/>
+                                    </td>
+                                    <td colspan="2">Total Late:
+                                        <t t-esc="emp['totals']['late_days']"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-weight:bold; background-color:#e0e0e0;">
+                                    <td colspan="2">Total HalfDay:
+                                        <t t-esc="emp['totals']['half_days']"/>
+                                    </td>
+                                    <td colspan="2">Total Absent Days:
+                                        <t t-esc="emp['totals']['absent_days']"/>
+                                    </td>
+                                    <td colspan="3">Full Day Leave:
+                                        <t t-esc="emp['totals']['full_day_leaves']"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="page-break-after: always;"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!--    <template id="employee_schedule_report_template">-->
+    <!--        <t t-call="web.html_container">-->
+    <!--            <t t-call="web.basic_layout">-->
+    <!--                <div class="page">-->
+    <!--                    <h3 style="text-align:center;">-->
+    <!--                        Daily Attendance Report-->
+    <!--                    </h3>-->
+    <!--                    <p style="text-align:center; margin-bottom:15px;">-->
+    <!--                        <strong>-->
+    <!--                            <t t-esc="period"/>-->
+    <!--                        </strong>-->
+    <!--                    </p>-->
+    <!--                    <table class="table table-bordered"-->
+    <!--                           style="width:100%; font-size:12px; border-top:4px solid #007bff;">-->
+    <!--                        <thead>-->
+    <!--                            <tr>-->
+    <!--                                <th>Sr #</th>-->
+    <!--                                <th>Date</th>-->
+    <!--                                <th>Schedule</th>-->
+    <!--                                <th>Scheduled In</th>-->
+    <!--                                <th>Scheduled Out</th>-->
+    <!--                                <th>Actual In</th>-->
+    <!--                                <th>Actual Out</th>-->
+    <!--                                <th>Worked Time</th>-->
+    <!--                                <th>Remarks</th>-->
+    <!--                            </tr>-->
+    <!--                        </thead>-->
+    <!--                        <tbody>-->
+    <!--                            <t t-set="current_employee" t-value="False"/>-->
+    <!--                            <t t-set="sr" t-value="0"/>-->
+
+    <!--                            <t t-foreach="lines" t-as="l">-->
+    <!--                                <t t-set="sr" t-value="sr + 1"/>-->
+    <!--                                <t t-if="current_employee != l['employee']">-->
+    <!--                                    <tr style="background-color:#f0f0f0; font-weight:bold;">-->
+    <!--                                        <td colspan="3">-->
+    <!--                                            Employee:&#160;&#160;-->
+    <!--                                            <t t-esc="l['employee']"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="3">-->
+    <!--                                            Department:&#160;&#160;-->
+    <!--                                            <t t-esc="l['dept'] or '-'"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="3">-->
+    <!--                                            Punch Code:&#160;&#160;-->
+    <!--                                            <t t-esc="l['code'] or '-'"/>-->
+    <!--                                        </td>-->
+    <!--                                    </tr>-->
+    <!--                                    <tr style="background-color:#f0f0f0; font-weight:bold;">-->
+    <!--                                        <td colspan="3">-->
+    <!--                                            Team:&#160;&#160;-->
+    <!--                                            <t t-esc="l['team']"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="3">-->
+    <!--                                            Job:&#160;&#160;-->
+    <!--                                            <t t-esc="l['Job'] or '-'"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="3">-->
+    <!--                                            Manager:&#160;&#160;-->
+    <!--                                            <t t-esc="l['manager'] or '-'"/>-->
+    <!--                                        </td>-->
+    <!--                                    </tr>-->
+    <!--                                    <t t-set="current_employee" t-value="l['employee']"/>-->
+    <!--                                </t>-->
+
+    <!--                                <tr>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="sr"/>-->
+    <!--                                    </td>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="l.get('date')"/>-->
+    <!--                                    </td>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="l.get('name')"/>-->
+    <!--                                    </td>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="l.get('scheduled_in')"/>-->
+    <!--                                    </td>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="l.get('scheduled_out')"/>-->
+    <!--                                    </td>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="l.get('check_in')"/>-->
+    <!--                                    </td>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="l.get('check_out')"/>-->
+    <!--                                    </td>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="l.get('worked_time')"/>-->
+    <!--                                    </td>-->
+    <!--                                    <td>-->
+    <!--                                        <t t-esc="l.get('remarks')"/>-->
+    <!--                                    </td>-->
+    <!--                                </tr>-->
+
+    <!--                                <t t-set="next_employee"-->
+    <!--                                   t-value="lines[lines.index(l)+1]['employee'] if lines.index(l)+1 &lt; len(lines) else False"/>-->
+    <!--                                <t t-if="current_employee != next_employee">-->
+    <!--                                    <tr style="font-weight:bold; background-color:#e0e0e0;">-->
+    <!--                                        <td colspan="2">Scheduled Time:-->
+    <!--                                            <t t-esc="l.get('scheduled_hours')"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="2">Worked Time:-->
+    <!--                                            <t t-esc="l.get('worked_hours')"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="3">Total Schedule Day:-->
+    <!--                                            <t t-esc="l.get('scheduled_days')"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="2">Total Late:-->
+    <!--                                            <t t-esc="l.get('lates',0)"/>-->
+    <!--                                        </td>-->
+    <!--                                    </tr>-->
+    <!--                                    <tr style="font-weight:bold; background-color:#e0e0e0;">-->
+    <!--                                        <td colspan="2">Total HalfDay:-->
+    <!--                                            <t t-esc="l.get('half_days')"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="2">Total Absent Days:-->
+    <!--                                            <t t-esc="l.get('absent_days')"/>-->
+    <!--                                        </td>-->
+    <!--                                        <td colspan="3">Full Day Leave:-->
+    <!--                                            <t t-esc="l.get('full_day_leaves')"/>-->
+    <!--                                        </td>-->
+    <!--                                    </tr>-->
+    <!--                                </t>-->
+    <!--                            </t>-->
+    <!--                        </tbody>-->
+    <!--                    </table>-->
+    <!--                </div>-->
+    <!--            </t>-->
+    <!--        </t>-->
+    <!--    </template>-->
+
+    <record id="employee_schedule_report_action" model="ir.actions.report">
+        <field name="name">Employee Schedule Report</field>
+        <field name="model">employee.schedule.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_schedule_report.employee_schedule_report_template</field>
+        <field name="report_file">employee_schedule_report.employee_schedule_report_template</field>
+        <field name="print_report_name">'Employee Schedule Report'</field>
+    </record>
+
+    <record id="employee_schedule_report_action_xlsx" model="ir.actions.report">
+        <field name="name">Employee Schedule Report Xlsx</field>
+        <field name="model">employee.schedule.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">employee_schedule_report.employee_schedule_template_xlsx</field>
+        <field name="report_file">employee_schedule_report.employee_schedule_template_xlsx</field>
+        <field name="print_report_name">'Employee Schedule Report'</field>
+    </record>
+
+
+</odoo>

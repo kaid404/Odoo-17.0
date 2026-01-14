@@ -1,0 +1,21 @@
+<odoo>
+    <record id="religion_islam" model="res.religion">
+        <field name="name">Islam</field>
+    </record>
+
+    <record id="religion_christianity" model="res.religion">
+        <field name="name">Christianity</field>
+    </record>
+
+    <record id="religion_hinduism" model="res.religion">
+        <field name="name">Hinduism</field>
+    </record>
+
+    <record id="religion_buddhism" model="res.religion">
+        <field name="name">Buddhism</field>
+    </record>
+
+    <record id="religion_judaism" model="res.religion">
+        <field name="name">Judaism</field>
+    </record>
+</odoo>

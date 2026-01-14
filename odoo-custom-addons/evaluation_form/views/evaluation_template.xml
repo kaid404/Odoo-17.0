@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_evaluation_template_form" model="ir.ui.view">
+        <field name="name">evaluation.template.form</field>
+        <field name="model">evaluation.template</field>
+        <field name="arch" type="xml">
+            <form string="Evaluation Template">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page string="Template Lines">
+                            <field name="template_line_ids" context="{'default_template_id': active_id}">
+                                <tree editable="bottom">
+                                    <field name="evaluation_factors"/>
+                                    <field name="score"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="evaluation_factors"/>
+                                        <field name="score"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_evaluation_template_tree" model="ir.ui.view">
+        <field name="name">evaluation.template.tree</field>
+        <field name="model">evaluation.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_evaluation_template" model="ir.actions.act_window">
+        <field name="name">Evaluation Templates</field>
+        <field name="res_model">evaluation.template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="menu_evaluation_templates" name="Evaluation Templates"
+              parent="hr_recruitment.menu_hr_recruitment_configuration"
+              action="action_evaluation_template"
+              sequence="10"
+    />
+
+
+</odoo>

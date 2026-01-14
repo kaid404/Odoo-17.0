@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="time_policy_depart_tree"  model="ir.ui.view">
+        <field name="name">tree</field>
+        <field name="model">kt.atten.policy</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="user"/>
+                <field name="time" widget="float_time"/>
+
+            </tree>
+        </field>
+
+    </record>
+    <!-- To-Do Task Form view -->
+    <record id="time_policy_depart_view" model="ir.ui.view">
+        <field name="name">loan.loan.wizards</field>
+        <field name="model">kt.atten.policy</field>
+        <field name="type">form</field>
+
+        <field name="arch" type="xml">
+            <header>
+
+
+            </header>
+            <sheet>
+                <form string='Time Policy'>
+                    <group>
+                        <group>
+<!--                            <field name="department_id"/>-->
+                            <field name="user" readonly="1"/>
+
+                        </group>
+                        <group>
+                            <field name="time" widget="float_time"/>
+
+                        </group>
+                    </group>
+
+                </form>
+
+            </sheet>
+        </field>
+    </record>
+
+    <!-- To-Do Task List view -->
+
+
+    <record id="time_policy_depart_action" model="ir.actions.act_window">
+
+        <field name="name">Late Relaxation Policy</field>
+
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">kt.atten.policy</field>
+        <field name="view_mode">tree,form</field>
+
+        <!--      <field name="target">new</field>-->
+        <field name="view_id" ref='time_policy_depart_tree'/>
+
+
+    </record>
+
+    <menuitem id="menu_hr_attendance_time" name="Late Relaxation Policy" parent="hr_attendance.group_hr_attendance_own_reader" sequence="30"
+              groups="hr_attendance.group_hr_attendance_own_reader" action="time_policy_depart_action"/>
+
+</odoo>
+
+
+
+<!--<odoo>-->
+<!--    <data>-->
+<!--        <record id="view_general_configuration_kaytax" model="ir.ui.view">-->
+<!--            <field name="name">res.config.settings.form.inherit</field>-->
+<!--            <field name="model">res.config.settings</field>-->
+<!--            <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//div[@data-key='hr_attendance']" position="inside">-->
+<!--&lt;!&ndash;                <xpath expr="//div[@name='integration']" position="after">&ndash;&gt;-->
+<!--                    <h2>Relaxation Policy</h2>-->
+<!--                    <div class="row mt16 o_settings_container">-->
+
+<!--                        <div class="col-12 col-lg-6 o_setting_box">-->
+
+<!--                            <div class="o_setting_right_pane">-->
+<!--                                <h3>Time</h3>-->
+<!--                                <div class="content-group">-->
+<!--                                    <group>-->
+<!--                                        <field name="relax_time" class="oe_inline"/>-->
+<!--                                    </group>-->
+
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--    </data>-->
+<!--    <record id="action_kaytex_settings" model="ir.actions.act_window">-->
+<!--        <field name="name">Settings</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">res.config.settings</field>-->
+<!--        <field name="view_mode">form</field>-->
+<!--        <field name="target">inline</field>-->
+<!--        <field name="context">{'module' : 'kaytex'}</field>-->
+<!--    </record>-->
+
+<!--    <menuitem id="menu_hr_attendance_settings"-->
+<!--              name="Settings"-->
+<!--              parent="hr_attendance.menu_hr_attendance_view_attendances"-->
+<!--              sequence="0"-->
+<!--              groups="hr_attendance.group_hr_attendance_own_reader"-->
+<!--              action="action_kaytex_settings"/>-->
+
+
+<!--</odoo>-->

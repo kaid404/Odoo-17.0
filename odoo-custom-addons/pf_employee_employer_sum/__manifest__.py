@@ -1,0 +1,20 @@
+{
+    'name': 'PF Employee and Employer Sum',
+    'version': '17.0',
+    'category': 'Studio',
+    'summary': 'Module for manging the PF Employee and Employer Sum',
+    'sequence': '-10008',
+    'license': 'AGPL-3',
+    'author': 'Hasnain Jutt',
+    'Maintainer': 'GlobalXS',
+    'website': 'globalxs.co',
+    'depends': ['mail', 'hr','hr_payroll', 'sync_employee_advance_salary'],
+    'demo': [],
+    'data': [
+        # 'security/ir.model.access.csv',
+        'views/pf_employee_employer.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto install': False,
+}

@@ -1,0 +1,234 @@
+<odoo>
+
+
+    <record id="employee_application_list_view" model="ir.ui.view">
+        <field name="name">Application Form</field>
+        <field name="model">employment.form</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="position_applied"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="employee_application_form_view" model="ir.ui.view">
+        <field name="name">Application Form</field>
+        <field name="model">employment.form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h2 style="text-align:center; text-decoration: underline;">Employment Application Form</h2>
+                    <div class="o_row" style="margin-top:20px; margin-left:0px; margin-bottom:30px;">
+                        <div class="o_col o_col_12">
+                            <strong>This Company is an Equal Opportunity Employer. Further, we state that the
+                                information you provide shall be kept confidential.
+                            </strong>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="position_applied"/>
+                            <field name="expected_salary"/>
+                            <field name="gross_salary"/>
+                        </group>
+                    </group>
+                    <group string="Applicant’s Information:">
+                        <group>
+                            <field name="name"/>
+                            <field name="marital_status"/>
+                            <field name="current_address"/>
+                            <field name="cnic_number" placeholder="xxxxx-xxxxxxx-x"/>
+                            <field name="qualification_recent"/>
+                            <field name="current_company"/>
+                            <field name="total_work_experience"/>
+                        </group>
+                        <group>
+
+                            <field name="date_of_birth"/>
+                            <field name="mobile_no"/>
+                            <field name="email_id"/>
+                            <field name="institute_name"/>
+                            <field name="current_job"/>
+                            <field name="father_occupation"/>
+                        </group>
+                    </group>
+                    <div class="o_row">
+                        <div class="o_col o_col_6">
+                            <strong>Have any of your relatives ever been employed with this company?</strong>
+                        </div>
+                        <div class="o_col o_col_6">
+                            <field name="relatives_employed" widget="radio" nolabel="1"/>
+                        </div>
+                    </div>
+                    <div class="o_row">
+                        <div class="o_col o_col_6">
+                            <strong>Have you ever been employed with this company?</strong>
+                        </div>
+                        <div class="o_col o_col_6">
+                            <field name="previously_employed" widget="radio" nolabel="1"/>
+                        </div>
+                    </div>
+                    <div class="o_row" style="margin:20px; margin-left:0px;">
+                        <div class="o_col o_col_6">
+                            <strong>Please provide the details of (relatives/friends/colleagues/others) you know in this
+                                Company:
+                            </strong>
+                        </div>
+                    </div>
+                    <table style="border:1px solid black; border-collapse:collapse; width:100%;">
+                        <thead>
+                            <th style="border:1px solid black; width:34%; text-align: center;">NAME OF EMPLOYEE</th>
+                            <th style="border:1px solid black; width:33%; text-align: center;">RELATIONSHIP</th>
+                            <th style="border:1px solid black; width:33%; text-align: center;">POSITION HELD</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border:1px solid black; align:center;">
+                                    <field name="name_1" style="width:100%; border:none;"/>
+                                </td>
+                                <td style="border:1px solid black; align:center;">
+                                    <field name="relationship_1" style="width:100%; border:none;"/>
+                                </td>
+                                <td style="border:1px solid black; align:center;">
+                                    <field name="position_held_1" style="width:100%; border:none;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black; align:center;">
+                                    <field name="name_2" style="width:100%; border:none;"/>
+                                </td>
+                                <td style="border:1px solid black; align:center;">
+                                    <field name="relationship_2" style="width:100%; border:none;"/>
+                                </td>
+                                <td style="border:1px solid black; align:center;">
+                                    <field name="position_held_2" style="width:100%; border:none;"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="o_row" style="margin:20px; margin-left:0px;">
+                        <div class="o_col o_col_6">
+                            <strong>How did you get the information about the job opening at this company?</strong>
+                        </div>
+                        <div class="o_col o_col_6">
+                            <field name="info_source" widget="radio" nolabel="1"/>
+                        </div>
+                    </div>
+                    <div class="o_row" style="margin:20px; margin-left:0px;">
+                        <div class="o_col o_col_4">
+                            <strong>Applicant’s Signatures: &#160;&#160;&#160;&#160;&#160;&#160;</strong>
+                            <field name="signature" nolabel="1"/>
+                        </div>
+                        <!--                        <div class="o_col o_col_10">-->
+                        <!--                        </div>-->
+                    </div>
+                    <div class="o_col o_col_12">
+                        <h2 style="text-align:center; text-decoration: underline;">(For office use only)</h2>
+                        <group>
+                            <field name="team_name"/>
+                            <field name="Interviewer_name"/>
+                            <field name="interview_status" widget="radio"/>
+                            <field name="reason"/>
+                        </group>
+
+                    </div>
+                    <h2 style="text-align:center; text-decoration: underline;">DECLARATION FORM</h2>
+
+
+                    <div style="margin:30px; margin-left:0px; border-bottom: 1px solid black;">
+                        <div class="o_col o_col_12">
+                            <p>Is your visa application (Immigration, studies, visit, Family sponsorship, etc.) to
+                                any country in the process?
+                            </p>
+                        </div>
+                        <div class="o_col o_col_6">
+                            <field name="visa_status" widget="radio" nolabel="1"/>
+                        </div>
+                        <div class="o_col o_col_12" style="margin-bottom: 20px;">
+                            <p>If yes, please include details of the applied visa (Type, country, application date,
+                                and expected time of completion of the process).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="margin:20px; margin-left:0px; border-bottom: 1px solid black;">
+                        <div class="o_col o_col_12">
+                            <p>Have you applied to any local/ foreign university for higher studies as of the date
+                                mentioned above?
+                            </p>
+                        </div>
+                        <div class="o_col o_col_6">
+                            <field name="additional_uni_status" widget="radio" nolabel="1"/>
+                        </div>
+                        <div class="o_col o_col_12" style="margin-bottom: 20px;">
+                            <p>If yes, please specify the name of the university that applied for higher education
+                                and the estimated time to pursue the education/commencement of the batch.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="margin:20px; margin-left:0px;">
+                        <div class="o_col o_col_12">
+                            <p>I’m legally authorized to work in Pakistan
+                            </p>
+                        </div>
+                        <div class="o_col o_col_6">
+                            <field name="work_status_in_pk" widget="radio" nolabel="1"/>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 style="text-align:center; text-decoration: underline;">Acknowledgment</h2>
+                        <div class="o_col_12">
+                            <p>
+                                I confirm that the information that I have provided in this declaration form is correct
+                                and complete as of the date mentioned below. I understand and accept that if I knowingly
+                                withhold information, or provide false or misleading information, this may result in my
+                                application being rejected, or if I am appointed, my dismissal. I further agree that any
+                                change to the above-mentioned items will be immediately communicated via email to the
+                                Human Resources Department.
+                                <br/>
+                                <br/>
+                                Also, the company may hold the issuance of final settlements in case of non-disclosure
+                                of visa process.
+                            </p>
+
+                        </div>
+                    </div>
+                    <group>
+                        <field name="name_in_block_letter"/>
+                    </group>
+                    <group>
+                        <field name="date_signature"/>
+                    </group>
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_employee_application_form" model="ir.actions.act_window">
+        <field name="name">employee application form</field>
+        <field name="res_model">employment.form</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_employee_application_form" name="Employee Application Form"
+              action="action_employee_application_form"
+              parent="hr_recruitment.menu_crm_case_categ0_act_job"/>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+

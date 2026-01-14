@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_turbo_solution">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <style>
+                        table{
+                        width:100%;
+                        border-collapse:collapse;
+                        border:none;
+                        margin:0px 0;
+                        }
+                        thead{
+                        background-color:#1750ad;
+                        color:white;
+                        border:none;
+                        }
+                        tbody{
+                        border:none;
+                        }
+                        table th,
+                        table td{
+                        font-size:11px;
+                        text-align:center;
+                        border:none;
+                        padding:6px;
+                        }
+                        table tr{
+                        border:none;
+                        border-bottom:1px solid silver;
+                        }
+                        #terms_conditions p{
+                        line-height:1.5;
+                        font-size:11px;
+                        margin:0;
+                        padding:0;
+                        margin-bottom:7px;
+                        }
+                    </style>
+
+                    <div class="page">
+                        <div class="row"
+                             style="">
+                            <div class="col-6" style="text-align:left;margin-left:-30px;margin-top:-4px;">
+                                <img src="/turbo_direct_sale/static/turbosolutionlogo.jpg" alt="logo 1"
+                                     height="67.5px"
+                                     width="83.5%" style=""/>
+                                <!--                                <h2 style="color:#1750ad;font-weight:bold;font-family:Courier New;">Turbo International Solutions</h2>-->
+                            </div>
+                            <div class="col-6"></div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <t t-if="o.service_invoice and o.currency_id.name != 'PKR'">
+                            <div class="row" style="font-size:18px;font-weight:bold;">
+                                <div class="col-1"/>
+                                <div class="col-10" style="text-align:center">
+                                    <span style="text-align:center">
+                                        COMMERCIAL Bill
+                                    </span>
+                                </div>
+                                <div class="col-1"/>
+                            </div>
+                            <div class="row" style="font-size:18px;font-weight:bold;">
+                                <div class="col-1"/>
+                                <div class="col-10" style="text-align:center">
+                                    <span style="text-align:center">
+                                        <t t-if="o.name != '/'">
+                                            <t t-esc="o.name"/>
+                                        </t>
+                                    </span>
+                                </div>
+                                <div class="col-1"/>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="row" style="border-bottom:2px solid #1750ad;margin-bottom:20px;">
+                                <div class="col-12" style="text-align:left;font-size:14px;">
+                                    <strong>Bill -</strong>&#160;&#160;
+                                    <strong t-field="o.name"/>
+                                </div>
+                            </div>
+                        </t>
+                        <div class="row" style="font-size:12px;margin-bottom:10px;">
+                            <div class="col-5">
+                                <t t-if="o.direct_sale_invoice">
+                                    <strong>Supplier :</strong>
+                                </t>
+                                <t t-else="">
+                                    <strong>Client :</strong>
+                                </t>
+                                <br/>
+                                <t t-if="o.partner_id.parent_id">
+                                    <span t-esc="o.partner_id.parent_id.name.split(',')[0]"/>
+                                    <br/>
+                                    <div t-field="o.partner_id.parent_id"
+                                         t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                                </t>
+                                <t t-else="">
+                                    <span t-esc="o.partner_id.name.split(',')[0]"/>
+                                    <br/>
+                                    <div t-field="o.partner_id"
+                                         t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+
+                                </t>
+                                <!--                                <br/>-->
+                                <!--                                <span t-esc="o.partner_id.street"/>-->
+                                <!--                                <br/>-->
+                                <!--                                <span t-esc="o.partner_id.street2"/>-->
+                                <!--                                <span t-esc="o.partner_id.city"/>,-->
+                                <!--                                <br/>-->
+                                <!--                                <span t-esc="o.partner_id.country_id.name"/>-->
+                                <!--                                <span t-esc="o.partner_id.zip"/>-->
+                                <!--                                <br/>-->
+                                <strong>NTN</strong>
+                                <span t-esc="o.partner_id.ntn1"/>
+                                <!--                                <br/>-->
+                                <!--                                <strong>STN</strong>-->
+                                <!--                                <span t-esc="o.partner_id.stn1"/>-->
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-5">
+                                <t t-if="o.direct_sale_invoice">
+                                    <strong>Customer :</strong>
+                                    <br/>
+                                    <t t-if="o.direct_sale_id.partner_id.parent_id">
+                                        <span t-esc="o.direct_sale_id.partner_id.parent_id.name.split(',')[0]"/>
+                                        <br/>
+                                        <div t-field="o.direct_sale_id.partner_id.parent_id"
+                                             t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-esc="o.direct_sale_id.partner_id.name.split(',')[0]"/>
+                                        <br/>
+                                        <div t-field="o.direct_sale_id.partner_id"
+                                             t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+
+                                    </t>
+                                    <!--                                    <strong t-esc="o.direct_sale_id.partner_id.display_name"/>-->
+                                </t>
+                            </div>
+                        </div>
+
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <t t-if="o.service_invoice and o.currency_id.name != 'PKR'">
+                                        <th>Invoice Date</th>
+                                        <th>Client Reference</th>
+                                        <th>Client Contact Person</th>
+                                        <th>Supplier Reference</th>
+                                        <th>Supplier Contact Person</th>
+                                    </t>
+                                    <t t-else="">
+                                        <th>Invoice Date</th>
+                                        <t t-if="o.direct_sale_invoice">
+                                            <th>Supplier Reference</th>
+                                            <th>T/C Type</th>
+                                            <th>Client Reference</th>
+                                        </t>
+                                        <t t-else="">
+                                            <th>Due Date</th>
+                                            <th>Payment Term</th>
+                                            <t t-if="o.service_invoice">
+                                                <th>T/C Type</th>
+                                                <th>P.O./W.O.</th>
+                                                <th>P.O./W.O. Date</th>
+                                            </t>
+                                            <t t-else="">
+                                                <th>PO NO</th>
+                                                <th>PO Date</th>
+                                            </t>
+
+                                        </t>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <t t-if="o.service_invoice and o.currency_id.name != 'PKR'">
+                                        <td>
+                                            <t t-if="o.invoice_date">
+                                                <t t-esc="o.invoice_date.strftime('%d-%m-%Y')"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.sr_client_ref"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.sr_client_contact_person"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.sr_supplier_ref"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.sr_supplier_contact_person"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td>
+                                            <t t-if="o.invoice_date">
+                                                <t t-esc="o.invoice_date.strftime('%d-%m-%Y')"/>
+                                            </t>
+                                        </td>
+                                        <t t-if="o.direct_sale_invoice">
+                                            <td>
+                                                <t t-esc="o.supplier_reference"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.direct_sale_id.default_item_type_id.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.client_reference"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td>
+                                                <t t-if="o.invoice_date_due">
+                                                    <t t-esc="o.invoice_date_due.strftime('%d-%m-%Y')"/>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.invoice_payment_term_id.name"/>
+                                            </td>
+                                            <t t-if="o.service_invoice">
+                                                <td>
+                                                    <t t-set="sale_order"
+                                                       t-value="env['sale.order'].search([('name', '=', o.invoice_origin)], limit=1)"/>
+                                                    <t t-esc="sale_order.service_item_type_id.name"/>
+                                                </td>
+                                            </t>
+                                            <td>
+                                                <t t-esc="o.po_no"/>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.po_date">
+                                                    <t t-esc="o.po_date.strftime('%d-%m-%Y')"/>
+                                                </t>
+                                            </td>
+                                        </t>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <t t-if="o.service_invoice and o.currency_id.name != 'PKR'">
+                                        <th style="text-align:left;">S/N</th>
+                                        <th style="text-align:left;">Type</th>
+                                        <th name="th_description" style="text-align:left;">
+                                            <span>Description</span>
+                                        </th>
+                                        <th name="th_hs_Code" style="text-align:left;">
+                                            <span>HS Code</span>
+                                        </th>
+                                        <th name="th_quantity" style="text-align:right;">
+                                            <span>Qty</span>
+                                        </th>
+                                        <th style="text-align:right;">
+                                            <span>Unit</span>
+                                        </th>
+                                        <th style="text-align:right;">
+                                            <span>Sale Price</span>
+                                        </th>
+                                        <th style="text-align:right;">
+                                            <span>Total</span>
+                                        </th>
+                                    </t>
+                                    <t t-else="">
+                                        <th style="text-align:left;width:60%;">Description</th>
+                                        <th name="th_hs_Code" style="text-align:left;">
+                                            <span>HS Code</span>
+                                        </th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th style="text-align:right;">Amount</th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="total_amount" t-value="0"/>
+                                <t t-set="total_quantity" t-value="0"/>
+                                <t t-set="total_price" t-value="0"/>
+                                <t t-set="amount" t-value="0"/>
+                                <t t-set="sr_no" t-value="1"/>
+
+                                <t t-foreach="o.invoice_line_ids" t-as="lines">
+                                    <tr>
+                                        <t t-if="o.service_invoice and o.currency_id.name != 'PKR'">
+                                            <td style="text-align:left;">
+                                                <t t-esc="sr_no"/>
+                                                <t t-set="sr_no" t-value="sr_no + 1"/>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                <span>
+                                                    <t t-esc="lines.sale_line_ids.default_item_type_id.name"/>
+                                                </span>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                <span t-if="lines.name" t-field="lines.name">
+                                                </span>
+                                                <br/>
+                                                <t t-if="lines.service_task_ids">
+                                                    <span t-foreach="lines.service_task_ids" t-as="task">
+                                                        <span t-field="task.name"/>
+                                                        <br/>
+                                                    </span>
+                                                </t>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                <span t-field="lines.hs_code"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <span t-field="lines.quantity"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <span t-field="lines.product_uom_id.name"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <span t-esc="'{:,}'.format(round(lines.price_unit, 2))">9.00</span>
+                                            </td>
+                                            <td name="td_subtotal" class="o_price_total" style="text-align:right;">
+                                                <span t-esc="'{:,}'.format(round(lines.price_subtotal, 2))">27.00
+                                                </span>
+                                                <t t-set="amount" t-value="amount + lines.price_subtotal"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td style="text-align:left;width:60%;">
+                                                <span t-field="lines.name"/>
+                                                <br/>
+                                                <t t-if="lines.move_id.service_invoice">
+                                                    <span t-foreach="lines.service_task_ids" t-as="task">
+                                                        <span t-field="task.name"/>
+                                                        <br/>
+                                                    </span>
+                                                </t>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                <span t-field="lines.hs_code"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="lines.quantity"/>
+                                                <t t-set="total_quantity" t-value="total_quantity + lines.quantity"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="'{:,}'.format(round(lines.price_unit, 2))"/>
+                                                <t t-set="total_price" t-value="total_price + lines.price_unit"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <t t-set="amount" t-value="amount + lines.price_subtotal"/>
+                                                <t t-esc="'{:,}'.format(round(lines.price_subtotal, 2))"/>
+                                                <t t-esc="o.currency_id.symbol"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <!--                                <tr>-->
+                                <!--                                    <td colspan="2">-->
+                                <!--                                        <strong>Total</strong>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <t t-esc="total_quantity"/>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <t t-esc="total_price"/>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <t t-esc="amount"/>-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+                            </tbody>
+                        </table>
+
+                        <t t-if="o.sale_invoice">
+
+                            <div class="row" style="font-size:12px;">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-3"
+                                     style="border-bottom:1px solid silver;border-top:3px solid #1750ad;padding:5px;">
+                                    <span>
+                                        <strong>Subtotal</strong>
+                                    </span>
+                                </div>
+                                <div class="col-3" align="right"
+                                     style="border-bottom:1px solid silver;border-top:3px solid #1750ad;padding:5px;">
+                                    <span style="">
+                                        <t t-esc="'{:,}'.format(round(amount, 2))"/>
+                                        <t t-esc="o.currency_id.symbol"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <!--                            <br/>-->
+                            <!--                            <br/>-->
+
+                            <!--                            <div class="row">-->
+                            <!--                                <div class="col-12" style="text-align:left;">-->
+                            <!--                                    <span>Payment Terms :</span>&#160;&#160;&#160;&#160;&#160;-->
+                            <!--                                    <span>-->
+                            <!--                                        <t t-esc="o.invoice_payment_term_id.name"/>-->
+                            <!--                                    </span>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+
+                            <!--                            <div class="row">-->
+                            <!--                                <div class="col-12">-->
+                            <!--                                    <span>Payment Communication :</span>&#160;&#160;&#160;&#160;&#160;-->
+                            <!--                                    <span>-->
+                            <!--                                        <t t-esc="o.payment_reference"/>-->
+                            <!--                                    </span>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+                        </t>
+
+                        <!--                        <t t-if="o.direct_sale_invoice">-->
+                        <!--                            <div class="row">-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2">-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2" align="center">-->
+                        <!--                                    <strong>€</strong>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2" align="right">-->
+                        <!--                                    <strong>PKR</strong>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="row">-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                    <table class="table table-bordered"-->
+                        <!--                                           style="border: 1px solid black;width:100%; background-color: #000000;">-->
+                        <!--                                    </table>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="row">-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2">-->
+                        <!--                                    <strong>Revenue</strong>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2" align="center">-->
+                        <!--                                    <span t-esc="round(o.revenue, 2)"/>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2" align="right">-->
+                        <!--                                    <span t-esc="round(o.revenue_pkr, 2)"/>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="row">-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                    <table class="table table-bordered"-->
+                        <!--                                           style="border: 1px solid black;width:100%; background-color: #000000;">-->
+                        <!--                                    </table>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="row">-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2">-->
+                        <!--                                    <strong>Cost</strong>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2" align="center">-->
+                        <!--                                    <span t-esc="round(o.cost, 2)"/>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2" align="right">-->
+                        <!--                                    <span t-esc="round(o.cost_pkr, 2)"/>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="row">-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                    <table class="table table-bordered"-->
+                        <!--                                           style="border: 1px solid black;width:100%; background-color: #000000;">-->
+                        <!--                                    </table>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="row">-->
+                        <!--                                <div class="col-6">-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2">-->
+                        <!--                                    <strong>Profit</strong>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2" align="center">-->
+                        <!--                                    <span t-esc="round(o.profit, 2)"/>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col-2" align="right">-->
+                        <!--                                    <span t-esc="round(o.profit_pkr, 2)"/>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </t>-->
+
+                        <div class="footer" style="margin-top:-2px;">
+                            <div class="row">
+                                <div class="col-12" style="font-size:14px;">
+                                    This document is computer generated and does not require the signature or stamp in
+                                    order to be considered valid.
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-12"
+                                     style="color: #1750ad;font-weight:bold;font-size:18px; text-align:center;">
+                                    <span>Raiwind Road Lahore</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="account_invoices_turbo_solution" model="ir.actions.report">
+        <field name="name">Invoices Turbo Solution</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">turbo_reports.report_invoice_turbo_solution</field>
+        <field name="report_file">turbo_reports.report_invoice_turbo_solution</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="attachment"/>
+        <!--        <field name="binding_model_id" ref="account.model_account_move"/>-->
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="turbo_direct_sale.turbo_solutions_report_format"/>
+        <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),
+ (4, ref('account.group_account_readonly'))]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_att_summary_report_form" model="ir.ui.view">
+        <field name="name">att.summary.report.form</field>
+        <field name="model">att.summary.report</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Summary Report">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="filter_by"/>
+                        <field name="company_id" invisible="filter_by != 'company'"/>
+                        <field name="employee_ids" widget="many2many_tags" invisible="filter_by != 'employee'"/>
+                        <field name="department_ids" widget="many2many_tags" invisible="filter_by != 'department'"/>
+                        <field name="team_ids" widget="many2many_tags" invisible="filter_by != 'team'"/>
+
+                    </group>
+                </group>
+                <group string="Filters">
+                    <group>
+                        <field name="show_presents" widget="boolean_toggle"/>
+                        <field name="show_leaves" widget="boolean_toggle"/>
+                        <field name="show_absents" widget="boolean_toggle"/>
+                        <field name="show_lates" widget="boolean_toggle"/>
+                    </group>
+                    <group>
+                        <field name="show_hd" widget="boolean_toggle"/>
+                        <field name="show_schedule_hours" widget="boolean_toggle"/>
+                        <field name="show_worked_hours" widget="boolean_toggle"/>
+                        <field name="show_extra_time" widget="boolean_toggle"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print_report" type="object" string="Print Report" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_att_summary_report_wizard" model="ir.actions.act_window">
+        <field name="name">Attendance Summary Report</field>
+        <field name="res_model">att.summary.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Attendance Summary Report"
+              id="menu_attendance_summary_report"
+              parent="hr_attendance.menu_hr_attendance_reporting"
+              action="action_att_summary_report_wizard"
+              sequence="51"/>
+
+</odoo>

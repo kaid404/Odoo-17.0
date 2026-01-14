@@ -1,0 +1,103 @@
+<odoo>
+    <data>
+        <template id="print_attendance_report_to_management">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div style="text-align: center">
+                        <h3>Monthly Top Management Attendance Report Summary</h3>
+                        <strong>Date:</strong>
+                        <span>from
+                            <span t-esc="form.get('start_date')"/>
+                            to
+                            <span t-esc="form.get('end_date')"/>
+                        </span>
+                    </div>
+                    <table class="table table-sm table-bordered">
+                        <thead style="background-color: black; color: white;">
+                            <tr>
+                                <th class="text-center">
+                                    <strong>Employee Name</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Designation</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Department</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Total Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Shift Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Present</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Absent</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Rest Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Leaves Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Total Late Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Punctuality %</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Regularity %</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="form.get('attendances')" t-as="l">
+                                <td class="text-center">
+                                    <span t-esc="l.get('name')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('designation')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('department')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('total_days')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('planned')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('present')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('absent')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('rest_days')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('total_leaves')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('total_late')"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('punctual')"/>
+                                    <span>%</span>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="l.get('regular')"/>
+                                    <span>%</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

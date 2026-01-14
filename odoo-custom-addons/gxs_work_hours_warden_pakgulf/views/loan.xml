@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<odoo>
+  <record id="max_loan_hide_saad" model="res.groups">
+        <field name="name">Advance/Loan</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+    </record>
+    <record id="loan_loan_wizard_tree" model="ir.ui.view">
+        <field name="name">tree</field>
+        <field name="model">loan.loan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="from_request_date"/>
+                <field name="attrs_condition" invisible="1"/>
+                <field name="max_loan"/>
+                <field name="loan_apply"/>
+                <field name="description"/>
+            </tree>
+        </field>
+
+    </record>
+    <!-- To-Do Task Form view -->
+    <record id="loan_loan_wizard_view" model="ir.ui.view">
+        <field name="name">loan.loan.wizards</field>
+        <field name="model">loan.loan</field>
+        <field name="type">form</field>
+
+        <field name="arch" type="xml">
+        <header>
+            <button name="approve" type="object" string="Approve" class="oe_highlight"
+
+            attrs="{'invisible': [('state', '=', 'approved')]}"/>
+            <field name="state" widget="statusbar"/>
+        </header>
+            <form string='Wi Form'>
+                <group>
+                    <group>
+                        <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="attrs_condition" invisible="1"/>
+
+                    </group>
+                    <group>
+                        <field name="max_loan" force_save="1" attrs="{'invisible': [('attrs_condition', '=', False)]}"/>
+                        <field name="loan_apply" force_save="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                </group>
+                <field name="description"/>
+
+
+                <!--              </footer>-->
+
+            </form>
+
+
+        </field>
+    </record>
+
+    <!-- To-Do Task List view -->
+
+
+    <record id="loan_loan_action" model="ir.actions.act_window">
+
+        <field name="name">Assumption Request</field>
+
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loan.loan</field>
+        <field name="view_mode">tree,form</field>
+
+        <!--      <field name="target">new</field>-->
+        <field name="view_id" ref='loan_loan_wizard_tree'/>
+
+
+    </record>
+
+
+    <record id="loan_loan_loan_wizard_tree" model="ir.ui.view">
+        <field name="name">tree</field>
+        <field name="model">loan.loan.loan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="loan_type"/>
+                <field name="request_date"/>
+                <field name="attrs_condition" invisible="1"/>
+                <field name="max_loan" />
+                <field name="loan_apply"/>
+                <field name="description"/>
+            </tree>
+        </field>
+
+    </record>
+    <!-- To-Do Task Form view -->
+    <record id="loan_loan_loan_wizard_view" model="ir.ui.view">
+        <field name="name">loan.loan</field>
+        <field name="model">loan.loan.loan</field>
+        <field name="type">form</field>
+
+        <field name="arch" type="xml">
+        <header>
+            <button name="approve" type="object" string="Approve" class="oe_highlight"
+
+            attrs="{'invisible': [('state', '=', 'approved')]}"/>
+            <field name="state" widget="statusbar"/>
+        </header>
+            <form string='Wi Form'>
+                <group>
+                    <group>
+                        <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="loan_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="attrs_condition" invisible="1"/>
+                        <field name="request_date"/>
+
+                    </group>
+                    <group>
+                        <field name="max_loan"  force_save="1" attrs="{'invisible': [('attrs_condition', '=', False)]}"/>
+                        <field name="loan_apply" force_save="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                </group>
+                <field name="description"/>
+
+
+                <!--              </footer>-->
+
+            </form>
+
+
+        </field>
+    </record>
+
+    <!-- To-Do Task List view -->
+
+
+    <record id="loan_loan_loan_action" model="ir.actions.act_window">
+
+        <field name="name">loan Request</field>
+
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loan.loan.loan</field>
+        <field name="view_mode">tree,form</field>
+
+        <!--      <field name="target">new</field>-->
+        <field name="view_id" ref='loan_loan_loan_wizard_tree'/>
+
+
+    </record>
+
+
+
+
+
+
+
+    <menuitem id="menu_rot_advance"
+              name="Advance"
+              action="loan_loan_action"
+              sequence="10"
+    />
+    <menuitem id="menu_rot_loan"
+              name="loan"
+              action="loan_loan_loan_action"
+              sequence="10"
+    />
+
+</odoo>
+
+
+        <!--
+        2 form with menus
+        2nd form description
+        name CHar
+        Date date
+        phone char
+        amount float
+        qty Int
+        Task many2one relation 1st form
+        status field / bar - selection
+        2 button (Draft or validate)
+          draft - stage
+          validate - stage
+         -->

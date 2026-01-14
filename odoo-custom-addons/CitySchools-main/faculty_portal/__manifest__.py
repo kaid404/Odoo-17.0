@@ -1,0 +1,35 @@
+{
+    'name': 'CMS Faculty Portal',
+    'version': '17.0',
+    'summary': """CMS Faculty Portal""",
+    'description': 'CMS Faculty Portal',
+    'category': 'Portal',
+    'sequence': 1,
+    'author': 'Mohid',
+    'company': 'GlobalXS Technology Solutions',
+    'website': "https://www.globalxs.co/",
+    'license': 'AGPL-3',
+    'depends': ['base', 'website','gxs_timetable'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/faculty_dashboard.xml',
+        'views/attendance.xml',
+        'views/attendance_form.xml',
+        'views/profile.xml',
+        'views/diary_form.xml',
+        'views/diary.xml',
+        'views/diary_view.xml',
+        'views/notification.xml',
+    ],
+    'assets': {
+            'web.assets_backend': [
+                # '/faculty_portal/static/src/js/faculty_script.js',
+            ],
+            'web.assets_common': [
+                # '/faculty_portal/static/src/js/faculty_script.js',
+            ],
+        },
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}

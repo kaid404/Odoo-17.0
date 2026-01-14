@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_job_requisition_form" model="ir.ui.view">
+            <field name="name">Job Requisition Form</field>
+            <field name="model">job.requisition</field>
+            <field name="arch" type="xml">
+                <form string="Job Requisition Form">
+                    <header>
+                        <button name="action_submit" type="object" string="Submit"
+                                class="btn-primary" invisible="state == 'submit'"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,submit"/>
+                    </header>
+                    <sheet>
+                        <h2 style="text-align:center; text-decoration: underline;">NEW EMPLOYEE REQUISITION FORM</h2>
+                        <div>
+                            <h3>
+                                <field name="sequence" readonly="True"/>
+                            </h3>
+                            <group>
+                                <group>
+                                    <field name="requested_by" readonly="1"/>
+<!--                                    <field name="requested_bu"/>-->
+                                    <field name="email_id"/>
+                                    <field name="hiring_position" readonly="state == 'submit'"/>
+                                    <field name="job_type" widget="radio" required="1" readonly="state == 'submit'"/>
+                                </group>
+                                <group>
+                                    <field name="team_name1"/>
+<!--                                    <field name="team_name" readonly="state == 'submit'"/>-->
+                                    <field name="number_of_positions" readonly="state == 'submit'"/>
+                                    <!--                                    <field name="show_other_budget" invisible="0"/>-->
+                                    <!--                                    <field name="show_other_approval" invisible="0"/>-->
+                                    <!--                                    <field name="show_other_reason" invisible="0"/>-->
+
+                                </group>
+                            </group>
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Position Requirement Justification
+                                    </strong>
+                                    <div>
+                                        <field name="justification" readonly="state == 'submit'"/>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div invisible="not (justification in ['transfer'])">
+                                    <div class="o_row" style="margin:20px; margin-left:0px;">
+                                        <!--                                <div class="o_col o_col_6">-->
+                                        <strong>Replacement (In case of replacement, answer these questions)
+                                            <br/>
+                                            <ul>
+                                                <li>Replacement of (Name)</li>
+                                                <li>Job Title</li>
+                                            </ul>
+                                            <br/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="o_row" style="margin:20px; margin-left:0px;">
+                                    <field name="replacement" nolabel="1" readonly="state == 'submit'"/>
+                                </div>
+                            </div>
+
+                            <!--                            <div class="o_row" style="margin:20px; margin-left:0px;">-->
+                            <!--                                <div class="o_col o_col_6">-->
+                            <!--                                    <strong>Reason For Relieving.-->
+                            <!--                                    </strong>-->
+                            <!--                                    <br/>-->
+
+
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="o_row" style="margin:20px; margin-left:0px;">-->
+                            <!--                                <field name="reason_for_relieving" widget="many2many_checkboxes" nolabel="1"/>-->
+
+                            <!--                            </div>-->
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Reason For Leaving.
+                                    </strong>
+                                    <br/>
+                                    <field name="reason_for_relieving" widget="many2many_checkboxes" nolabel="1"
+                                           readonly="state == 'submit'"/>
+                                    <field name="show_other_reason" invisible="1"/>
+                                    <div style="margin-top:10px; margin-left:20px;">
+
+                                        <field name="other_reason" invisible="not show_other_reason"
+                                               placeholder="Please specify other reason" readonly="state == 'submit'"/>
+                                    </div>
+                                    <!--                                    <field name="budget_information" widget="many2many_checkboxes" nolabel="1"/>-->
+
+                                </div>
+                            </div>
+
+
+                            <!--                            <div class="o_row" style="margin:20px; margin-left:0px;">-->
+                            <!--                                <div class="o_col o_col_6">-->
+                            <!--                                    <strong>Job Specifications.-->
+                            <!--                                    </strong>-->
+                            <!--                                    <br/>-->
+                            <!--                                    <field name="job_specification" widget="many2many_checkboxes" nolabel="1"/>-->
+
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Role Requirements
+                                    </strong>
+                                    <br/>
+                                    <field name="job_specification" widget="many2many_checkboxes" nolabel="1"
+                                           readonly="state == 'submit'"/>
+                                    <field name="show_other_job" invisible="1"/>
+                                    <div style="margin-top:10px; margin-left:20px;">
+
+                                        <field name="other_job" invisible="not show_other_job"
+                                               placeholder="Please specify other Job" readonly="state == 'submit'"/>
+                                    </div>
+                                    <!--                                    <field name="budget_information" widget="many2many_checkboxes" nolabel="1"/>-->
+
+                                </div>
+                            </div>
+
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Related Experience.
+                                    </strong>
+                                    <br/>
+                                    <field name="related_experience" readonly="state == 'submit'"/>
+
+                                </div>
+                            </div>
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Proposed Salary.
+                                    </strong>
+                                    <br/>
+                                    <field name="proposed_salary" widget="radio" nolabel="1"
+                                           readonly="state == 'submit'"/>
+                                    <field name="other_salary_check" invisible="1"/>
+                                    <div style="margin-top:10px; margin-left:20px;">
+
+                                    <field name="other_salary" invisible="not other_salary_check"
+                                           placeholder="Please specify  Salary" readonly="state == 'submit'"/>
+                                    </div>
+                                    <!--                                    <field name="budget_information" widget="many2many_checkboxes" nolabel="1"/>-->
+
+                                </div>
+                            </div>
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Budget Information.
+                                    </strong>
+                                    <br/>
+                                    <span>To be disclosed for the interview:</span>
+                                    <br/>
+                                    <field name="budget_information" widget="many2many_checkboxes" nolabel="1"
+                                           readonly="state == 'submit'"/>
+                                    <field name="show_other_budget" invisible="1"/>
+                                    <div style="margin-top:10px; margin-left:20px;">
+
+                                        <field name="other_budget" invisible="not show_other_budget"
+                                               placeholder="Please specify other budget" readonly="state == 'submit'"/>
+                                    </div>
+                                    <!--                                    <field name="budget_information" widget="many2many_checkboxes" nolabel="1"/>-->
+
+                                </div>
+                            </div>
+                            <!--                            <div class="o_row" style="margin:20px; margin-left:0px;">-->
+                            <!--                                <field name="budget_information" widget="many2many_checkboxes" nolabel="1"/>-->
+                            <!--                                <div style="margin-top:10px;">-->
+                            <!--                                    <field name="other_budget" invisible="not show_other_budget"-->
+                            <!--                                           placeholder="Please specify other budget"/>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>
+                                    </strong>
+                                    <br/>
+
+                                </div>
+                            </div>
+                            
+
+
+                            <!--                            <div class="o_row" style="margin:20px; margin-left:0px;">-->
+                            <!--                                <div class="o_col o_col_6">-->
+                            <!--                                    <strong>Test to be conducted or not-->
+                            <!--                                    </strong>-->
+                            <!--                                    <br/>-->
+                            <!--                                    <field name="is_test_conducted" widget="radio" nolabel="1"/>-->
+
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Test to be conducted:
+                                    </strong>
+                                    <br/>
+                                    <!--                                    <p>If Yes, then specify from the options below.</p>-->
+                                    <br/>
+                                    <field name="test_to_be_conducted" nolabel="1" readonly="state == 'submit'"/>
+
+                                </div>
+                            </div>
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Any Special Skills Required
+                                    </strong>
+                                    <br/>
+                                    <field name="any_special_skills" readonly="state == 'submit'"/>
+
+                                </div>
+                            </div>
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Date
+                                    </strong>
+                                    <br/>
+                                    <p>To ensure a smooth hiring process, the joining date should be at least 12 working
+                                        days from today to allow time for evaluation, shortlisting, and offer rollout
+                                        Please specify the date by which you need to close this position.
+                                    </p>
+                                    <br/>
+                                    <field name="date" readonly="state == 'submit'"/>
+
+                                </div>
+                            </div>
+                            <div class="o_row" style="margin:20px; margin-left:0px;">
+                                <div class="o_col o_col_6">
+                                    <strong>Please mention if you've taken an approval from the CEO/COO for this
+                                        position.
+                                    </strong>
+                                    <br/>
+                                    <p>Kindly note that as per our SOP, we require all leads to take a go ahead from one
+                                        of the founders, before making the job post live
+                                    </p>
+                                    <br/>
+                                    <field name="approval_ceo" widget="many2many_checkboxes"
+                                           readonly="state == 'submit'" nolabel="1"/>
+                                    <div style="margin-top:10px;">
+                                        <field name="show_other_approval" invisible="1"/>
+                                        <field name="other_approval" invisible="not show_other_approval"
+                                               placeholder="Please specify other approval"
+                                               readonly="state == 'submit'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_job_requisition_tree" model="ir.ui.view">
+            <field name="name">Job Requisition Tree</field>
+            <field name="model">job.requisition</field>
+            <field name="arch" type="xml">
+                <tree string="Job Requisition Tree">
+                    <field name="email_id"/>
+                    <!--                    <field name="carrier_id"/>-->
+                    <!--                    <field name="current_date"/>-->
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_job_requisition_tree" model="ir.actions.act_window">
+            <field name="name">Job Requisition Form</field>
+            <field name="res_model">job.requisition</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_job_requisition_tree"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first Job Requisition Form.
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_job_requisition"
+                  name="Job Requisition"
+                  web_icon="job_requisition,static/src/icon.png"
+                  sequence="10"/>
+        <menuitem id="menu_configuration"
+                  name="Configuration"
+                  parent="menu_job_requisition"
+                  sequence="20"/>
+
+
+        <menuitem id="menu_job_requisition_tree"
+                  name="Job Requisition"
+                  parent="menu_job_requisition"
+                  sequence="10"
+                  action="action_job_requisition_tree"/>
+
+        <!--        <record id="seq_job_requisition_form" model="ir.sequence">-->
+        <!--            <field name="name">Job Requisition Reference</field>-->
+        <!--            <field name="code">job.requisition</field>-->
+        <!--            <field name="prefix">JOB/REQ/%(year)s/</field>-->
+        <!--            <field name="padding">4</field>-->
+        <!--            <field name="company_id" eval="False"/>-->
+        <!--        </record>-->
+
+        <record id="seq_job_requisition_ref" model="ir.sequence">
+            <field name="name">Job Requisition Reference</field>
+            <field name="code">job.requisition</field>
+            <field name="prefix">JR/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+
+</odoo>
+

@@ -1,0 +1,413 @@
+<odoo>
+
+    <template id="report_employment_form_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="page-break-after: always;">
+
+                    <div class="text-center">
+                        <img src="/your_module/static/src/img/logo.png" style="height: 70px;"/>
+                        <h4>HR Dept.</h4>
+                        <h2 style="text-decoration: underline; text-align: center;">Employment Application Form</h2>
+                    </div>
+
+                    <table class="table table-bordered"
+                           style="width:100%; border-collapse: collapse; border: 1px solid black; font-size:12px;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+                                    Position Applied for
+                                </th>
+                                <th>
+                                    Expected Salary
+                                </th>
+                                <th>
+                                    Expected Salary
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border: 1px solid black; padding: 6px; text-align: center;">
+                                    <t t-esc="doc.date"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 6px; text-align: center;">
+                                    <t t-esc="doc.position_applied.name"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 6px; text-align: center;">
+                                    <t t-esc="doc.expected_salary"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 6px; text-align: center;">
+                                    <t t-esc="doc.gross_salary"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!--                        <tr>-->
+                        <!--                            <td colspan="2"-->
+                        <!--                                style="border: 1px solid black; padding: 6px; text-align: left;">-->
+                        <!--                                This Company is an Equal Opportunity Employer. Further, we state that the information-->
+                        <!--                                you provide shall be kept confidential.-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                        <!--                        <tr>-->
+                        <!--                            <td style="border: 1px solid black; font-weight: bold; padding: 6px; text-align: left; width: 40%;">-->
+                        <!--                                Date:-->
+                        <!--                            </td>-->
+                        <!--                            <td style="border: 1px solid black; padding: 6px; text-align: center;">-->
+                        <!--                                <t t-esc="doc.date"/>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                        <!--                        <tr>-->
+                        <!--                            <td style="border: 1px solid black; font-weight: bold; padding: 6px; text-align: left;">-->
+                        <!--                                Position Applied for:-->
+                        <!--                            </td>-->
+                        <!--                            <td style="border: 1px solid black; padding: 6px; text-align: center;">-->
+                        <!--                                <t t-esc="doc.position_applied.name"/>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                        <!--                        <tr>-->
+                        <!--                            <td style="border: 1px solid black; font-weight: bold; padding: 6px; text-align: left;">-->
+                        <!--                                Expected Salary:-->
+                        <!--                            </td>-->
+                        <!--                            <td style="border: 1px solid black; padding: 6px; text-align: center;">-->
+                        <!--                                <t t-esc="doc.expected_salary"/>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                        <!--                        <tr>-->
+                        <!--                            <td style="border: 1px solid black; font-weight: bold; padding: 6px; text-align: left;">-->
+                        <!--                                Current Gross Salary:-->
+                        <!--                            </td>-->
+                        <!--                            <td style="border: 1px solid black; padding: 6px; text-align: center;">-->
+                        <!--                                <t t-esc="doc.gross_salary"/>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
+                    </table>
+                    <h4>
+                        <strong>Applicant&#39;s Information:</strong>
+                    </h4>
+                    <table class="table table-bordered"
+                           style="width:100%; border-collapse: collapse; font-size:12px; border: 1px solid black;">
+                        <tr style="border-bottom: 1px solid black;">
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black; width: 25%;">Name:</td>
+                            <td style="padding: 6px;border: 1px solid black; width: 25%;">
+                                <t t-esc="doc.name"/>
+                            </td>
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black; width: 25%;">
+                                Qualification (Recent):
+                            </td>
+                            <td style="padding: 6px;border: 1px solid black; width: 25%;">
+                                <t t-esc="doc.qualification_recent"/>
+                            </td>
+
+
+                        </tr>
+
+                        <tr style="border-bottom: 1px solid black;">
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">Date of Birth:</td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.date_of_birth"/>
+                            </td>
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">Institute Name:</td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.institute_name"/>
+                            </td>
+
+
+                        </tr>
+
+
+                        <tr style="border-bottom: 1px solid black;">
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">CNIC #:</td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.cnic_number"/>
+                            </td>
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">Current Company:</td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.current_company"/>
+                            </td>
+
+                        </tr>
+
+                        <tr style="border-bottom: 1px solid black;">
+
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">Mobile #:</td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.mobile_no"/>
+                            </td>
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">Current Job Title:</td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.current_job"/>
+                            </td>
+
+                        </tr>
+
+                        <tr style="border: 1px solid black;">
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;border: 1px solid black;">
+                                Email ID:
+                            </td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.email_id"/>
+                            </td>
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">Total Work
+                                Experience:
+                            </td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.total_work_experience"/>
+                            </td>
+
+
+                        </tr>
+
+                        <tr style="border: 1px solid black;">
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;border: 1px solid black;">
+                                Marital Status:
+                            </td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.marital_status"/>
+                            </td>
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">Father&#39;s
+                                Occupation:
+                            </td>
+                            <td style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.father_occupation"/>
+                            </td>
+
+
+                        </tr>
+                        <tr style="border-bottom: 1px solid black;">
+                            <td style="font-weight: bold; padding: 6px;border: 1px solid black;">Current Address:</td>
+                            <td colspan="3" style="padding: 6px;border: 1px solid black;">
+                                <t t-esc="doc.current_address"/>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <p>
+                        <strong>Have any of your relatives ever been employed with this company?</strong>
+                        <span style="margin-left:10px;">
+                            <t t-if="doc.relatives_employed == 'yes'">Yes</t>
+                            <t t-if="doc.relatives_employed == 'no'">No</t>
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Have you ever been employed with this company?</strong>
+                        <span style="margin-left:10px;">
+                            <t t-if="doc.previously_employed == 'yes'">Yes</t>
+                            <t t-if="doc.previously_employed == 'no'">No</t>
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Relatives/Friends/Colleagues you know in this company:</strong>
+                    </p>
+                    <table class="table" style="width:100%; border:1px solid black; border-collapse:collapse;">
+                        <thead>
+                            <tr>
+                                <th style="border:1px solid black;">NAME OF EMPLOYEE</th>
+                                <th style="border:1px solid black;">RELATIONSHIP</th>
+                                <th style="border:1px solid black;">POSITION HELD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border:1px solid black; text-align: center;">
+                                    <t t-esc="doc.name_1"/>
+                                </td>
+                                <td style="border:1px solid black; text-align: center;">
+                                    <t t-esc="doc.relationship_1"/>
+                                </td>
+                                <td style="border:1px solid black; text-align: center;">
+                                    <t t-esc="doc.position_held_1"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black; text-align: center;">
+                                    <t t-esc="doc.name_2"/>
+                                </td>
+                                <td style="border:1px solid black; text-align: center;">
+                                    <t t-esc="doc.relationship_2"/>
+                                </td>
+                                <td style="border:1px solid black; text-align: center;">
+                                    <t t-esc="doc.position_held_2"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        <strong>How did you get job information?</strong>
+                        <t t-esc="doc.info_source"/>
+                    </p>
+
+                    <p>
+                        <strong>Applicant&#39;s Signature:</strong>
+                    </p>
+                    <t t-if="doc.signature">
+                        <img t-att-src="'data:image/png;base64,%s' % doc.signature" style="width:150px;"/>
+                    </t>
+
+                    <table class="table table-bordered"
+                           style="width:100%; border-collapse: collapse; border: 1px solid black; font-size:12px;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Team Name
+                                </th>
+                                <th>
+                                    Interviewer Name
+                                </th>
+                                <th>
+                                    Interview Status
+                                </th>
+                                <th>
+                                    Reason
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border: 1px solid black; padding: 6px; text-align: center;">
+                                    <t t-esc="doc.team_name"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 6px; text-align: center;">
+                                    <t t-esc="doc.Interviewer_name"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 6px; text-align: center;">
+                                    <t t-esc="doc.interview_status"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 6px; text-align: center;">
+                                    <t t-esc="doc.reason"/>
+                                </td>
+                            </tr>
+                        </tbody>
+<!--                        <tr>-->
+<!--                            <td style="border: 1px solid black; font-weight: bold; padding: 6px; text-align: left; width: 40%;">-->
+<!--                                Team Name:-->
+<!--                            </td>-->
+<!--                            <td style="border: 1px solid black; padding: 6px; text-align: center;">-->
+<!--                                <t t-esc="doc.team_name"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td style="border: 1px solid black; font-weight: bold; padding: 6px; text-align: left;">-->
+<!--                                Interviewer Name:-->
+<!--                            </td>-->
+<!--                            <td style="border: 1px solid black; padding: 6px; text-align: center;">-->
+<!--                                <t t-esc="doc.Interviewer_name"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td style="border: 1px solid black; font-weight: bold; padding: 6px; text-align: left;">-->
+<!--                                Interview Status:-->
+<!--                            </td>-->
+<!--                            <td style="border: 1px solid black; padding: 6px; text-align: center;">-->
+<!--                                <t t-esc="doc.interview_status"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td style="border: 1px solid black; font-weight: bold; padding: 6px; text-align: left;">-->
+<!--                                Reason:-->
+<!--                            </td>-->
+<!--                            <td style="border: 1px solid black; padding: 6px; text-align: center;">-->
+<!--                                <t t-esc="doc.reason"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+                    </table>
+
+
+                </div>
+
+
+                <div class="page">
+
+                    <h2 class="text-center" style="text-decoration: underline; text-align: center;">Declaration Form
+                    </h2>
+
+                    <p>
+                        <strong>Is your visa application in process?</strong>
+                    </p>
+                    <ul>
+                        <li>
+                            <t t-if="doc.visa_status == 'yes'">Yes</t>
+                            <t t-if="doc.visa_status == 'no'">No</t>
+                        </li>
+                    </ul>
+
+                    <p>
+                        <strong>Have you applied to any foreign/local university?</strong>
+                    </p>
+                    <ul>
+                        <li>
+                            <t t-if="doc.additional_uni_status == 'yes'">Yes</t>
+                            <t t-if="doc.additional_uni_status == 'no'">No</t>
+                        </li>
+                    </ul>
+
+                    <p>
+                        <strong>Are you authorized to work in Pakistan?</strong>
+                    </p>
+                    <ul>
+                        <li>
+                            <t t-if="doc.work_status_in_pk == 'yes'">Yes</t>
+                            <t t-if="doc.work_status_in_pk == 'no'">No</t>
+                        </li>
+                    </ul>
+
+                    <h3 style="text-align:center;">Acknowledgment</h3>
+                    <p>
+                        I confirm that the information I have provided in this declaration form is correct and complete
+                        as of the date mentioned below. I understand and accept that if I knowingly withhold or provide
+                        false or misleading information, my application may be rejected or my employment terminated.
+                    </p>
+
+                    <p>
+                        <strong>Name in Block Letters:</strong>
+                        <t t-esc="doc.name_in_block_letter"/>
+                    </p>
+                    <!--                    <t t-if="doc.date_signature">-->
+                    <p>
+                        <strong>Date Signature:_______________________</strong>
+                    </p>
+                    <!--                        <img t-att-src="'data:image/png;base64,%s' % doc.date_signature" style="width:150px;"/>-->
+                    <!--                    </t>-->
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_employment_form" model="report.paperformat">
+        <field name="name">Employment Form Paperformat</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_employment_application_report" model="ir.actions.report">
+        <field name="name">Employment Application Form</field>
+        <field name="model">employment.form</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_application_form.report_employment_form_template</field>
+        <field name="report_file">employee_application_form.report_employment_form_template</field>
+        <field name="binding_model_id" ref="model_employment_form"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Employment Application - %s' % (object.name)</field>
+        <field name="paperformat_id" ref="employee_application_form.paperformat_employment_form"/>
+    </record>
+</odoo>
+
+

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="student_profile_template" name="Profile Dashboard Template">
+        <t t-call="web.layout">
+            <head>
+<!--                <meta charset="UTF-8"/>-->
+<!--                <meta http-equiv="X-UA-Compatible" content="IE=edge"/>-->
+<!--                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
+                <link rel="stylesheet" href="/student_portal/static/src/css/style.css"/>
+                <link rel="stylesheet" href="/student_portal/static/src/css/responsive.css"/>
+                <!-- font-awsome CDN Link -->
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+                      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+                      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+                <link rel='stylesheet'
+                      href='https://cdn-uicons.flaticon.com/2.5.1/uicons-thin-rounded/css/uicons-thin-rounded.css'/>
+            </head>
+
+            <body>
+               <header>
+                    <div class="logosec">
+                        <div class="menuicn">
+                            <!-- <span> &#x2630;</span> -->
+                            <i class="fa-solid fa-bars-staggered"></i>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <!-- <span>&#128276;</span> -->
+                        <i class="fa-regular fa-bell"></i>
+                        <!-- <span id="fullscreen-toggle" onclick="toggleFullscreen()">&#x26F6;</span> -->
+                        <i class="fa-solid fa-expand" id="fullscreen-toggle" onclick="toggleFullscreen()"></i>
+                        <!-- <span id="theme-toggle">&#9789;</span> -->
+                        <i class="fa-solid fa-circle-half-stroke" id="theme-toggle"></i>
+                        <img class="nav-img profile_pic" t-att-src="image_data_uri(profile_form.image_1920)" alt="Profile Pic"/>
+                    </div>
+                </header>
+                <main class="main-container">
+                    <div class="navcontainer">
+                        <nav class="nav">
+                            <div class="nav-upper-options">
+                                <a href="/student_dashboard">
+                                    <div class="nav-option">
+                                        <!-- <i class="fi fi-tr-dashboard-panel nav-img"></i> -->
+                                        <img class="nav-img" src="/student_portal/static/src/img/dashboard (2).png"
+                                             alt="animated_icon"/>
+                                        <h3>Dashboard</h3>
+                                    </div>
+                                </a>
+                                <a href="/student_profile">
+                                    <div class="option2 nav-option">
+                                        <img class="nav-img" src="/student_portal/static/src/img/user.png"
+                                             alt="profile"/>
+                                        <h3>Profile</h3>
+                                    </div>
+                                </a>
+                                <a href="/fee">
+                                    <div class="nav-option option3">
+                                        <img class="nav-img" src="/student_portal/static/src/img/calendar.png"
+                                             alt="Fee"/>
+                                        <h3>Fee</h3>
+                                    </div>
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="main">
+                        <div class="profile-container">
+    <!-- <input type="hidden" name="profile_form_id" t-att-value="profile_form.id"/> -->
+
+                            <div class="profile-sidebar">
+                                <div class="profile-pic">
+                                    <img t-att-src="'data:image/png;base64,' + profile_form.image_1920.decode('utf-8')" alt="Profile Picture"/>
+                                </div>
+                                
+                                <h3><t t-esc="profile_form.name" /></h3>
+<!--                                <p><t t-esc="profile_form.title.name" /> of <t t-foreach="profile_form.faculty_subject_ids" t-as="subjects"><t t-esc="subjects.name" /></t> </p>-->
+                                <button class="edit-profile-btn">Edit Profile</button>
+                            </div>
+                            <div class="profile-details">
+                                <h2>Personal Information</h2>
+                                <div class="info-group">
+                                    <label for="full-name">Full Name:</label>
+                                    <p id="full-name"><t t-esc="profile_form.title.name" /> <t t-esc="profile_form.first_name" /> <t t-esc="profile_form.middle_name" /> <t t-esc="profile_form.last_name" /></p>
+                                </div>
+                                <div class="info-group">
+                                    <label for="email">Email:</label>
+                                    <p id="email"><t t-esc="profile_form.email" /></p>
+                                </div>
+                                <div class="info-group">
+                                    <label for="phone">Mobile:</label>
+                                    <p id="mobile"><t t-esc="profile_form.mobile" /></p>
+                                </div>
+
+                                <h2>Academic Information</h2>
+                                <div class="info-group">
+                                    <label for="department">Year:</label>
+                                    <p id="year"><t t-esc="profile_form.class_id.name"/></p>
+                                </div>
+                                <div class="info-group">
+                                    <label for="department">Class:</label>
+                                    <p id="class"><t t-esc="profile_form.year_id.name"/></p>
+                                </div>
+                                <div class="info-group">
+                                    <label for="research">Section:</label>
+                                    <p id="section"><t t-esc="profile_form.section_id.name"/></p>
+                                </div>
+
+                                <h2>Contact Information</h2>
+                                <div class="info-group">
+                                    <label for="office">Parent/Guardian:</label>
+                                    <p id="parent_name"><t t-esc="profile_form.parent_name"/></p>
+                                </div>
+                                <div class="info-group">
+                                    <label for="office-hours">Emergency Contact:</label>
+                                    <p id="emergency-contact">03247878777</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                <script src="/student_portal/static/src/js/index.js"></script>
+            </body>
+        </t>
+    </template>
+</odoo>

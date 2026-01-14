@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="attendance_adjustment_tree" model="ir.ui.view">
+        <field name="name">attendance.adjustment.tree</field>
+        <field name="model">attendance.adjustment</field>
+        <field name="arch" type="xml">
+            <tree string="Requests" decoration-info="state =='draft'"
+                  decoration-muted="state == 'cancel'" decoration-success="state == 'done'"
+                  decoration-warning="state == 'confirm'">
+                <field name="employee_id"/>
+                <field name="att_date"/>
+                <field name="emp_check_in"/>
+                <field name="emp_check_out"/>
+                <field name="responsible_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="attendance_adjustment_form" model="ir.ui.view">
+        <field name="name">attendance.adjustment.form</field>
+        <field name="model">attendance.adjustment</field>
+        <field name="arch" type="xml">
+            <form string="Attendances">
+                <header>
+                    <button name="action_ask_approval" type="object" string="Request Approval"
+                            invisible="state != 'draft'"
+                            class="oe_highlight"/>
+                    <button name="revert_button" string="Reset" type="object" class="btn-primary"
+                            invisible="state != 'done'"/>
+                    <button name="action_confirm" type="object" string="Confirm" invisible="state != 'to_be_approved'"
+                            class="oe_highlight" groups="attendance_adjustment_request.group_attendance_approver"/>
+                    <button name="action_refuse" type="object" string="Refuse" invisible="state != 'to_be_approved'"
+                            class="oe_highlight" groups="attendance_adjustment_request.group_attendance_approver"/>
+                    <button name="create_attendance" type="object" string="Create Attendance"
+                            invisible="state != 'approve'"
+                            class="oe_highlight" groups="attendance_adjustment_request.group_attendance_approver"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to_be_approved,approve,refuse"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_inline oe_stat_button" name="open_employee_request"
+                                type="object" icon="fa-calendar">
+                            <field string="Attendance" name="attendance_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="att_date"/>
+                            <field name="emp_check_in"/>
+                            <field name="emp_check_out"/>
+                        </group>
+                        <group>
+                            <field name="worked_hours" widget="float_time"/>
+                            <field name="responsible_id"
+                                   options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                            <field name="pre_check_in"/>
+                            <field name="pre_check_out"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="attendance_request_kanban" model="ir.ui.view">
+        <field name="name">attendance.request.kanban</field>
+        <field name="model">attendance.adjustment</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_tags_section"/>
+                                <field name="employee_id"/>
+                                <ul>
+                                    <li>Reason :
+                                        <field name="notes"/>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--action of the appointment menu-->
+    <record id="action_attendance_adjustment" model="ir.actions.act_window">
+        <field name="name">Attendance Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">attendance.adjustment</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your First Request !
+            </p>
+        </field>
+    </record>
+
+    <record id="attendance_adjustment_rule_company" model="ir.rule">
+        <field name="name">Attendance Adjustment: Multi-company</field>
+        <field name="model_id" ref="attendance_adjustment_request.model_attendance_adjustment"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('company_id', '=', company_id)]</field>
+    </record>
+
+    <menuitem id="attendance_request_adjustment" name="Attendance Request"
+              parent="hr_attendance.menu_hr_attendance_view_attendances"
+              action="action_attendance_adjustment" sequence="30"/>
+
+
+</odoo>
+

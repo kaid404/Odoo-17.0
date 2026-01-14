@@ -1,0 +1,76 @@
+<odoo>
+    <data>
+        <record id="op_promote_students_view" model="ir.ui.view">
+            <field name="name">op.promote.student.form</field>
+            <field name="model">promote.student</field>
+            <field name="arch" type="xml">
+                <form string="Promote Students">
+                    <p class="oe_grey">Select Class and Section whom students you want to promote!</p>
+
+                    <!-- Separator for Previous Class & Section -->
+                    <separator string="Previous Class &amp; Section" colspan="12"/>
+
+                    <!-- Group the fields for better layout and spacing -->
+                    <group>
+                        <group>
+                            <field name="from_class_id" readonly="0"/>
+                        </group>
+                        <group>
+                            <field name="from_section_id" readonly="0" domain="[('class_id', '=', from_class_id)]"/>
+                        </group>
+                    </group>
+
+                    <p class="oe_grey">Select New Class, New Section, and Year for these Students</p>
+
+                    <!-- Separator for New Class, Section & Year -->
+                    <separator string="New Class, Section &amp; Year" colspan="12"/>
+
+                    <group>
+                        <group>
+                            <field name="class_id" readonly="0"/>
+                        </group>
+                        <group>
+                            <field name="year_id" readonly="0"/>
+
+                        </group>
+                        <group>
+                            <field name="section_id" readonly="0" domain="[('class_id', '=', year_id)]"/>
+
+                        </group>
+                    </group>
+
+                    <!-- Student Selection -->
+                    <group>
+                        <field name="student_ids" readonly="0"/>
+                    </group>
+
+                    <!-- Footer buttons -->
+                    <footer>
+                        <button string="Promote Students" name="promote_students" type="object" default_focus="1"
+                                class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_promote_students">
+            <field name="name">Promote Students</field>
+            <field name="res_model">promote.student</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <!--            <field name="binding_model_id" ref="model_promote_student"/>-->
+        </record>
+        <menuitem id="menu_op_promote_students"
+                  name="Promote Students"
+                  parent="gxs_core.menu_op_general_student"
+                  sequence="10000"
+                  action="action_promote_students"
+        />
+
+
+    </data>
+</odoo>

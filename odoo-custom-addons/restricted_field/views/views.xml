@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+
+
+        <record id="restrict_field_inherit" model="ir.ui.view">
+            <field name="name">restrict.field.inherit</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[7]" position="after">
+                    <field name="restricted"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_restrict_tree_inherit" model="ir.ui.view">
+            <field name="name">account.restrict.tree.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_id']" position="attributes">
+                    <attribute name="domain">[('restricted', '=', False)]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

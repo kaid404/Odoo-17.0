@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="emp_loan_payment_schedule_pdf_doc">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="employee_data" t-as="employee">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-2">
+                                <img t-att-src="'data:image/png;base64,%s' % company_logo"
+                                     style="max-width: 100px; max-height: 100px;"/>
+                            </div>
+                            <div class="col-8" style="text-align:center">
+                                <div class="row">
+                                    <h1>
+                                        <span t-esc="company_name"/>
+                                    </h1>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" style="text-align:center">
+                                        <h3 style="background-color: #C1C1C1;">
+                                            <strong>Loan Payment Schedule</strong>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-3">
+                                <strong>
+                                    Employee Name:
+                                </strong>
+                                <strong t-esc="employee.get('name')"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Date of Birth:
+                                    <t t-esc="employee.get('date_birth')"/>
+                                </strong>
+                            </div>
+                            <div class="col-3">
+                                <strong>Remaining Period of Services:
+                                    <t
+                                            t-esc="employee.get('service_duration')"/>
+                                </strong>
+                            </div>
+                            <div class="col-3">
+                                <strong>Joining Date:
+                                    <t t-esc="employee.get('joining')"/>
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid black;">
+                            <div class="col-3">
+                            </div>
+                            <div class="col-3">
+                                <strong>
+                                    Badge Id:
+                                </strong>
+                                <strong t-esc="employee.get('badge')"/>
+                            </div>
+                            <div class="col-3">
+                            </div>
+                            <div class="col-3">
+                            </div>
+                        </div>
+
+                        <t t-foreach="employee.get('loan_data')" t-as="loan">
+                            <div class="row">
+                                <div class="col-4">
+                                    <strong>Loan Number:
+                                        <t t-esc="loan.get('loan_no')"/>
+                                    </strong>
+                                </div>
+                                <div class="col-4">
+                                    <strong>
+                                        Loan Type:
+                                        <t t-esc="loan.get('loan_type')"/>
+                                    </strong>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Monthly Deduction:
+                                        <t t-if="loan.get('deduction')">
+                                            <t t-esc="'{:,}'.format(round(loan.get('deduction')))"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="loan.get('deduction')"/>
+                                        </t>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <strong>
+                                        Loan Admissible:
+                                        <t t-if="loan.get('loan_sectioned')">
+                                            <t t-esc="'{:,}'.format(round(loan.get('loan_sectioned')))"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="loan.get('loan_sectioned')"/>
+                                        </t>
+                                    </strong>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Number Of Installments:
+                                        <t t-esc="loan.get('installments')"/>
+                                    </strong>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Start From:
+                                        <t t-esc="loan.get('date')"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <strong>Loan Sanctioned:
+                                        <t t-if="loan.get('loan_sectioned')">
+                                            <t t-esc="'{:,}'.format(round(loan.get('loan_sectioned')))"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="loan.get('loan_sectioned')"/>
+                                        </t>
+                                    </strong>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Loan Recevied:
+                                        <t t-if="loan.get('loan_paid')">
+                                            <t t-esc="'{:,}'.format(round(loan.get('loan_paid')))"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="loan.get('loan_paid')"/>
+                                        </t>
+                                    </strong>
+                                </div>
+                            </div>
+                            <table class="table table-bordered"
+                                   style="border: 1px solid black;">
+                                <thead>
+                                    <tr style="text-align:center;">
+                                        <th rowspan="2" style="border: 1px solid black;">S.No.</th>
+                                        <th rowspan="2" style="border: 1px solid black;">Period</th>
+                                        <th colspan="4" style="border: 1px solid black;">Amount</th>
+                                        <th rowspan="2" style="border: 1px solid black;">Rate</th>
+                                        <th colspan="1" style="border: 1px solid black;">Deduction</th>
+                                        <th rowspan="2" style="border: 1px solid black;">Principle Outstanding</th>
+                                        <th rowspan="2" style="border: 1px solid black;">Status</th>
+                                    </tr>
+                                    <tr style="text-align:center;">
+                                        <th style="border: 1px solid black;">Opening</th>
+                                        <th style="border: 1px solid black;">Lumsum</th>
+                                        <th style="border: 1px solid black;">Write Off</th>
+                                        <th style="border: 1px solid black;">Closing</th>
+                                        <th style="border: 1px solid black;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="sr" t-value="1"/>
+                                    <t t-set="total_deduction" t-value="0.0"/>
+                                    <t t-set="total_lum_sum" t-value="0.0"/>
+                                    <t t-set="total_write_off" t-value="0.0"/>
+                                    <t t-set="total_balance" t-value="0.0"/>
+                                    <t t-foreach="loan.get('loan_line_data')" t-as="line">
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                <span t-esc="sr"/>
+                                                <t t-set="sr" t-value="sr+1"/>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                <span t-esc="line.get('date')"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <t t-if="line.get('opening')">
+                                                    <strong>
+                                                        <t t-esc="'{:,}'.format(round(line.get('opening')))"/>
+                                                    </strong>
+                                                </t>
+                                                <t t-else="">
+                                                    <strong t-esc="line.get('opening')"/>
+                                                </t>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <t t-if="line.get('lum_sum')">
+                                                    <strong>
+                                                        <t t-esc="'{:,}'.format(round(line.get('lum_sum')))"/>
+                                                    </strong>
+                                                </t>
+                                                <t t-else="">
+                                                    <strong t-esc="line.get('lum_sum')"/>
+                                                </t>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <t t-if="line.get('writeoff')">
+                                                    <strong>
+                                                        <t t-esc="'{:,}'.format(round(line.get('writeoff')))"/>
+                                                    </strong>
+                                                </t>
+                                                <t t-else="">
+                                                    <strong t-esc="line.get('writeoff')"/>
+                                                </t>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <t t-if="line.get('closing')">
+                                                    <strong>
+                                                        <t t-esc="'{:,}'.format(round(line.get('closing')))"/>
+                                                    </strong>
+                                                </t>
+                                                <t t-else="">
+                                                    <strong t-esc="line.get('closing')"/>
+                                                </t>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <span>0.0 %</span>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <t t-if="line.get('principle_amount')">
+                                                    <span>
+                                                        <t t-esc="'{:,}'.format(round(line.get('principle_amount')))"/>
+                                                    </span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span t-esc="line.get('principle_amount')"/>
+                                                </t>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <t t-if="line.get('principle_outstanding')">
+                                                    <strong>
+                                                        <t t-esc="'{:,}'.format(round(line.get('principle_outstanding')))"/>
+                                                    </strong>
+                                                </t>
+                                                <t t-else="">
+                                                    <strong t-esc="line.get('principle_outstanding')"/>
+                                                </t>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                <span>
+                                                    <strong t-esc="line.get('status')"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div class="row" style="font-size:18px;font-weight:bold;">
+                                <div class="col-3 px-2">
+                                    <div style="border-top:1px solid;padding-top:10px;text-align:center;">Prepared By</div>
+                                </div>
+                                <div class="col-3 px-2">
+                                    <div style="border-top:1px solid;padding-top:10px;text-align:center;">Checked By</div>
+                                </div>
+                                <div class="col-3 px-2">
+                                    <div style="border-top:1px solid;padding-top:10px;text-align:center;">Verified By</div>
+                                </div>
+                                <div class="col-3 px-2">
+                                    <div style="border-top:1px solid;padding-top:10px;text-align:center;">Approved By</div>
+                                </div>
+                            </div>
+                            <p style="page-break-before: always;"/>
+                        </t>
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="emp_loan_payment_schedule_paperformat" model="report.paperformat">
+        <field name="name">Employee Loan Payment Schedule PDF</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">12</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">27</field>
+        <field name="dpi">100</field>
+    </record>
+
+
+    <record id="emp_loan_payment_schedule_report_action" model="ir.actions.report">
+        <field name="name">Employee Loan Payment Schedule PDF</field>
+        <field name="model">emp.loan.payment.schedule</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pakgulf_employee_pf_loan_application.emp_loan_payment_schedule_pdf_doc</field>
+        <field name="report_file">pakgulf_employee_pf_loan_application.emp_loan_payment_schedule_pdf_doc</field>
+        <field name="binding_model_id" ref="model_emp_loan_payment_schedule"/>
+        <!-- <field name="paperformat_id"
+        ref="pakgulf_employee_pf_loan_application.emp_grant_loan_app_paperformat"/> -->
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

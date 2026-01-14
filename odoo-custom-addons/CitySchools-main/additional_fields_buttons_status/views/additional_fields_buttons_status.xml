@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="new_fee_field" model="ir.ui.view">
+        <field name="name">account.move.inherit.clinet.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+              <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="student_id" invisible="1"/>
+                <field name="student_id" invisible="not student_id"/>
+                <field name="class_id" invisible="not student_id"/>
+                <field name="mobile" invisible="not student_id"/>
+                <field name="gr_no" invisible="not student_id"/>
+                <field name="section_id" invisible="not student_id"/>
+                <field name="year_id" invisible="not student_id"/>
+                <field name="board_reg_number" invisible="not student_id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="new_fee_field_tree" model="ir.ui.view">
+        <field name="name">account.move.inherit.clinet.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+        <field name="arch" type="xml">
+              <xpath expr="//field[2]" position="after">
+                <field name="student_id" invisible="1"/>
+                <field name="student_id" invisible="not student_id"/>
+                <field name="class_id" invisible="not student_id"/>
+                <field name="mobile" invisible="not student_id"/>
+                <field name="gr_no" invisible="not student_id"/>
+                <field name="section_id" invisible="not student_id"/>
+                <field name="year_id" invisible="not student_id"/>
+                <field name="board_reg_number" invisible="not student_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="City_High_School.view_admission_form_inherit" model="ir.ui.view">
+        <field name="name">op.admission</field>
+        <field name="model">op.admission</field>
+        <field name="inherit_id" ref="gxs_admission.view_op_admission_form"/>
+        <field name="arch" type="xml">
+            <field name="family_business" position="before">
+                
+                <field name="father_occupation"/>
+                <field name="father_education"/>
+                <field name="mother_education"/>
+
+                        <field name="religion_id"/>
+                        <field name="nationality"/>
+<!--                <field name="phone"/>-->
+<!--                <field name="mobile"/>-->
+            </field>
+
+        </field>
+    </record>
+
+
+
+<record id="view_op_reference_tree" model="ir.ui.view">
+    <field name="name">op.reference.tree</field>
+    <field name="model">op.reference</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="description"/>
+        </tree>
+    </field>
+</record>
+<record id="view_op_reference_form" model="ir.ui.view">
+    <field name="name">op.reference.form</field>
+    <field name="model">op.reference</field>
+    <field name="arch" type="xml">
+        <form string="Reference">
+            <group>
+                <field name="name"/>
+                <field name="description"/>
+            </group>
+        </form>
+    </field>
+</record>
+<record id="action_op_reference" model="ir.actions.act_window">
+    <field name="name">References</field>
+    <field name="res_model">op.reference</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_id" ref="view_op_reference_tree"/>
+</record>
+
+
+<menuitem id="menu_op_admission_configuration"
+          name="Configuration"
+          parent="gxs_admission.menu_op_admission_root"
+          sequence="10"/>
+
+
+        <menuitem id="gxs_admission.menu_admission_register" name="Admission Registers"
+                  sequence="10"
+                  groups="gxs_admission.group_op_admission_admin"
+                  parent="menu_op_admission_configuration"
+                  action="gxs_admission.act_open_op_admission_register_view"/>
+
+<menuitem id="menu_op_reference"
+          name="Reference"
+          parent="additional_fields_buttons_status.menu_op_admission_configuration"
+          action="action_op_reference"
+          sequence="20"/>
+
+    <record id="view_employee_filter" model="ir.ui.view">
+            <field name="name">op.student.search</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="gxs_core.view_op_student_search"/>
+            <field name="arch" type="xml">
+                <search string="Student">
+                    <field name="mobile" string="Mobile Number" filter_domain="[('mobile', 'ilike', self)]"/>
+                    <field name="gr_no" string="Registration Number" filter_domain="[('gr_no', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
+
+    <record id="view_account_invoice_filter_inherit" model="ir.ui.view">
+            <field name="name">op.student.search</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+
+                <search string="Search Invoice">
+                    <field name="mobile" string="Mobile Number" filter_domain="[('mobile', 'ilike', self)]"/>
+                    <field name="gr_no" string="Registration Number" filter_domain="[('gr_no', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
+
+    <record id="view_op_admission_search_inheit" model="ir.ui.view">
+            <field name="name">op.admission.search</field>
+            <field name="model">op.admission</field>
+            <field name="inherit_id" ref="gxs_admission.view_op_admission_search"/>
+            <field name="arch" type="xml">
+                <search string="Registration">
+                    <field name="mobile" string="Mobile Number" filter_domain="[('mobile', 'ilike', self)]"/>
+<!--                    <field name="application_number" string="Registration Number" filter_domain="[('gr_no', 'ilike', self)]"/>-->
+                </search>
+            </field>
+        </record>
+
+
+<!--    <record id="voucher_paper_format" model="report.paperformat">-->
+<!--        <field name="name">Voucher Paper Format</field>-->
+<!--        <field name="default" eval="True"/>-->
+<!--        <field name="format">A4</field>-->
+<!--        <field name="orientation">Portrait</field>-->
+<!--        <field name="margin_top">10</field>-->
+<!--        <field name="margin_bottom">20</field>-->
+<!--        <field name="margin_left">0</field>-->
+<!--        <field name="margin_right">0</field>-->
+<!--        <field name="header_line" eval="False"/>-->
+<!--        <field name="header_spacing">22</field>-->
+<!--        <field name="disable_shrinking" eval="True"/>-->
+<!--        <field name="dpi">96</field>-->
+<!--    </record>-->
+
+<!--    <record id="report_city_school_detail" model="ir.actions.report">-->
+<!--        <field name="name">Voucher</field>-->
+<!--        <field name="model">account.move</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">city_school.high_school_detail_doc</field>-->
+<!--        <field name="report_file">city_school.high_school_detail_doc</field>-->
+<!--        <field name="binding_model_id" ref="gxs_core.model_op_student"/>-->
+<!--        <field name="binding_type">report</field>-->
+<!--        <field name="paperformat_id" ref="additional_fields_buttons_status.voucher_paper_format"/>-->
+<!--    </record>-->
+</odoo>

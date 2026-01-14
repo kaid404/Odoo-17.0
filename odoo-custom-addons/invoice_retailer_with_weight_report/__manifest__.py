@@ -1,0 +1,20 @@
+{
+    'name': 'Invoice Retaller with Weight Report',
+    'version': '17.0',
+    'category': 'Extra Tools',
+    'summary': 'Invoice Retaller with Weight Report',
+    'sequence': '-1003',
+    'license': 'AGPL-3',
+    'author': 'Khalid (GXS)',
+    'Maintainer': 'Odoo Mates',
+    'depends': ['account', 'stock','sh_sale_custom'],
+    'demo': [],
+    'data': [
+        # 'security/ir.model.access.csv',
+        'reports/invoice_retailer_report_with_weight_template.xml',
+        'views/invoice_inherit_view.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto install': False,
+}

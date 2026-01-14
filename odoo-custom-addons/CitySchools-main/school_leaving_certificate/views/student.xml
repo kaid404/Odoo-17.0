@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="op_student_form" model="ir.ui.view">
+        <field name="name">op.student.inherit.form</field>
+        <field name="model">op.student</field>
+        <field name="inherit_id" ref="gxs_core.view_op_student_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='gender']" position="after">
+                <field name="slc_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//form/header" position="inside">
+                <button name="action_create_slc_certificate" invisible="state !='left'" type="object" string="Create SLC"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="get_slc" class="btn oe_stat_button" invisible="not slc_id" icon="fa-file" type="object">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">SLC</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="server_action_credit_note" model="ir.actions.server">
+            <field name="name">Refund Security Fee</field>
+            <field name="model_id" ref="model_op_student"/>
+            <field name="binding_model_id" ref="model_op_student"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.create_credit_note()
+            </field>
+        </record>
+
+</odoo>

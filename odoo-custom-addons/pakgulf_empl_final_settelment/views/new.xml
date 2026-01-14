@@ -1,0 +1,174 @@
+RPC_ERROR
+Odoo Server Error
+Traceback (most recent call last):
+  File "/opt/odoo17/odoo/odoo/tools/cache.py", line 99, in lookup
+    r = d[key]
+  File "<decorator-gen-5>", line 2, in __getitem__
+  File "/opt/odoo17/odoo/odoo/tools/func.py", line 87, in locked
+    return func(inst, *args, **kwargs)
+  File "/opt/odoo17/odoo/odoo/tools/lru.py", line 34, in __getitem__
+    a = self.d[obj]
+KeyError: ('ir.model.data', <function IrModelData._xmlid_lookup at 0x7441de38d360>, 'pakgulf_empl_final_settelment.action_payslip_form')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 556, in _tag_root
+    f(rec)
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 426, in _tag_record
+    f_val = _eval_xml(self, field, env)
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 143, in _eval_xml
+    +_process("".join(etree.tostring(n, encoding='unicode') for n in node))
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 132, in _process
+    self.idref[id] = self.id_get(id)
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 538, in id_get
+    res = self.model_id_get(id_str, raise_if_not_found)
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 544, in model_id_get
+    return self.env['ir.model.data']._xmlid_to_res_model_res_id(id_str, raise_if_not_found=raise_if_not_found)
+  File "/opt/odoo17/odoo/odoo/addons/base/models/ir_model.py", line 2189, in _xmlid_to_res_model_res_id
+    return self._xmlid_lookup(xmlid)
+  File "<decorator-gen-43>", line 2, in _xmlid_lookup
+  File "/opt/odoo17/odoo/odoo/tools/cache.py", line 104, in lookup
+    value = d[key] = self.method(*args, **kwargs)
+  File "/opt/odoo17/odoo/odoo/addons/base/models/ir_model.py", line 2182, in _xmlid_lookup
+    raise ValueError('External ID not found in the system: %s' % xmlid)
+ValueError: External ID not found in the system: pakgulf_empl_final_settelment.action_payslip_form
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/odoo17/odoo/odoo/http.py", line 1765, in _serve_db
+    return service_model.retrying(self._serve_ir_http, self.env)
+  File "/opt/odoo17/odoo/odoo/service/model.py", line 133, in retrying
+    result = func()
+  File "/opt/odoo17/odoo/odoo/http.py", line 1792, in _serve_ir_http
+    response = self.dispatcher.dispatch(rule.endpoint, args)
+  File "/opt/odoo17/odoo/odoo/http.py", line 1996, in dispatch
+    result = self.request.registry['ir.http']._dispatch(endpoint)
+  File "/opt/odoo17/odoo/odoo/addons/base/models/ir_http.py", line 222, in _dispatch
+    result = endpoint(**request.params)
+  File "/opt/odoo17/odoo/odoo/http.py", line 722, in route_wrapper
+    result = endpoint(self, *args, **params_ok)
+  File "/opt/odoo17/odoo/addons/web/controllers/dataset.py", line 28, in call_button
+    action = self._call_kw(model, method, args, kwargs)
+  File "/opt/odoo17/odoo/addons/web/controllers/dataset.py", line 20, in _call_kw
+    return call_kw(request.env[model], method, args, kwargs)
+  File "/opt/odoo17/odoo/odoo/api.py", line 468, in call_kw
+    result = _call_kw_multi(method, model, args, kwargs)
+  File "/opt/odoo17/odoo/odoo/api.py", line 453, in _call_kw_multi
+    result = method(recs, *args, **kwargs)
+  File "<decorator-gen-71>", line 2, in button_immediate_install
+  File "/opt/odoo17/odoo/odoo/addons/base/models/ir_module.py", line 75, in check_and_log
+    return method(self, *args, **kwargs)
+  File "/opt/odoo17/odoo/odoo/addons/base/models/ir_module.py", line 466, in button_immediate_install
+    return self._button_immediate_function(self.env.registry[self._name].button_install)
+  File "/opt/odoo17/odoo/odoo/addons/base/models/ir_module.py", line 590, in _button_immediate_function
+    registry = modules.registry.Registry.new(self._cr.dbname, update_module=True)
+  File "<decorator-gen-16>", line 2, in new
+  File "/opt/odoo17/odoo/odoo/tools/func.py", line 87, in locked
+    return func(inst, *args, **kwargs)
+  File "/opt/odoo17/odoo/odoo/modules/registry.py", line 113, in new
+    odoo.modules.load_modules(registry, force_demo, status, update_module)
+  File "/opt/odoo17/odoo/odoo/modules/loading.py", line 480, in load_modules
+    processed_modules += load_marked_modules(env, graph,
+  File "/opt/odoo17/odoo/odoo/modules/loading.py", line 364, in load_marked_modules
+    loaded, processed = load_module_graph(
+  File "/opt/odoo17/odoo/odoo/modules/loading.py", line 227, in load_module_graph
+    load_data(env, idref, mode, kind='data', package=package)
+  File "/opt/odoo17/odoo/odoo/modules/loading.py", line 71, in load_data
+    tools.convert_file(env, package.name, filename, idref, mode, noupdate, kind)
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 627, in convert_file
+    convert_xml_import(env, module, fp, idref, mode, noupdate)
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 693, in convert_xml_import
+    obj.parse(doc.getroot())
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 613, in parse
+    self._tag_root(de)
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 556, in _tag_root
+    f(rec)
+  File "/opt/odoo17/odoo/odoo/tools/convert.py", line 569, in _tag_root
+    raise ParseError('while parsing %s:%s, somewhere inside\n%s' % (
+odoo.tools.convert.ParseError: while parsing /opt/odoo17/odoo-custom-addons/pakgulf_empl_final_settelment/views/empl_final_settlement.xml:4, somewhere inside
+<record id="view_employee_final_settlement_form" model="ir.ui.view">
+            <field name="name">employee.final.settlement.form</field>
+            <field name="model">employee.final.settlement</field>
+            <field name="arch" type="xml">
+                <form string="Employee Final Settlement Form">
+                    <header>
+                        <button name="action_1st_appr" class="btn btn-primary" string="Confirm" type="object" invisible="state != 'draft'"/>
+                        <button name="action_2nd_appr" class="btn btn-primary" string="Approval" type="object" invisible="state != '1st_appr'"/>
+                        <button name="action_payslip" class="btn btn-primary" string="Payslip" type="object" invisible="state != '2nd_appr'"/>
+                        <button name="action_cancel" class="btn btn-danger" string="Cancel" type="object" invisible="state == 'cancel'"/>
+                        <button name="action_reset" class="btn btn-primary" string="Reset To Draft" type="object" invisible="state != 'cancel'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+<!--                        <div class="oe_button_box" name="button_box">-->
+<!--                            <button name="action_open_payslip" string="Payslip" type="object" icon="fa-bar-chart"/>-->
+<!--                            <field name="payslip_id"/>-->
+<!--&lt;!&ndash;                            <xpath expr="//form" position="inside">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <button name="%(action_payslip_form)d" string="Payslip" type="action"&ndash;&gt;-->
+<!--&lt;!&ndash;                                        context="{'default_id': active_id}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                        invisible="payslip_id == False"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </xpath>&ndash;&gt;-->
+<!--                        </div>-->
+
+                        <div>
+                            <group>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="batch"/>
+                                    <field name="company"/>
+                                    <field name="department"/>
+                                    <field name="designation"/>
+                                </group>
+                                <group>
+                                    <field name="grade"/>
+                                    <field name="location"/>
+                                    <field name="dob"/>
+                                    <field name="jod"/>
+                                    <field name="gratuity_date"/>
+                                </group>
+                            </group>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div>
+                            <group>
+                                <group>
+                                    <field name="leave_reason"/>
+                                    <field name="last_work_date"/>
+                                </group>
+                                <group>
+                                    <field name="resign_date"/>
+
+                                    <field name="pf_end_date"/>
+                                </group>
+                                <group>
+                                    <field name="salary_paid"/>
+                                    <field name="gratuity"/>
+                                    <field name="loan"/>
+                                    <field name="prov_fund"/>
+                                </group>
+                            </group>
+                            <br/>
+                            <br/>
+                            <group>
+                                <field name="remarks"/>
+                            </group>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+
+                </form>
+            </field>
+        </record>
+
+The above server error caused the following client error:
+RPC_ERROR: Odoo Server Error
+    RPCError@http://localhost:1700/web/assets/01f90e2/web.assets_web_dark.min.js:2869:319
+    makeErrorFromResponse@http://localhost:1700/web/assets/01f90e2/web.assets_web_dark.min.js:2872:163
+    jsonrpc/promise</<@http://localhost:1700/web/assets/01f90e2/web.assets_web_dark.min.js:2876:34

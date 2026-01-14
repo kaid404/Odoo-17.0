@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="city_books_ledger_report_pdf_doc">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="rec.get('category_dict').items()" t-as="category">
+                        <div class="row">
+                            <div class="col-8" align="left">
+                                <h5>
+                                    <b>
+                                        Sale of&#160;
+                                        <t t-esc="category[0]"/>&#160;(
+                                        <span t-esc="rec.get('from_date')"/>&#160;
+                                        to:&#160;
+                                        <span t-esc="rec.get('to_date')"/>)
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-6" align="left"/>
+                        </div>
+                        <br/>
+                        <table width="100%">
+                            <thead>
+                                <tr style="border: 1px solid black; background-color: #DCDCDC;">
+                                    <th style="padding: 8px;border: 1px solid black;" width="20%">
+                                        <span>Detail</span>
+                                    </th>
+                                    <th style="padding: 8px;border: 1px solid black;" width="10%">
+                                        <span>Cost</span>
+                                    </th>
+                                    <th style="padding: 8px;border: 1px solid black;" width="10%">
+                                        <span>Sale Price</span>
+                                    </th>
+                                    <th style="padding: 8px;border: 1px solid black;" width="20%">
+                                        <span>Total Received</span>
+                                    </th>
+                                    <th style="padding: 8px;border: 1px solid black;" width="10%">
+                                        <span>Sale</span>
+                                    </th>
+                                    <th style="border: 1px solid black;" width="10%">
+                                        <span>Balance</span>
+                                    </th>
+                                    <th style="border: 1px solid black;" width="10%">
+                                        <span>Amount</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Product Rows -->
+                                <t t-foreach="category[1]" t-as="product">
+                                    <tr style="border: 1px solid black;">
+                                        <td style="padding: 8px; border: 1px solid black;">
+                                            <t t-esc="product.get('product')"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid black;">
+                                            <t t-esc="product.get('cost')"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid black;">
+                                            <t t-esc="product.get('sale_price')"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid black;">
+                                            <t t-esc="product.get('total_received')"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid black;">
+                                            <t t-esc="product.get('total_sold')"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid black;">
+                                            <t t-esc="product.get('balance_qty')"/>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid black;">
+                                            <t t-esc="product.get('balance_qty') * product.get('sale_price')"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </t>
+                    <!--                    <table width="100%">-->
+                    <!--                        <thead>-->
+                    <!--                            <tr style="border: 1px solid black; background-color: #DCDCDC;">-->
+                    <!--&lt;!&ndash;                                <th style="padding: 8px; border: 1px solid black;">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <span>Date</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </th>&ndash;&gt;-->
+                    <!--                                <th style="padding: 8px;border: 1px solid black;">-->
+                    <!--                                    <span>Detail</span>-->
+                    <!--                                </th>-->
+                    <!--                                <th style="padding: 8px;border: 1px solid black;">-->
+                    <!--                                    <span>Rate</span>-->
+                    <!--                                </th>-->
+                    <!--                                <th style="padding: 8px;border: 1px solid black;">-->
+                    <!--                                    <span>Total Received</span>-->
+                    <!--                                </th>-->
+                    <!--                                <th style="padding: 8px;border: 1px solid black;">-->
+                    <!--                                    <span>Sale</span>-->
+                    <!--                                </th>-->
+                    <!--                                <th style="border: 1px solid black;">-->
+                    <!--                                    <span>Balance</span>-->
+                    <!--                                </th>-->
+                    <!--                                <th style="border: 1px solid black;">-->
+                    <!--                                    <span>Amount</span>-->
+                    <!--                                </th>-->
+                    <!--                            </tr>-->
+                    <!--                        </thead>-->
+                    <!--                        <tbody>-->
+                    <!--&lt;!&ndash;                            <t t-foreach="rec.get('record_list')" t-as="record">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <tr style="border: 1px solid black;">&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;                                    <td style="padding: 8px; border: 1px solid black;">&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;                                        <t t-esc="record.get('date')"/>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;                                    </td>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <td style="padding: 8px; border: 1px solid black;">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                        <t t-esc="record.get('product')"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <td style="padding: 8px; border: 1px solid black;">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                        <t t-esc="record.get('rate')"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <td style="padding: 8px; border: 1px solid black;">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                        <t t-esc="record.get('opening_qty')"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <td style="padding: 8px; border: 1px solid black;">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                        <t t-esc="record.get('incoming_qty')"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <td style="padding: 8px; border: 1px solid black;">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                        <t t-esc="record.get('balance_qty')"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    <td style="padding: 8px; border: 1px solid black;">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                        <t t-esc="record.get('balance_qty') * record.get('rate')"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                </tr>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;                            </t>&ndash;&gt;-->
+                    <!--                            <t t-foreach="rec.get('record_list')" t-as="record">-->
+                    <!--                            <tr style="border: 1px solid black;">-->
+                    <!--                                <td style="padding: 8px; border: 1px solid black;">-->
+                    <!--                                    <t t-esc="record.get('product')"/>-->
+                    <!--                                </td>-->
+                    <!--                                <td style="padding: 8px; border: 1px solid black;">-->
+                    <!--                                    <t t-esc="record.get('rate')"/>-->
+                    <!--                                </td>-->
+                    <!--                                <td style="padding: 8px; border: 1px solid black;">-->
+                    <!--                                    <t t-esc="record.get('total_received')"/>-->
+                    <!--                                </td>-->
+                    <!--                                <td style="padding: 8px; border: 1px solid black;">-->
+                    <!--                                    <t t-esc="record.get('total_sold')"/>-->
+                    <!--                                </td>-->
+                    <!--                                <td style="padding: 8px; border: 1px solid black;">-->
+                    <!--                                    <t t-esc="record.get('balance_qty')"/>-->
+                    <!--                                </td>-->
+                    <!--                                <td style="padding: 8px; border: 1px solid black;">-->
+                    <!--                                    <t t-esc="record.get('balance_qty') * record.get('rate')"/>-->
+                    <!--                                </td>-->
+                    <!--                            </tr>-->
+                    <!--                        </t>-->
+                    <!--                        </tbody>-->
+                    <!--                    </table>-->
+
+                </div>
+                <div class="footer" style="border-top: 1px solid black">
+                    <div class="row">
+                        <div class="col-4" style="text-align:left">
+                            <span>Printed By:</span>
+                            <t t-esc="user.name"/>
+                        </div>
+                        <div class="col-4" style="text-align:center">
+                            <span>Date:</span>
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                        </div>
+                        <div class="col-4" align="right">
+                            <div class="text-muted">
+                                Page:
+                                <span class="page"/>
+                                of
+                                <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="city_books_ledger_report_paper" model="report.paperformat">
+        <field name="name">Product Ledger Report (PDF)</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">25</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="city_books_ledger_report_action" model="ir.actions.report">
+        <field name="name">Books Ledger Report (PDF)</field>
+        <field name="model">city.books.ledger.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cityschool_books_sale_ledger_report.city_books_ledger_report_pdf_doc</field>
+        <field name="report_file">cityschool_books_sale_ledger_report.city_books_ledger_report_pdf_doc</field>
+        <field name="binding_model_id" ref="model_city_books_ledger_report"/>
+        <field name="paperformat_id" ref="city_books_ledger_report_paper"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

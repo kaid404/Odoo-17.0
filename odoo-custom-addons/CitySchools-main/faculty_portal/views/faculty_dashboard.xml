@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="faculty_dashboard_template" name="Faculty Dashboard Template">
+        <t t-call="web.layout">
+            <head>
+                <link rel="stylesheet" href="/faculty_portal/static/src/css/style.css"/>
+                <link rel="stylesheet" href="/faculty_portal/static/src/css/responsive.css"/>
+                <!-- font-awsome CDN Link -->
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+                      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+                      crossorigin="anonymous" referrerpolicy="no-referrer"/>
+                <link rel='stylesheet'
+                      href='https://cdn-uicons.flaticon.com/2.5.1/uicons-thin-rounded/css/uicons-thin-rounded.css'/>
+
+            </head>
+
+            <body>
+                <header>
+                    <div class="logosec">
+                        <div class="menuicn">
+                            <!-- <span> &#x2630;</span> -->
+                            <i class="fa-solid fa-bars-staggered"></i>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <!-- <span>&#128276;</span> -->
+                        <i class="fa-regular fa-bell"></i>
+                        <!-- <span id="fullscreen-toggle" onclick="toggleFullscreen()">&#x26F6;</span> -->
+                        <i class="fa-solid fa-expand" id="fullscreen-toggle" onclick="toggleFullscreen()"></i>
+                        <!-- <span id="theme-toggle">&#9789;</span> -->
+                        <i class="fa-solid fa-circle-half-stroke" id="theme-toggle"></i>
+                        <img class="nav-img profile_pic" t-att-src="image_data_uri(faculty_staff.image_1920)"
+                             alt="Profile Pic"/>
+                    </div>
+                </header>
+
+                <div class="main-container">
+                    <div class="navcontainer">
+                        <nav class="nav">
+                            <div class="nav-upper-options">
+                                <a href="/dashboard">
+                                    <div class="nav-option">
+                                        <!-- <i class="fi fi-tr-dashboard-panel nav-img"></i> -->
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/dashboard (2).png"
+                                             alt="animated_icon"/>
+                                        <h3>Dashboard</h3>
+                                    </div>
+                                </a>
+                                <a href="/profile">
+                                    <div class="option2 nav-option">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/user.png"
+                                             alt="profile"/>
+                                        <h3>Profile</h3>
+                                    </div>
+                                </a>
+                                <a href="/attendance">
+                                    <div class="nav-option option3">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/calendar.png"
+                                             alt="Attendance"/>
+                                        <h3>Attendance</h3>
+                                    </div>
+                                </a>
+                                  <a href="/diary_form">
+                                    <div class="nav-option option3">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/calendar.png"
+                                             alt="Attendance"/>
+                                        <h3>Diary</h3>
+                                    </div>
+                                </a>
+                                <a href="/notification">
+                                    <div class="nav-option option6">
+                                        <img class="nav-img" src="/faculty_portal/static/src/img/box.png"
+                                             alt="Notifications"/>
+                                        <h3>Notifications</h3>
+                                    </div>
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+
+                    <div class="main">
+                        <div class="box-container">
+                            <!-- Profile and Workload Section -->
+                            <div class="box box1">
+                                <div class="profile-section">
+                                    <img id="user_img"
+                                         t-att-src="image_data_uri(faculty_staff.image_1920)"
+                                         alt="img"/>
+                                    <div class="profile-info">
+                                        <h6 class="profile-name">
+                                            <t t-esc="name"/>
+                                        </h6>
+                                        <p class="profile-barcode">ID :
+                                            <t t-esc="barcode"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="workload-section">
+                                    <i class="fa-solid fa-list-check"></i>
+                                    <h6 class="workload-heading">Work Load :</h6>
+                                    <p class="workload-details">
+                                        <t t-esc="load"/>
+                                        classes per day
+                                    </p>
+                                </div>
+                                <div class="classes-section">
+                                    <h6 class="classes-heading">Today Attendance :</h6>
+                                    <div id="class-schedulee">
+                                        <t t-if="not attendance">
+                                            <h4 class="no-class">No class Attendance is scheduled for today.</h4>
+                                        </t>
+                                        <t t-else="">
+                                            <table class="att_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Class</th>
+                                                        <th>Faculty</th>
+                                                        <th>Sheet</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="attendance" t-as="att">
+                                                        <tr>
+                                                            <td>
+                                                                <t t-esc="att.get('course_id')"/>
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="att.get('faculty_id')"/>
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="att.get('name')"/>
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="att.get('attendance_date')"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Today's Class Section -->
+                            <div class="box box3">
+                                <div class="classes-section">
+                                    <h6 class="classes-heading">Today Classes :</h6>
+                                    <div id="class-schedule">
+                                        <t t-if="not classes">
+                                            <h4 class="no-class">No class is scheduled for today.</h4>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-foreach="classes" t-as="class">
+                                                <div class="class-card">
+                                                    <p class="class-subject">
+                                                        <i class="fas fa-book"></i>
+                                                        <strong>Subject :</strong>
+                                                        <span>
+                                                            <t t-esc="class.subject_id.name"/>
+                                                        </span>
+                                                    </p>
+                                                    <p class="class-details">
+                                                        <i class="fas fa-chalkboard"></i>
+                                                        <strong>Room :</strong>
+                                                        <span>
+                                                            <t t-esc="class.classroom_id.name"/>
+                                                        </span>
+                                                    </p>
+                                                    <p class="class-time">
+                                                        <i class="fas fa-clock"></i>
+                                                        <strong>Time :</strong>
+                                                        <span>
+                                                            <t t-esc="class.utc_time(class.start_datetime).time()"/>
+                                                            -
+                                                            <t t-esc="class.utc_time(class.end_datetime).time()"/>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slider_main">
+                            <h3>Notifications :</h3>
+                            <div class="slider-container">
+                                <div class="arrow-left">&lt;</div>
+                                <div class="slider-wrapper">
+                                    <div class="slider">
+                                        <t t-foreach="notify" t-as="nft">
+                                            <div class="slide">
+                                                <div class="innercard">
+                                                    <img id="user_img_notif" t-att-src="image_data_uri(nft.image)"
+                                                         alt="img"/>
+                                                    <p>
+                                                        <strong>Title:</strong>
+                                                        <t t-esc="nft.name"/>
+                                                    </p>
+                                                    <p class="description">
+                                                        <strong>Uploaded By:</strong>
+                                                        <t t-esc="nft.uploaded_by.name"/>
+                                                    </p>
+                                                    <p>
+                                                        <strong>Expiry Date:</strong>
+                                                        <t t-esc="nft.expiry"/>
+                                                    </p>
+                                                    <button class="read-more-btn" style="display:none;">Read More
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="arrow-right">&gt;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="/faculty_portal/static/src/js/index.js"></script>
+                <script>
+
+const slider = document.querySelector('.slider');
+const slides = document.querySelectorAll('.slide');
+const arrowLeft = document.querySelector('.arrow-left');
+const arrowRight = document.querySelector('.arrow-right');
+const sliderContainer = document.querySelector('.slider-container');
+let currentIndex = 0;
+const totalSlides = slides.length;
+console.log('totalSlides-->',totalSlides)
+
+function updateSliderPosition() {
+    const slideWidth = slides[0].clientWidth;
+    slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+}
+
+function updateArrows() {
+    if (totalSlides &lt;= 4) {
+        arrowLeft.style.display = 'none';
+        arrowRight.style.display = 'none';
+    } else {
+        arrowLeft.style.display = 'block';
+        arrowRight.style.display = 'block';
+    }
+}
+
+// Initialize arrows based on the total number of slides
+
+updateArrows();
+
+arrowLeft.addEventListener('click', () => {
+    if (currentIndex > 0) {
+        currentIndex -= 1; // Move to the previous card
+    } else {
+        currentIndex = totalSlides - 1; // Loop back to the last card
+    }
+    updateSliderPosition();
+});
+
+arrowRight.addEventListener('click', () => {
+    if (currentIndex &lt; totalSlides - 1) {
+        currentIndex += 1; // Move to the next card
+    } else {
+        currentIndex = 0; // Loop back to the first card
+    }
+    updateSliderPosition();
+});
+
+// Adjust the slider on window resize
+window.addEventListener('resize', updateSliderPosition);
+
+
+
+
+                </script>
+            </body>
+        </t>
+    </template>
+</odoo>

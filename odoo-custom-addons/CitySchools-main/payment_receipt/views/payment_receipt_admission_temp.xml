@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payment_receipt_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <style>
+                    table{
+                    width:100%;
+                    }
+                    th,td{
+                    padding:10px 2px;
+                    text-align:right;
+                    }
+                </style>
+                <t t-esc="pb" t-value="0"/>
+                <t t-foreach="docs" t-as="o">
+                    <div class="header pt-2" style="border:2px solid;border-bottom:none;">
+                        <div class="row">
+                            <div class="col-2 text-center pt-1" style="">
+                                <img t-if="o.company_id.logo"
+                                     t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"
+                                     alt="Company Logo" style="max-height: 80px;"/>
+                            </div>
+                            <div class="col-5 pt-3" style="">
+                                <h5 class="p-0 m-0">
+                                    <strong>CITY HIGH SCHOOL</strong>
+                                </h5>
+                                <div style="font-size:10px;" class="p-0">
+                                    <span t-esc="o.company_id.street"/>
+                                    <span t-esc="o.company_id.street2"/>
+                                    <span t-esc="o.company_id.city"/>
+                                </div>
+                                <div style="font-size:10px;" class="p-0">
+                                    <span t-esc="o.company_id.state_id.name"/>
+                                    <span t-esc="o.company_id.country_id.name"/>
+                                    <span t-esc="o.company_id.phone"/>
+                                </div>
+
+                            </div>
+                            <div class="col-5 pt-1" style="font-size:9.4px;">
+                                <div class="pb-2">
+                                    <img src="/payment_receipt/static/src/img/www.png"
+                                         alt="https://www.cityhighschool.pk" width="20px"/>
+                                    <span>https://www.cityhighschool.pk</span>
+                                </div>
+                                <div class="pb-2" style="position:relative;">
+                                    <img src="/payment_receipt/static/src/img/youtub.png"
+                                         alt="https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw" width="20px"/>
+                                    <span style="position:absolute;left:22px;top:1px;">
+                                        https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw
+                                    </span>
+                                </div>
+                                <div class="">
+                                    <img src="/payment_receipt/static/src/img/facebook.png"
+                                         alt="https://www.facebook.com/cityhighschoolfsd" width="20px"/>
+                                    <span>https://www.facebook.com/cityhighschoolfsd</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page pt-4 pb-4" style="border:2px solid;border-top:none;font-size:14px;">
+                        <div class="row pb-3">
+                            <div class="col-12" style="font-size:20px;text-align:center;">
+                                <strong>Prospectus Payment Receipt</strong>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-12" style="border-bottom:1px dotted ;padding-bottom:3px;width:670px;">
+                                <span>
+                                    <t t-set="prospect_amount" t-value="o.prospectus_fee"/>
+                                    <span>Prospectus Fee Paid Amount &#160;&#160;&#160;&#160;&#160; : &#160;&#160;&#160;&#160;&#160;</span>
+                                    <strong t-esc="prospect_amount"/>&#160;&#160;&#160;&#160;&#160;
+                                    (
+                                    <span style="font-size:12px;">
+                                        <span t-esc="o.prospect_amount_to_words(prospect_amount)"/>
+                                        ONLY
+                                    </span>
+                                    )
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-6">
+                                <div style="border-bottom:1px dotted ;padding-bottom:3px;width:300px;">
+                                    <span>Student Name &#160;&#160;&#160;&#160;&#160; : &#160;&#160;&#160;&#160;&#160;
+                                    </span>
+                                    <strong t-esc="o.name"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div style="width:300px;border-bottom:1px dotted ;padding-bottom:3px;">
+                                    <span>Application Number &#160;&#160;&#160;&#160;&#160; : &#160;&#160;&#160;&#160;&#160;</span>
+                                    <strong t-esc="o.application_number"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-6">
+                                <div style="width:300px;border-bottom:1px dotted ;padding-bottom:3px;">
+                                    <span>CNIC &#160;&#160;&#160;&#160;&#160; : &#160;&#160;&#160;&#160;&#160;</span>
+                                    <strong t-esc="o.form_b"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div style="width:300px;border-bottom:1px dotted ;padding-bottom:3px;">
+                                    <span>Campus &#160;&#160;&#160;&#160;&#160; : &#160;&#160;&#160;&#160;&#160;</span>
+                                    <strong t-esc="o.company_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-6">
+                                <div style="width:300px;border-bottom:1px dotted ;padding-bottom:3px;">
+                                    <span>Father Name &#160;&#160;&#160;&#160;&#160; : &#160;&#160;&#160;&#160;&#160;
+                                    </span>
+                                    <strong t-esc="o.father_name"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div style="width:300px;border-bottom:1px dotted ;padding-bottom:3px;">
+                                    <span>Admission Date &#160;&#160;&#160;&#160;&#160; :
+                                        &#160;&#160;&#160;&#160;&#160;
+                                    </span>
+                                    <strong t-esc="o.admission_date"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="payment_receipt_paper_format" model="report.paperformat">
+        <field name="name">payment receipt Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A5</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">22</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="payment_receipt_print_action" model="ir.actions.report">
+        <field name="name">Prospectus Payment Receipt</field>
+        <field name="model">op.admission</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">payment_receipt.payment_receipt_template</field>
+        <field name="report_file">payment_receipt.payment_receipt_template</field>
+        <field name="binding_model_id" ref="model_op_admission"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="payment_receipt.payment_receipt_paper_format"/>
+    </record>
+</odoo>

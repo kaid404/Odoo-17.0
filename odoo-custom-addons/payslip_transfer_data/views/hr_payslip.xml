@@ -1,0 +1,28 @@
+<odoo>
+    <record id="payslip_view_inherit" model="ir.ui.view">
+        <field name="name">Payslip Form Inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[3]" position="after">
+                <page string="Transfer Data">
+                    <group>
+                        <group>
+                            <field name="emp_department_id"/>
+                            <field name="emp_job_id"/>
+                            <field name="emp_location_id"/>
+                            <field name="emp_employee_grade"/>
+                        </group>
+                        <group>
+                            <field name="emp_employee_type"/>
+                            <field name="emp_analytics"/>
+                            <field name="emp_employee_bank"/>
+                            <field name="emp_employer_bank"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

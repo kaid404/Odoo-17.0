@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_school_leaving_certificate_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <style>
+                    .main{position:relative;font-size:18px;height:1085px;width:763px;border-radius:0px;border:3px solid
+                    silver;}
+                    .main_inner{height:100%;width:100%;background-color:rgba(255, 255, 255,
+                    0);opacity:0.95;border-radius:0px;}
+                    .inner_container{z-index:1000;height:100%;width:100%;background-color:transparent;opacity:1;border-radius:0px;}
+                    .right_corner{z-index:-1;position:absolute;top:0;right:0;height:150px;}
+                    .lft_corner{z-index:0;position:absolute;bottom:0px;left:0;height:250px;width:100%;}
+                    .head{padding-top:35px;text-align:center;}
+                    .logo{text-align:right;padding:20px 0 0 0;}
+                    .head h5{font-size:25px;margin:0;padding:10px 0;box-sizing:border-box;}
+                    .title{font-size:18px;}
+                    .static_data_lines{line-height:2.5;padding: 0px 0;}
+                    .dynamic_data_lines{border-bottom:1px dotted;margin-bottom:0px;padding:0 15px;}
+                    table{border:1px dotted silver;width:100%;}
+                    table td ,th{border-bottom:1px dotted silver;padding:3px;text-align:center;}
+                    <!--                                        table,right_corner,lft_corner,head,row{z-index:20000;color:black;opacity:1;}-->
+                    .foter{opacity:1;position:absolute;bottom:100px;left:0;width:100%;font-size:15px;}
+                </style>
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.sudo()"/>
+                    <div class="main">
+                        <!--                        <img class="lft_corner" src="/school_leaving_certificate/static/src/img/bg9.png"/>-->
+                        <div class="main_inner">
+                            <!--                            <img class="right_corner" src="/school_leaving_certificate/static/src/img/bg8_right.png"/>-->
+                            <div class="inner_container">
+                                <div class="head">
+                                    <div class="row">
+                                        <div class="logo col-2">
+                                            <!--                                            <img t-if="o.company_id.logo"-->
+                                            <!--                                                 t-att-src="'data:image/png;base64,%s' % o.company_id.logo.decode('utf-8')"-->
+                                            <!--                                                 alt="Company Logo" style="max-height: 80px;"/>-->
+<!--                                            <img src="/school_leaving_certificate/static/src/img/logo.png"-->
+<!--                                                 alt="Company Logo"-->
+<!--                                                 style="max-height: 100px;"/>-->
+                                        </div>
+                                        <div class="col-8" style="padding-top:100px;">
+<!--                                            <h5 style="font-color:white;">-->
+<!--                                                <strong>CITY HIGH SCHOOL (-->
+<!--                                                    <t t-esc="o.student_id.company_id.name"/>-->
+<!--                                                    )-->
+<!--                                                </strong>-->
+<!--                                            </h5>-->
+<!--                                            <div class="address">-->
+<!--                                                <span t-esc="o.student_id.company_id.street"/>-->
+<!--                                                <span t-esc="o.student_id.company_id.street2"/>-->
+<!--                                                <span t-esc="o.student_id.company_id.city"/>-->
+<!--                                                &lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;                                    <div>&ndash;&gt;-->
+<!--                                                <t t-if="o.student_id.company_id.state_id.name or o.student_id.company_id.country_id.name or o.student_id.company_id.phone">-->
+<!--                                                    ,-->
+<!--                                                </t>-->
+<!--                                                <br/>-->
+<!--                                                <span t-esc="o.student_id.company_id.state_id.name"/>-->
+<!--                                                <span t-esc="o.student_id.company_id.country_id.name"/>-->
+<!--                                                <span t-esc="o.student_id.company_id.phone"/>-->
+<!--                                                .-->
+<!--                                            </div>-->
+                                            <div class="title">
+                                                <strong>School Leaving Certificate</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 logo">
+                                            <!--                                            <img src="/school_leaving_certificate/static/src/img/image.png"-->
+                                            <!--                                                 alt="https://www.cityhighschool.pk" height="80px"/>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ps-5 pe-5 pt-5" style="text-align:center;">
+                                    <div class="col-6">
+                                        <span>Certificate No :</span>
+                                        <strong>
+                                            <t t-esc="o.name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <span>Admission No :</span>
+                                        <strong>
+                                            <t t-esc="o.admission_no"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row ps-5 pe-5 pt-5">
+                                    <div class="col-12">
+                                        <div>
+                                            <span class="static_data_lines">This is to certify that &#160;:&#160;</span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.student_id.name"/>
+
+                                            </strong>
+                                            <span class="static_data_lines">Son / Daughter of Mr &#160;:&#160;</span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.father_name"/>
+
+                                            </strong>
+                                            <span class="static_data_lines">Was admitted to this school on
+                                                &#160;:&#160;
+                                            </span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.format_date(o.enrollment_date)"/>
+
+                                            </strong>
+                                            <span class="static_data_lines">and left on &#160;:&#160;</span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.format_date(o.date)"/>
+                                            </strong>
+                                        </div>
+                                        <div>
+                                            <span class="static_data_lines">He / She was studying in class
+                                                &#160;:&#160;
+                                            </span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.class_id.name"/>
+
+                                            </strong>
+                                            <span class="static_data_lines">His / Her conduct was &#160;:&#160;</span>
+                                            <strong class="dynamic_data_lines">good</strong>
+                                        </div>
+                                        <div>
+                                            <span class="static_data_lines">He / She has paid the school dues up to
+                                                &#160;:&#160;
+                                            </span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.fee_due"/>
+                                            </strong>
+                                            <span class="static_data_lines">His / Her DOB according to the Admission
+                                                Register &#160;:&#160;
+                                            </span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.format_date(o.student_id.birth_date)"/>
+                                            </strong>
+                                            <span class="static_data_lines">in words &#160;:&#160;</span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.birth_date_to_words(o.student_id.birth_date)"/>
+                                            </strong>
+                                        </div>
+                                        <div>
+                                            <span class="static_data_lines">He / She has been promoted to Class &#160;:&#160;</span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.student_id.year_id.name"/>
+                                            </strong>
+                                            <span class="static_data_lines">left during the term &#160;:&#160;</span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.term_id.name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ps-5 pe-5 pt-4">
+                                    <div class="col-6">
+                                        <span class="static_data_lines">Possible Attendance</span>
+                                        <strong class="dynamic_data_lines">
+                                            <t t-esc="o.possible_attendance"/>
+
+                                        </strong>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="static_data_lines">His / Her Attendance</span>
+                                        <strong class="dynamic_data_lines">
+                                            <t t-esc="o.student_attendance"/>
+
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="foter">
+                                    <div class="row ps-5 pe-5 pb-4">
+                                        <div class="col-4">
+                                            <span class="static_data_lines">Date of issue</span>
+                                            <strong class="dynamic_data_lines">
+                                                <t t-esc="o.format_date(o.date)"/>
+                                            </strong>
+
+                                        </div>
+                                        <div class="col-4">
+                                            <span class="static_data_lines">Checked By</span>
+                                            <strong class="dynamic_data_lines">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</strong>
+                                        </div>
+                                        <div class="col-4">
+                                            <span class="static_data_lines">Principal</span>
+                                            <strong class="dynamic_data_lines">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row pe-3">
+                                        <div class="col-9"></div>
+                                        <div class="col-1" style="text-align:right;">
+                                            <img src="/school_leaving_certificate/static/src/img/www.png"
+                                                 alt="https://www.cityhighschool.pk" width="17px" class="pb-1"/>
+                                            <br/>
+                                            <img src="/school_leaving_certificate/static/src/img/Instagram_icon.png"
+                                                 alt="https://www.instagram.com/cityhighschoolfsd_/?hl=en" width="17px"
+                                                 class="pb-1"/>
+                                            <br/>
+                                            <img src="/school_leaving_certificate/static/src/img/facebook.png"
+                                                 alt="https://www.facebook.com/cityhighschoolfsd" width="17px"
+                                                 class="pb-1"/>
+                                            <br/>
+                                            <img src="/school_leaving_certificate/static/src/img/youtub.png"
+                                                 alt="https://www.youtube.com/channel/UCtSNF6LRnVCKerOFN-jv0zw"
+                                                 width="18px" style="margin-right:2px;"/>
+                                        </div>
+                                        <div class="col-2" style="text-align:left;">
+                                            <img src="/school_leaving_certificate/static/src/img/qr_code_final.png"
+                                                 style="width: 85px; height: 85px;" alt="Social Media QR Code"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="slc_template_paper_format" model="report.paperformat">
+        <field name="name">School Leaving Certificate Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+    <record id="report_school_leaving_certificate" model="ir.actions.report">
+        <field name="name">School Leaving Certificate</field>
+        <field name="model">school.leaving.certificate</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_leaving_certificate.report_school_leaving_certificate_template</field>
+        <field name="report_file">school_leaving_certificate.report_school_leaving_certificate_template</field>
+        <field name="print_report_name">'%s' % (object.name)</field>
+        <field name="binding_model_id" ref="school_leaving_certificate.model_school_leaving_certificate"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="school_leaving_certificate.slc_template_paper_format"/>
+    </record>
+
+</odoo>

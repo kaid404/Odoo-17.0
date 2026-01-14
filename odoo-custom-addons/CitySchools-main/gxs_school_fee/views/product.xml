@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="fee_product_inherit_form" model="ir.ui.view">
+        <field name="name">fee.product.inherit.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id'] " position="before">
+                <field name="is_school_fee"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

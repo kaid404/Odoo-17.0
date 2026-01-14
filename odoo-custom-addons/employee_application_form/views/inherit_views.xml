@@ -1,0 +1,35 @@
+<odoo>
+
+
+    <record id="candidates_field_inherit" model="ir.ui.view">
+        <field name="name">candidates_field_inherit</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Candidates">
+                    <group>
+                        <field name="candidates_id"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//header" position="inside">
+                <button name="action_create_application_form"
+                        type="object"
+                        string="New Application"
+                        class="oe_highlight"/>
+            </xpath>
+
+            <xpath expr="//sheet/div[@class='oe_button_box']" position="inside">
+                <button type="object"
+                        name="action_open_applications"
+                        class="oe_stat_button"
+                        icon="fa-user">
+                    <field name="employment_form_ids" widget="statinfo" string="Applications"/>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

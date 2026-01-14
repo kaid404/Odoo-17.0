@@ -1,0 +1,13 @@
+<odoo>
+    <record id="view_op_admission_form_inherit" model="ir.ui.view">
+        <field name="name">op.admission.form.inherit</field>
+        <field name="model">op.admission</field>
+        <field name="inherit_id" ref="gxs_admission.view_op_admission_form"/>
+        <field name="arch" type="xml">
+            <header>
+                <button name="%(payment_receipt.payment_receipt_print_action)d" string="Print Payment Receipt"
+                        type="action" class="btn-primary" invisible="prospectus_fee_paid != True"/>
+            </header>
+        </field>
+    </record>
+</odoo>

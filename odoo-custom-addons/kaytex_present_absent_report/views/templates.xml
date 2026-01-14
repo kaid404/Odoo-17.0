@@ -1,0 +1,446 @@
+<odoo>
+    <data>
+        <template id="print_attendance_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page"
+                         style="font-size: 8pt;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri;">
+                        <h3 style="text-align: center;">Individual Time Sheet</h3>
+                        <p style="text-align: center;">Date: from
+                            <span t-esc="form.get('start_date')"/>
+                            to
+                            <span t-esc="form.get('end_date')"/>
+                        </p>
+                        <t t-foreach="form.get('employee_rec')"
+                           t-as="o">
+                            <!--                    <h3 class="text-center"><span t-esc="form.get('start_date')"/> to <span t-esc="form.get('end_date')"/></h3>-->
+                            <div id="informations" class="row mt32 mb32" style="border:1px solid black;">
+                                <div class="col-auto mw-100 mb-2" name="barcode" style="margin-top:10px;">
+                                    <strong>Employee Code:</strong>
+                                    <span class="m-0" t-esc="o.get('badge')"/>
+                                    <br/>
+                                    <strong>Employee Name:</strong>
+                                    <span class="m-0" t-esc="o.get('name')"/>
+                                </div>
+                                <div style="margin-left: 150px; margin-top:10px;" class="col-auto mw-100 mb-2"
+                                     name="employee_id">
+                                    <strong>Department:</strong>
+                                    <span class="m-0" t-esc="o.get('dept')"/>
+                                    <br/>
+                                    <strong>Designation:</strong>
+                                    <span class="m-0" t-esc="o.get('position')"/>
+                                </div>
+                            </div>
+                        </t>
+                        <table class="table table-sm table-bordered">
+                            <t t-set="total_work_hrs" t-value="0"/>
+                            <thead style="border:1px solid black;">
+                                <tr>
+                                    <th class="text-center">
+                                        <strong>Date</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Day</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Shift</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Check In</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Check Out</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Work Hours</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Late Arrival</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Early Departure</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Status</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="form.get('attendances')" t-as="l">
+                                    <td class="text-center">
+                                        <span t-esc="l.get('date')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('day')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('shift')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="l.get('check_in')">
+                                            <span t-esc="l.get('check_in')"/>
+                                        </t>
+                                    </td>
+                                    <td t-if="l.get('check_out')" class="text-center">
+                                        <span t-esc="l.get('check_out')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('work_hr')" t-options='{"widget": "float_time"}'/>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="l.get('late_arrival') > 0">
+                                            <span t-esc="l.get('late_arrival')" t-options='{"widget": "float_time"}'/>
+                                        </t>
+                                        <t t-else="">
+                                            <span>00.00</span>
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="0 > l.get('early_depart')">
+                                            <span t-esc="l.get('early_depart')" t-options='{"widget": "float_time"}'/>
+                                        </t>
+                                        <t t-else="">
+                                            <span>00.00</span>
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('status')"/>
+                                    </td>
+                                    <t t-set="total_work_hrs" t-value="total_work_hrs + l.get('work_hr')"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="grid-container">
+                                    <div class="item1">
+                                        <strong>Regularity %</strong>
+                                        <span style="float:right; margin-right: 30px">%</span>
+                                        <span style="float:right; margin-right: 5px"
+                                              t-esc="form.get('regularity')"/>
+                                    </div>
+                                    <div class="item2">
+                                        <strong>Punctuality %</strong>
+                                        <span style="float:right; margin-right: 30px">%</span>
+                                        <span style="float:right; margin-right: 5px"
+                                              t-esc="form.get('punctuality')"/>
+                                    </div>
+                                    <div class="item3">
+                                        <strong>Total Late Days</strong>
+                                        <span style="float:right; margin-right: 30px"
+                                              t-esc="form.get('late')"/>
+                                    </div>
+                                    <div class="item31">
+                                        <strong>Total Rest Days</strong>
+                                        <span style="float:right; margin-right: 30px"
+                                              t-esc="form.get('rest_days')"/>
+                                    </div>
+                                    <div class="item32">
+                                        <strong>Total plan Days</strong>
+                                        <span style="float:right; margin-right: 30px"
+                                              t-esc="form.get('plan_days')"/>
+                                    </div>
+                                    <div class="item31">
+                                        <strong>Total Absents</strong>
+                                        <span style="float:right; margin-right: 30px"
+                                              t-esc="form.get('absent')"/>
+                                    </div>
+                                    <div class="item4">
+                                        <strong>Total Early Out Days</strong>
+                                        <span style="float:right; margin-right: 30px"
+                                              t-esc="form.get('early')"/>
+                                    </div>
+                                    <div class="item5">
+                                        <strong>Total Work Hours</strong>
+                                        <span style="float:right; margin-right: 30px" t-esc="total_work_hrs"
+                                              t-options='{"widget": "float_time"}'/>
+                                    </div>
+                                    <div class="item6">
+                                        <strong>Total Pay Days</strong>
+                                        <span style="float:right; margin-right: 30px" t-esc="form.get('pay')"/>
+                                    </div>
+                                </div>
+                                <style>
+                                    .grid-container {
+                                    display: grid;
+                                    grid-gap: 20px;
+                                    background-color: black;
+                                    padding: 3px;
+                                    }
+
+                                    .grid-container > div {
+                                    background-color: white;
+                                    padding: 14px 0;
+                                    }
+                                </style>
+                            </div>
+                            <div class="col-6">
+                            </div>
+                        </div>
+                        <!--                        <br/>-->
+                        <!--                        <br/>-->
+                        <!--                        <br/>-->
+                        <!--                        <br/>-->
+                        <!--                        <br/>-->
+                        <!--                        <div class="row">-->
+                        <!--                            <div class="col-6">-->
+                        <!--                                <div class="grid-container">-->
+                        <!--                                    <div class="item1">-->
+                        <!--                                        <strong>Regularity %</strong>-->
+                        <!--                                        <t t-foreach="form.get('regular_percentage')" t-as="e">-->
+                        <!--                                            <span style="float:right; margin-right: 30px">%</span>-->
+                        <!--                                        </t>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="item2">-->
+                        <!--                                        <strong>Punctuality %</strong>-->
+                        <!--                                        <t t-foreach="form.get('reporting')" t-as="r">-->
+                        <!--                                            <span>-->
+                        <!--                                                <p style="float:right; margin-right: 30px"-->
+                        <!--                                                   t-esc="r.get('punctual_percent')">-->
+                        <!--                                                    <span>%</span>-->
+                        <!--                                                </p>-->
+                        <!--                                            </span>-->
+                        <!--                                        </t>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="item3">-->
+                        <!--                                        <strong>Total Late Days</strong>-->
+                        <!--                                        <t t-foreach="form.get('reporting')" t-as="r">-->
+                        <!--                                            <span style="float:right; margin-right: 30px"-->
+                        <!--                                                  t-esc="r.get('total_late')"/>-->
+                        <!--                                        </t>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="item4">-->
+                        <!--                                        <strong>Total Early Out Days</strong>-->
+                        <!--                                        <t t-foreach="form.get('early_out_days')" t-as="e">-->
+                        <!--                                            <span style="float:right; margin-right: 30px"-->
+                        <!--                                                  t-esc="e.get('early_out')"/>-->
+                        <!--                                        </t>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="item5">-->
+                        <!--                                        <strong>Total Work Hours</strong>-->
+                        <!--                                        <span style="float:right; margin-right: 30px" t-esc="total_work_hrs"-->
+                        <!--                                              t-options='{"widget": "float_time"}'/>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="item6">-->
+                        <!--                                        <strong>Total Pay Days</strong>-->
+                        <!--                                        &lt;!&ndash;                                        <span style="float:right; margin-right: 30px" t-esc="total_pay_days"/>&ndash;&gt;-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                                <style>-->
+                        <!--                                    .grid-container {-->
+                        <!--                                    display: grid;-->
+                        <!--                                    grid-gap: 20px;-->
+                        <!--                                    background-color: black;-->
+                        <!--                                    padding: 3px;-->
+                        <!--                                    }-->
+
+                        <!--                                    .grid-container > div {-->
+                        <!--                                    background-color: white;-->
+                        <!--                                    padding: 14px 0;-->
+                        <!--                                    }-->
+                        <!--                                </style>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="col-6">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="print_dept_attendance_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout" t-foreach="form.get('depart')" t-as="dep">
+                    <div style="text-align: center">
+                        <h3>Monthly Attendance Sheet</h3>
+                        <strong>Date:</strong>
+                        <span>from
+                            <span t-esc="form.get('start_date')"/>
+                            to
+                            <span t-esc="form.get('end_date')"/>
+                        </span>
+                        <p>
+                            <span>
+                                <strong>Department:</strong>
+                                <span class="m-0" t-esc="dep.get('name')"/>
+                            </span>
+                        </p>
+                    </div>
+                    <table class="table table-sm table-bordered">
+                        <thead style="background-color: black; color: white;">
+                            <tr>
+                                <th class="text-center">
+                                    <strong>Name</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Total Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Shift Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Present</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Absent</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Rest Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Leaves Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Total Late Days</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Punctuality %</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Regularity %</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr t-foreach="form.get('attendances')" t-as="l">
+                                <t t-if="dep.get('name') == l.get('department')">
+                                    <td class="text-center">
+                                        <span t-esc="l.get('name')"/>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span t-esc="l.get('total_days')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('planned')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('present')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('absent')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('rest_days')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('total_leaves')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('total_late')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('punctual')"/>
+                                        <span>%</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('regular')"/>
+                                        <span>%</span>
+                                    </td>
+                                </t>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="row" t-foreach="form.get('dep_list')" t-as="d">
+
+                                <t t-if="d.get('name') == dep.get('name')">
+                            <div class="col-6">
+                                <div class="grid-container">
+                                    <div class="item1">
+                                        <strong>Regularity %</strong>
+                                        <span style="float:right; margin-right: 30px">%</span>
+                                        <span style="float:right; margin-right: 5px"
+                                              t-esc="d.get('dep_reg')"/>
+                                    </div>
+                                    <div class="item2">
+                                        <strong>Punctuality %</strong>
+                                        <span style="float:right; margin-right: 30px">%</span>
+                                        <span style="float:right; margin-right: 5px"
+                                              t-esc="d.get('dep_pun')"/>
+                                    </div>
+
+                                </div>
+                                <style>
+                                    .grid-container {
+                                    display: grid;
+                                    grid-gap: 20px;
+                                    background-color: black;
+                                    padding: 3px;
+                                    }
+
+                                    .grid-container > div {
+                                    background-color: white;
+                                    padding: 14px 0;
+                                    }
+                                </style>
+                            </div></t></div>
+
+                </t>
+            </t>
+        </template>
+
+
+        <!-- Monthly Absentee Report Template-->
+        <template id="print_absentee_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div id="informations" class="row mt32 mb32" style="border:1px solid black;">
+                        <div class="col-auto mw-100 mb-2" name="barcode" style="margin-top:10px;">
+                            <strong>Date:</strong>
+                            <span t-esc="form.get('start_date')"/>
+                            to
+                            <span t-esc="form.get('end_date')"/>
+                        </div>
+                        <div style="margin-left: 150px; margin-top:10px;" class="col-auto mw-100 mb-2"
+                             name="department_id">
+                            <strong>Department:</strong>
+                            <span class="m-0" t-esc="form.get('dept')"/>
+                        </div>
+                    </div>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <strong>Employee</strong>
+                                </th>
+                                <t t-foreach="form.get('attendances')" t-as="d">
+                                    <th class="text-center">
+                                        <span t-esc="d.get('date')"/>
+                                    </th>
+                                </t>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <t t-set="i" t-value="2"/>
+                            <tr t-foreach="i" t-as="i">
+                                <td t-foreach="form.get('record')" t-as="e">
+                                    <span t-esc="e.get('name')"/>
+                                    <span t-esc="e.get('absent')"/>
+                                </td>
+                                <t t-set="i" t-value="i+1"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+
+
+</odoo>

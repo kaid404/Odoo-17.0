@@ -1,0 +1,46 @@
+<odoo>
+    <record id="view_approval_ceo_form" model="ir.ui.view">
+        <field name="name">approval ceo Form</field>
+        <field name="model">approval.ceo</field>
+        <field name="arch" type="xml">
+            <form string="Approval Ceo Form">
+                <sheet>
+                    <field name="name"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_approval_ceo_tree" model="ir.ui.view">
+        <field name="name">Approval Ceo Tree</field>
+        <field name="model">approval.ceo</field>
+        <field name="arch" type="xml">
+            <tree string="Approval Ceo Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="approval_ceo_other" model="approval.ceo">
+        <field name="name">Other</field>
+    </record>
+
+    <record id="action_approval_ceo_tree" model="ir.actions.act_window">
+        <field name="name">Approval Ceo Form</field>
+        <field name="res_model">approval.ceo</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="view_approval_ceo_tree"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the first Approval Ceo
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_approval_ceo_tree"
+              name="Approval Ceo"
+              parent="menu_configuration"
+              sequence="40"
+              action="action_approval_ceo_tree"/>
+</odoo>

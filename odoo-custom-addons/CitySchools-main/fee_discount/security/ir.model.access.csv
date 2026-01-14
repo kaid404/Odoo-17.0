@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fee_discount,access.fee.discount,model_fee_discount,,1,1,1,1
+access_fee_discount_wizard,access.fee.discount.wizard,model_fee_discount_wizard,,1,1,1,1
