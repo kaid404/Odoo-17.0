@@ -45,7 +45,8 @@ class TrainingReportWizard(models.TransientModel):
                         'student_name': line.student_id.name,
                         'assignment_total': 0.0,
                         'assignment_obt_total': 0.0,
-                        'assignment_remarks': 'N/A',
+                        'assignment_weightage': 0.0,
+                        'assignment_remarks': '',
                         # 'assignment_marks': [],
                         'jury_marks': []
                     }
