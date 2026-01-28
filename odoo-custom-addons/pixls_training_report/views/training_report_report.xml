@@ -57,17 +57,17 @@
                                         <t t-esc="student['student_name']"/>
                                     </td>
 
-<!--                                    <t t-foreach="student['assignment_marks']" t-as="a">-->
-                                        <td>
-                                            <t t-esc="student['assignment_total']"/>
-                                        </td>
-                                        <td>
-                                            <t t-esc="student['assignment_obt_total']"/>
-                                        </td>
-                                        <td>
-                                            <t t-esc="student['assignment_remarks']"/>
-                                        </td>
-<!--                                    </t>-->
+                                    <!--                                    <t t-foreach="student['assignment_marks']" t-as="a">-->
+                                    <td>
+                                        <t t-esc="student['assignment_total']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="student['assignment_weightage']"/>%
+                                    </td>
+                                    <td>
+                                        <t t-esc="student['assignment_remarks']"/>
+                                    </td>
+                                    <!--                                    </t>-->
                                     <t t-set="jury_total" t-value="0"/>
                                     <t t-foreach="student['jury_marks']" t-as="j">
                                         <t t-set="jury_total" t-value="jury_total + j['obt_total']"/>
