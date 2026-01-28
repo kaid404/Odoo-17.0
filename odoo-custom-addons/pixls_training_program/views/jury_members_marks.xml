@@ -1,0 +1,52 @@
+<odoo>
+
+    <record id="view_jury_members_marks_tree" model="ir.ui.view">
+        <field name="name">jury.members.marks.tree</field>
+        <field name="model">jury.members.marks</field>
+        <field name="arch" type="xml">
+            <tree string="Jury Members Marks">
+                <field name="training_program_id" readonly="1"/>
+                <field name="parameters_id" readonly="1"/>
+                <field name="student_id" readonly="1"/>
+                <field name="jury_member_id" readonly="1"/>
+                <field name="marks" readonly="1"/>
+                <field name="remarks" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_jury_members_marks_form" model="ir.ui.view">
+        <field name="name">jury.members.marks.form</field>
+        <field name="model">jury.members.marks</field>
+        <field name="arch" type="xml">
+            <form string="Jury Members Marks">
+                <group>
+                    <group>
+                        <field name="training_program_id" readonly="1"/>
+                        <field name="parameters_id" force_save="1" readonly="1"/>
+                        <field name="student_id" readonly="1"/>
+                        <field name="jury_member_id" force_save="1" readonly="1"/>
+                        <field name="marks" readonly="1"/>
+                        <field name="remarks" readonly="1"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_jury_members_marks" model="ir.actions.act_window">
+        <field name="name">Jury Members Marks</field>
+        <field name="res_model">jury.members.marks</field>
+        <field name="view_mode">tree,form</field>
+        <field name="type">ir.actions.act_window</field>
+    </record>
+
+    <menuitem id="menu_jury_members_marks" name="Jury Members Marks" parent="pixls_training_program.menu_pixls_training_program" action="action_jury_members_marks"
+              sequence="110"/>
+
+
+
+</odoo>

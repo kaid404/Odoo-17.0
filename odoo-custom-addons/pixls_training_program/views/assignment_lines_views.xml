@@ -1,0 +1,49 @@
+<odoo>
+    <record id="assignment_lines_form_view" model="ir.ui.view">
+        <field name="name">Assignment Lines</field>
+        <field name="model">assignment.lines</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="assignment"/>
+                        <field name="week"/>
+                        <field name="goals"/>
+                        <field name="total_marks"/>
+                        <field name="student_id"/>
+                        <field name="obtained_marks"/>
+                        <field name="remarks"/>
+
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="assignment_lines_list_view" model="ir.ui.view">
+        <field name="name">Assignment Lines</field>
+        <field name="model">assignment.lines</field>
+        <field name="arch" type="xml">
+            <tree>
+
+                <field name="assignment"/>
+                <field name="week"/>
+                <field name="goals"/>
+                <field name="total_marks"/>
+                <field name="student_id"/>
+                <field name="obtained_marks"/>
+                <field name="remarks"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_assignment_lines" model="ir.actions.act_window">
+        <field name="name">Assignment Lines</field>
+        <field name="res_model">assignment.lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_assignment_lines" name="Assignment Lines" action="action_assignment_lines"
+              parent="menu_pixls_training_program_configuration" sequence="400"/>
+
+
+</odoo>

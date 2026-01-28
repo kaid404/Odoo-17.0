@@ -1,0 +1,79 @@
+<odoo>
+
+    <record id="jury_trainer_result_form_view" model="ir.ui.view">
+        <field name="name">Jury Results</field>
+        <field name="model">jury.trainer.result</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="training_program_id"/>
+                            <field name="jury"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Students">
+                            <field name="student_lines_id">
+                                <tree create="false" delete="false">
+                                    <field name="student_id"/>
+                                    <field name="assignment_total"/>
+                                    <field name="trainer_remarks"/>
+                                    <field name="total"/>
+                                    <field name="obt_total"/>
+                                    <field name="remarks"/>
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <field name="student_id"/>
+                                            <field name="assignment_total"/>
+                                            <field name="trainer_remarks"/>
+                                            <field name="total"/>
+                                            <field name="obt_total"/>
+                                            <field name="remarks"/>
+                                        </group>
+                                        <notebook>
+                                            <page string="Parameter">
+                                                <field name="subline_ids">
+                                                    <tree editable="bottom" create="false" delete="false">
+                                                        <field name="parameter_id"/>
+                                                        <field name="total_marks"/>
+                                                        <field name="obt_marks"/>
+                                                        <field name="remarks"/>
+                                                    </tree>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="jury__trainer_result_list_view" model="ir.ui.view">
+        <field name="name">Jury Results</field>
+        <field name="model">jury.trainer.result</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="training_program_id"/>
+                <field name="jury"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_jury_trainer_result" model="ir.actions.act_window">
+        <field name="name">Jury Results</field>
+        <field name="res_model">jury.trainer.result</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_jury__trainer_result" name="Jury Result"
+              action="action_jury_trainer_result"
+              parent="menu_pixls_training_program" sequence="100"/>
+</odoo>

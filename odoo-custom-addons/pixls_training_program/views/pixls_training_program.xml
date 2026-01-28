@@ -1,0 +1,94 @@
+<odoo>
+    <record id="pixls_training_program_form_view" model="ir.ui.view">
+        <field name="name">Pixls Training Program</field>
+        <field name="model">pixls.training.program</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="inprogress_button" string="Proceed" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="done_button" string="Done" type="object" class="btn-primary"
+                            invisible="state != 'in_progress'"/>
+                    <button name="reset_to_draft_button" string="Reset to Draft" type="object" class="btn-primary"
+                            invisible="state != 'done'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="training_program"/>
+                            <field name="trainer" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Students">
+                            <field name="students">
+                                <tree editable="bottom">
+                                    <field name="student_id"/>
+<!--                                    <field name="total" widget="percentage"/>-->
+<!--                                    <field name="jury_total"/>-->
+<!--                                    <field name="remarks"/>-->
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Jury Members">
+                            <field name="jury_members_lines_id">
+                                <tree editable="bottom">
+                                    <field name="jury_member_id"/>
+                                </tree>
+                            </field>
+                        </page>
+<!--                        <page string="Parameters">-->
+<!--                            <field name="parameters_lines_id">-->
+<!--                                <tree editable="bottom">-->
+<!--                                    <field name="parameters_id"/>-->
+<!--                                    <button name="action_add_parameters" align="right" string="Add Parameters Marks"-->
+<!--                                            type="object"-->
+<!--                                            class="btn-primary mt-2"/>-->
+<!--                                    <button name="action_view_jury_members_marks" align="right"-->
+<!--                                            string="View Jury Members Marks"-->
+<!--                                            type="object"-->
+<!--                                            class="btn-primary mt-2"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="pixls_training_program_list_view" model="ir.ui.view">
+        <field name="name">Pixls Training Program</field>
+        <field name="model">pixls.training.program</field>
+        <field name="arch" type="xml">
+            <tree>
+
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="training_program"/>
+                <field name="trainer"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_pixls_training_program" model="ir.actions.act_window">
+        <field name="name">Pixls Training Program</field>
+        <field name="res_model">pixls.training.program</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_pixls_training_program" name="Pixls Training Program" action="action_pixls_training_program"/>
+
+
+    <menuitem id="menu_main_pixls_training_program" name="Pixls Training Program" action="action_pixls_training_program"
+              parent="menu_pixls_training_program" sequence="100"/>
+
+    <menuitem id="menu_pixls_training_program_configuration" name="Configuration" parent="menu_pixls_training_program"
+              sequence="200"/>
+
+
+</odoo>

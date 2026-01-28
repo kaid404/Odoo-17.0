@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+
+        <record id="group_training_admin" model="res.groups">
+            <field name="name">Admin Pixls</field>
+        </record>
+
+    </data>
+</odoo>

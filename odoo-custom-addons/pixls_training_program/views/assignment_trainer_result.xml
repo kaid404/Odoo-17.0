@@ -1,0 +1,89 @@
+<odoo>
+
+    <record id="assignment_trainer_result_form_view" model="ir.ui.view">
+        <field name="name">Assignment Trainer Results</field>
+        <field name="model">assignment.trainer.result</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="trainer"/>
+                        </group>
+                        <group>
+                            <field name="training_program_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Students">
+                            <field name="student_lines_id">
+                                <tree create="false" delete="false">
+                                    <field name="student_id"/>
+                                    <field name="total"/>
+                                    <field name="obt_total"/>
+                                    <field name="assignement_id"/>
+                                    <field name="remarks"/>
+                                    <field name="warning_check"/>
+                                    <field name="warning_reason" invisible="not warning_check"/>
+                                    <field name="warning_date" invisible="not warning_check"/>
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="student_id"/>
+                                                <field name="total"/>
+                                                <field name="obt_total"/>
+                                                <field name="assignement_id"/>
+                                                <field name="remarks"/>
+                                            </group>
+                                            <group>
+                                                <field name="warning_check"/>
+                                                <field name="warning_reason" invisible="not warning_check"/>
+                                                <field name="warning_date" invisible="not warning_check"/>
+                                            </group>
+                                        </group>
+                                        <notebook>
+                                            <page string="Goals">
+                                                <field name="subline_ids">
+                                                    <tree editable="bottom" create="false" delete="false">
+                                                        <field name="goal_id"/>
+                                                        <field name="total_marks"/>
+                                                        <field name="obt_marks"/>
+                                                    </tree>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="assignment_trainer_result_list_view" model="ir.ui.view">
+        <field name="name">Assignment Trainer Results</field>
+        <field name="model">assignment.trainer.result</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="trainer"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_assignment_trainer_result" model="ir.actions.act_window">
+        <field name="name">Assignment Trainer Results</field>
+        <field name="res_model">assignment.trainer.result</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_assignment_trainer_result" name="Assignment Trainer Result"
+              action="action_assignment_trainer_result"
+              parent="menu_pixls_training_program" sequence="100"/>
+</odoo>

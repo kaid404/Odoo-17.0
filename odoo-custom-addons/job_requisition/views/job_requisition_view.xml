@@ -80,10 +80,10 @@
                             <!--                            </div>-->
                             <div class="o_row" style="margin:20px; margin-left:0px;">
                                 <div class="o_col o_col_6">
-                                    <strong>Reason For Leaving.
+                                    <strong>Reason For Leaving
                                     </strong>
                                     <br/>
-                                    <field name="reason_for_relieving" widget="many2many_checkboxes" nolabel="1"
+                                    <field name="reason_for_relieving" widget="many2many_tags" nolabel="1"
                                            readonly="state == 'submit'"/>
                                     <field name="show_other_reason" invisible="1"/>
                                     <div style="margin-top:10px; margin-left:20px;">
@@ -126,7 +126,7 @@
 
                             <div class="o_row" style="margin:20px; margin-left:0px;">
                                 <div class="o_col o_col_6">
-                                    <strong>Related Experience.
+                                    <strong>Related Experience
                                     </strong>
                                     <br/>
                                     <field name="related_experience" readonly="state == 'submit'"/>
@@ -135,7 +135,7 @@
                             </div>
                             <div class="o_row" style="margin:20px; margin-left:0px;">
                                 <div class="o_col o_col_6">
-                                    <strong>Proposed Salary.
+                                    <strong>Proposed Salary
                                     </strong>
                                     <br/>
                                     <field name="proposed_salary" widget="radio" nolabel="1"
@@ -152,7 +152,7 @@
                             </div>
                             <div class="o_row" style="margin:20px; margin-left:0px;">
                                 <div class="o_col o_col_6">
-                                    <strong>Budget Information.
+                                    <strong>Budget Information
                                     </strong>
                                     <br/>
                                     <span>To be disclosed for the interview:</span>

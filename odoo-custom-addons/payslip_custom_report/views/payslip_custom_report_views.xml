@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_payslip_custom_report_form" model="ir.ui.view">
+        <field name="name">payslip.custom.report.form</field>
+        <field name="model">payslip.custom.report</field>
+        <field name="arch" type="xml">
+            <form string="Payslip Custom Report">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="filter_by"/>
+                            <field name="company_id" invisible="filter_by != 'company'"/>
+                            <field name="employee_ids" widget="many2many_tags" invisible="filter_by != 'employees'"/>
+                            <field name="team_ids" widget="many2many_tags" invisible="filter_by != 'team'"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report"
+                                type="object"
+                                string="Print Report"
+                                class="btn-primary"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_payslip_custom_report_view" model="ir.actions.act_window">
+        <field name="name">Payslip Custom Report</field>
+        <field name="res_model">payslip.custom.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_payslip_custom_report" name="Custom Payslip Report" parent="hr_payroll.menu_hr_payroll_report"
+              action="action_payslip_custom_report_view"/>
+</odoo>

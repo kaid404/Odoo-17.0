@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_training_report_wizard_form" model="ir.ui.view">
+        <field name="name">pixls.training.report.wizard.form</field>
+        <field name="model">pixls.training.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Training Report">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="program_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report" type="object" string="Print Report" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_training_report_wizard" model="ir.actions.act_window">
+        <field name="name">Training Report</field>
+        <field name="res_model">pixls.training.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_training_program_reporting" name="Reporting"
+              parent="pixls_training_program.menu_pixls_training_program" sequence="700"/>
+    <menuitem id="menu_training_program_report" name="Training Program Report"
+              parent="menu_training_program_reporting" action="action_training_report_wizard"/>
+</odoo>

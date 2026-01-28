@@ -1,0 +1,24 @@
+<odoo>
+    <record id="view_supplier_advances_xls_report_wizard" model="ir.ui.view">
+        <field name="name">supplier.advances.xls.report.wizard.form</field>
+        <field name="model">supplier.advances.xls.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Supplier Advances XLS Report">
+                <sheet>
+                    <group>
+                        <group string="Report Criteria">
+                            <field name="journal_id" widget="many2many_tags"
+                                   domain="[('type', 'in', ['bank', 'cash'])]"
+                                   context="{'show_account_number': True}"/>
+                            <field name="date_as"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Generate XLS Report" type="object" name="action_generate_xls_report" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

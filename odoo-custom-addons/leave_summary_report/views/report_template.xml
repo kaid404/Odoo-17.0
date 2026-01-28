@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="leave_summary_report_template">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <h2>Leave Summary Report</h2>
+                <p><strong>Company:</strong> <t t-esc="doc.company_id.name"/></p>
+                <p>
+                    <strong>Leave Types:</strong>
+                    <t t-foreach="doc.leave_type_ids" t-as="lt">
+                        <span t-esc="lt.name"/> |
+                    </t>
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <record id="action_leave_summary_report" model="ir.actions.report">
+        <field name="name">Leave Summary Report</field>
+        <field name="model">leave.summary.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">leave_summary_report.leave_summary_report_template</field>
+        <field name="report_file">leave_summary_report.leave_summary_report_template</field>
+    </record>
+</odoo>

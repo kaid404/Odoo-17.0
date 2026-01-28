@@ -1,0 +1,58 @@
+<odoo>
+    <record id="assignment_data_form_view" model="ir.ui.view">
+        <field name="name">Assignment Data</field>
+        <field name="model">assignment.data</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="weightage" widget="percentage"/>
+                        </group>
+                        <group>
+                            <field name="total_marks"/>
+                            <field name="training_program_id"  domain="[('id', 'in', program_ids)]"/>
+                            <field name="program_ids" invisible="1"/>
+                            <field name="trainer_id"/>
+                            <field name="available_trainers_ids" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Goals">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="marks"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="assignment_data_list_view" model="ir.ui.view">
+        <field name="name">Assignment Data</field>
+        <field name="model">assignment.data</field>
+        <field name="arch" type="xml">
+            <tree>
+
+                <field name="name"/>
+                <field name="total_marks"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_assignment_data" model="ir.actions.act_window">
+        <field name="name">Assignment Data</field>
+        <field name="res_model">assignment.data</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="menu_assignments" name="Assignments" action="action_assignment_data"
+              parent="menu_pixls_training_program_configuration" sequence="200"/>
+
+
+</odoo>

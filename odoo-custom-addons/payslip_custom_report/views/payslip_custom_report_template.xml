@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_template">
+        <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                    <h2>Payslip Custom Report</h2>
+                    <t t-foreach="payslips" t-as="slip">
+
+                        <div style="border: 2px solid black; margin-top:15px; padding:10px;">
+                            <table class="table table-borderless"
+                                   style="width:100%; border-collapse:collapse;">
+                                <tr>
+                                    <td colspan="3" style="padding:8px;">
+                                        Code:
+                                        <t t-esc="slip['code']"/>
+                                    </td>
+                                    <td colspan="3" style="padding:8px;">
+                                        Employee:
+                                        <t t-esc="slip['name']"/>
+                                    </td>
+                                    <td colspan="4" style="padding:8px;">
+                                        Team:
+                                        <t t-esc="slip['team']"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="padding:8px;">
+                                        Department:
+                                        <t t-esc="slip['department'] or '-'"/>
+                                    </td>
+                                    <td colspan="3" style="padding:8px;">
+                                        Job:
+                                        <t t-esc="slip['designation'] or '-'"/>
+                                    </td>
+                                    <td colspan="4" style="padding:8px;">
+                                        Joining Date:
+                                        <t t-esc="slip['joining_date'] or '-'"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="padding:8px;">
+                                        CNIC:
+                                        <t t-esc="slip['cnic'] or '-'"/>
+                                    </td>
+                                    <td colspan="3" style="padding:8px;">
+                                        Monthly Salary:
+                                        <t t-esc="slip['monthly_salary'] or '-'"/>
+                                    </td>
+                                    <td colspan="4" style="padding:8px;">
+                                        Joining Date:
+                                        <t t-esc="slip['joining_date'] or '-'"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <t t-set="total_earnings" t-value="0"/>
+                        <t t-set="total_deductions" t-value="0"/>
+
+                        <div class="row" style="width:100%; margin-top:20px;">
+
+                            <div style="width:50%; border:1px solid black;">
+                                <table class="table table-borderless" style="width:100%;">
+                                    <thead>
+                                        <tr style="font-weight:bold; border-bottom:1px solid black;text-align:center;">
+                                            <th colspan="2">Earnings</th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <t t-foreach="slip['earnings']" t-as="e">
+                                        <t t-set="total_earnings" t-value="total_earnings + e['amount']"/>
+                                        <tr style="padding:10px;">
+                                            <td style="padding-left:10px;">
+                                                <t t-esc="e['name']"/>
+                                            </td>
+                                            <td style="text-align:right;padding-right:10px;">
+                                                <t t-esc="'{:,.0f}'.format(e['amount'])"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </div>
+
+                            <div style="width:50%; border:1px solid black;">
+
+                                <table class="table table-borderless" style="width:100%;">
+                                    <thead>
+                                        <tr style="font-weight:bold; border-bottom:1px solid black; text-align:center;">
+                                            <th colspan="2">Deductions</th>
+                                        </tr>
+                                    </thead>
+
+                                    <t t-foreach="slip['deductions']" t-as="d">
+                                        <t t-set="total_deductions" t-value="total_deductions + d['amount']"/>
+                                        <tr>
+                                            <td style="padding-left:10px;">
+                                                <t t-esc="d['name']"/>
+                                            </td>
+                                            <td style="text-align:right; padding-right:10px;">
+                                                <t t-esc="'{:,.0f}'.format(d['amount'])"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="row" style="width:100%;">
+                            <div style="width:50%; border:1px solid black;">
+                                <table class="table-borderless" style="width:100%;">
+                                    <tr>
+                                        <td style="font-weight:bold; padding:10px;">Total Earnings</td>
+                                        <td style="text-align:right; font-weight:bold; padding:10px;">
+                                            <t t-esc="'{:,.0f}'.format(total_earnings)"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="width:50%; border:1px solid black;">
+                                <table class="table-borderless" style="width:100%;">
+                                    <tr>
+                                        <td style="font-weight:bold; padding:10px;">Total Deductions</td>
+                                        <td style="text-align:right; font-weight:bold; padding:10px;">
+                                            <t t-esc="'{:,.0f}'.format(total_deductions)"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div style="width:100%; margin-top:20px; border:1px solid black;">
+                            <p style="padding:10px;">NET Payment: <strong><t t-esc="'{:,.0f}'.format(slip['net'])"/></strong></p>
+                            <p style="padding:10px;">Amount In Words: <strong><t t-esc="slip['net_in_words']"/></strong></p>
+<!--                            <p><t t-esc="slip['net_in_words']"/> </p>-->
+                        </div>
+
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_payslip_custom_report" model="ir.actions.report">
+        <field name="name">Payslip Custom Report</field>
+        <field name="model">payslip.custom.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">payslip_custom_report.report_template</field>
+        <field name="report_file">payslip_custom_report.report_template</field>
+    </record>
+
+
+</odoo>

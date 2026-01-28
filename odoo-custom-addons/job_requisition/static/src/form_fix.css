@@ -1,11 +1,8 @@
 /* Make selection & radio fields visible even when not focused */
-.o_field_widget.o_field_selection select {
+.o_field_widget.o_field_many2many_tags[name="reason_for_relieving"],
+.o_field_widget.o_field_selection select,
+.o_field_widget[name="hiring_position"],
+.o_field_widget[name="number_of_positions"] {
     opacity: 1 !important;
     box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.12);
 }
-
-/* Optional: give a subtle border so users know it's clickable */
-/*.o_field_widget.o_field_selection select {*/
-/*    border: 1px solid #c9ccd2;*/
-/*    background-color: #fff;*/
-/*}*/

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_salary_sheet_xlsx_report" model="ir.actions.report">
+        <field name="name">Staff Salary Sheet</field>
+        <field name="model">salary.sheet.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">salary_xlsx_report.salary_sheet_xlsx</field>
+        <field name="report_file">salary_sheet</field>
+        <field name="binding_model_id" ref="model_salary_sheet_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

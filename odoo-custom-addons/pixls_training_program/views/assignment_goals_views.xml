@@ -1,0 +1,37 @@
+<odoo>
+    <record id="assignment_goals_form_view" model="ir.ui.view">
+        <field name="name">Assignment goals</field>
+        <field name="model">assignment.goals</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="name"/>
+<!--                        <field name="marks"/>-->
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="assignment_goals_list_view" model="ir.ui.view">
+        <field name="name">Assignment goals</field>
+        <field name="model">assignment.goals</field>
+        <field name="arch" type="xml">
+            <tree>
+
+                <field name="name"/>
+<!--                <field name="marks"/>-->
+            </tree>
+        </field>
+    </record>
+    <record id="action_assignment_goals" model="ir.actions.act_window">
+        <field name="name">Assignment Goals</field>
+        <field name="res_model">assignment.goals</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_assignment_goals" name="Goals" action="action_assignment_goals" parent="menu_pixls_training_program_configuration" sequence="300"/>
+
+
+</odoo>

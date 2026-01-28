@@ -1,0 +1,47 @@
+<odoo>
+
+    <record id="view_assignment_parameters_tree" model="ir.ui.view">
+        <field name="name">assignment.parameters.tree</field>
+        <field name="model">assignment.parameters</field>
+        <field name="arch" type="xml">
+            <tree string="Jury Criteria">
+                <field name="name"/>
+                <field name="total"/>
+                <field name="training_program_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_assignment_parameters_form" model="ir.ui.view">
+        <field name="name">assignment.parameters.form</field>
+        <field name="model">assignment.parameters</field>
+        <field name="arch" type="xml">
+            <form string="Jury Criteria">
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="total"/>
+                    </group>
+                    <group>
+                        <field name="training_program_id"/>
+                    </group>
+                </group>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_assignment_parameters" model="ir.actions.act_window">
+        <field name="name">Jury Criteria</field>
+        <field name="res_model">assignment.parameters</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_assignment_parameters"
+              name="Jury Criteria"
+              action="action_assignment_parameters"
+              parent="menu_pixls_training_program_configuration"
+              sequence="100"/>
+
+</odoo>

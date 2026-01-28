@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="training_report_template">
+        <t t-call="web.basic_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                    <h2>Training Report</h2>
+                    <table class="table table-bordered" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <t t-set="first_student" t-value="list(programs.values())[0]"/>
+
+                                <th t-att-colspan="4">
+                                    Assignment Results
+                                </th>
+
+                                <th t-att-colspan="1 + len(first_student['jury_marks']) * 3">
+                                    Jury Members
+                                </th>
+                            </tr>
+                            <!--                            <tr>-->
+                            <!--                                <th></th>-->
+
+                            <!--                                <t t-foreach="first_student['assignment_marks']" t-as="a">-->
+                            <!--                                    <th t-att-colspan="3">-->
+                            <!--                                        <t t-esc="a['trainer_name']"/>-->
+                            <!--                                    </th>-->
+                            <!--                                </t>-->
+                            <!--                                <t t-foreach="first_student['jury_marks']" t-as="j">-->
+                            <!--                                    <th t-att-colspan="3">-->
+                            <!--                                        <t t-esc="j['jury_name']"/>-->
+                            <!--                                    </th>-->
+                            <!--                                </t>-->
+                            <!--                                <th></th>-->
+                            <!--                            </tr>-->
+                            <tr>
+                                <th>Student</th>
+                                <!--                                <t t-foreach="first_student['assignment_marks']" t-as="a">-->
+                                <th>Total</th>
+                                <th>Obt</th>
+                                <th>Remarks</th>
+                                <!--                                </t>-->
+                                <t t-foreach="first_student['jury_marks']" t-as="j">
+                                    <th>Total</th>
+                                    <th>Obt</th>
+                                    <th>Remarks</th>
+                                </t>
+                                <th>Jury Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <t t-foreach="programs.values()" t-as="student">
+                                <tr>
+                                    <td>
+                                        <t t-esc="student['student_name']"/>
+                                    </td>
+
+<!--                                    <t t-foreach="student['assignment_marks']" t-as="a">-->
+                                        <td>
+                                            <t t-esc="student['assignment_total']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="student['assignment_obt_total']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="student['assignment_remarks']"/>
+                                        </td>
+<!--                                    </t>-->
+                                    <t t-set="jury_total" t-value="0"/>
+                                    <t t-foreach="student['jury_marks']" t-as="j">
+                                        <t t-set="jury_total" t-value="jury_total + j['obt_total']"/>
+                                        <td>
+                                            <t t-esc="j['total']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="j['obt_total']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="j['remarks']"/>
+                                        </td>
+                                    </t>
+                                    <td>
+                                        <t t-esc="jury_total"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_training_report_template" model="report.paperformat">
+        <field name="name">Training Report Paper Format</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">120</field>
+    </record>
+
+    <record id="action_training_report" model="ir.actions.report">
+        <field name="name">Training Report</field>
+        <field name="model">pixls.training.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pixls_training_report.training_report_template</field>
+        <field name="report_file">pixls_training_report.training_report_template</field>
+        <field name="paperformat_id" ref="pixls_training_report.paperformat_training_report_template"/>
+    </record>
+
+</odoo>
